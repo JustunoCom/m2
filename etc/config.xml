@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<justuno_settings>
+			<options_interface>
+				<accid></accid>
+				<juajaxurl></juajaxurl>
+				<token_key>Aj16KDxPCUVNxDkhO4Jbt1i7NJPZ7gi8</token_key>
+			</options_interface>
+		</justuno_settings>
+	</default>
+</config>

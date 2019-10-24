@@ -1,0 +1,20 @@
+<div class="pp-buttons-container">
+    <button id="<?php echo $block->getId() ?>" onclick="return generateToken();">
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+</div>
+<script>
+    function generateToken(){
+        var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        var s   = document.getElementById("justuno_settings_options_interface_token_key");
+        s.value = rString;  
+        return false;
+    }
+
+    function randomString(length, chars) {
+        var result = '';
+        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    }
+    
+</script>

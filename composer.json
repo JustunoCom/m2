@@ -1,0 +1,19 @@
+{
+    "name": "justuno/jumagext",
+    "description": "Justuno offers optimized marketing campaigns with customizable design, powerful targeting & segmentation, and A/B testing.",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+      "php": ">=5.5.0"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Justuno\\Jumagext\\": ""
+        }
+    }
+}
