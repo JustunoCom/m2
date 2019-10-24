@@ -2,7 +2,7 @@
     "name": "justuno.com/m2",
     "description": "Justuno offers optimized marketing campaigns with customizable design, powerful targeting & segmentation, and A/B testing.",
     "type": "magento2-module",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": [
         "OSL-3.0",
         "AFL-3.0"

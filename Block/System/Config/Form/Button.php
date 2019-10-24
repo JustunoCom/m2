@@ -45,7 +45,13 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
         $this->addData(
             [
                 'id'        => 'justuno_token_button',
-                'button_label' => _('Generate Token')
+				/**
+				 * 2019-10-245 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				 * «Call to undefined function Justuno\Jumagext\Block\System\Config\Form\_()
+				 * in vendor/justuno.com/m2/Block/System/Config/Form/Button.php:48»:
+				 * https://github.com/justuno-com/m2/issues/2
+				 */
+                'button_label' => __('Generate Token')
             ]
         );
         return $this->_toHtml();
