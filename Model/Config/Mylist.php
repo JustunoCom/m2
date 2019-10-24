@@ -24,9 +24,14 @@ class Mylist implements \Magento\Framework\Option\ArrayInterface
         $attributes = array();
         $attributes[] = ['value' => '', 'label' => __('Please Select')];
 
-        foreach($result as $data){
-            if($data['is_user_defined'] == 0){
-                $attributes[] = ['value' => $data['attribute_code'], 'label' => __($data['frontend_label'])];
+        foreach ($result as $a) {
+			/**
+			 * 2019-10-245 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			 * "The `manufaturer` attribute is absent in the «Choose Brand Attribute» backend dropdown":
+			 * https://github.com/justuno-com/m2/issues/3
+			 */
+            if (!$a['is_user_defined'] || 'manufacturer' === $a['attribute_code']) {
+                $attributes[] = ['value' => $a['attribute_code'], 'label' => __($a['frontend_label'])];
             }
         }
         return $attributes;
