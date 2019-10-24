@@ -33,7 +33,12 @@ class Data extends AbstractHelper
     public function __construct(
         TypeListInterface $cacheTypeList,
         Context $context,
-        Magento\Store\Model\StoreManagerInterface $storeManager
+		/**
+		 * 2019-10-245 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		 * «Class Justuno\Jumagext\Helper\Magento\Store\Model\StoreManagerInterface does not exist»
+		 * on `bin/magento setup:di:compile`: https://github.com/justuno-com/m2/issues/1
+		 */
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     )
     {
             parent::__construct($context);
