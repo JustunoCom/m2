@@ -1,4 +1,4 @@
-[Justuno](https://www.justuno.com) module for Magento 1. 
+[Justuno](https://www.justuno.com) module for Magento 2. 
 
 ## How to install
 ```
