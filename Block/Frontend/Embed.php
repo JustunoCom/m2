@@ -12,6 +12,7 @@ use Magento\Framework\View\Element\Template;
  */
 class Embed extends Template {
 	/**
+	 * 2019-11-13
 	 * @param Data $helper
 	 * @param Http $request
 	 * @param Registry $registry
@@ -35,49 +36,59 @@ class Embed extends Template {
 	}
 
 	/**
+	 * 2019-11-13
 	 * @return boolean
 	 */
 	function customerLoggedIn() {return $this->customerSession->isLoggedIn();}
 
 	/**
+	 * 2019-11-13
 	 * @return object
 	 */
 	function getCurrentProductID() {return $this->registry->registry('current_product')->getID();}
 
 	/**
+	 * 2019-11-13
 	 * @return string
 	 */
 	function getCustomerID() {return $this->customerSession->getCustomer()->getId();}
 
 	/**
+	 * 2019-11-13
 	 * @return string
 	 */
 	function getFullActionName() {return $this->_request->getFullActionName();}
 
 	/**
+	 * 2019-11-13
 	 * @return string
 	 */
 	function getValueACCID() {return $this->helper->getACCID();}
 
 	/**
+	 * 2019-11-13
 	 * @return string
 	 */
 	function getValueJUAJAX() {return $this->helper->getJUAJAX();}
 
 	/**
-	 * @var Http
-	 */
-	protected $_request;
-	/**
+	 * 2019-11-13
 	 * @var Session
 	 */
-	protected $customerSession;
+	private $customerSession;
 	/**
-	 * @var Registry
-	 */
-	protected $registry;
-	/**
+	 * 2019-11-13
 	 * @var Data
 	 */
 	private $helper;
+	/**
+	 * 2019-11-13
+	 * @var Registry
+	 */
+	private $registry;
+	/**
+	 * 2019-11-13
+	 * @var Http
+	 */
+	private $_request;
 }
