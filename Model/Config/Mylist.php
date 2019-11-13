@@ -12,7 +12,7 @@ class Mylist implements \Magento\Framework\Option\ArrayInterface
      *
      * @codeCoverageIgnore
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();

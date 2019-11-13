@@ -42,7 +42,7 @@ class InstallData implements InstallDataInterface
      * @param \Magento\Authorization\Model\RoleFactory $roleFactory
      * @param \Magento\Authorization\Model\RulesFactory $rulesFactory
      */
-    public function __construct(
+    function __construct(
         \Magento\User\Model\UserFactory $userFactory,
         \Magento\Authorization\Model\RoleFactory $roleFactory, /* Instance of Role*/
         \Magento\Authorization\Model\RulesFactory $rulesFactory, /* Instance of Rule */
@@ -66,7 +66,7 @@ class InstallData implements InstallDataInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         /**
         * Create Justuno role

@@ -30,7 +30,7 @@ class Data extends AbstractHelper
      * @param TypeListInterface $cacheTypeList
      * @param Context $context
      */
-    public function __construct(
+    function __construct(
         TypeListInterface $cacheTypeList,
         Context $context,
 		/**
@@ -49,7 +49,7 @@ class Data extends AbstractHelper
    /**
      * @return string
      */
-    public function getACCID()
+    function getACCID()
     {
         return (string) $this->getValue(self::OPTION_ACCID);
 	}
@@ -57,7 +57,7 @@ class Data extends AbstractHelper
 	/**
      * @return string
      */
-    public function getJUAJAX()
+    function getJUAJAX()
     {
         return (string) $this->getValue(self::OPTION_JUAJAXURL);
 	}

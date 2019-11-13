@@ -18,7 +18,7 @@ class Catalog extends \Magento\Framework\App\Action\Action
     protected $_ratingFactory;
     protected $request;
 
-	public function __construct(
+	function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Catalog\Model\Category $category,
@@ -42,7 +42,7 @@ class Catalog extends \Magento\Framework\App\Action\Action
     // http://justuno.urtestsite.com/index.php/rest/V1/products?sortOrders=created_at&pageSize=10&currentPage=1
 
     /**generate query parameters */
-    public function build_http_query( $query ){
+    function build_http_query( $query ){
         $query_array = array();
         foreach( $query as $key => $key_value ){
             if($key_value == ''){continue;}
@@ -59,7 +59,7 @@ class Catalog extends \Magento\Framework\App\Action\Action
     }
 
 
-    public function execute()
+    function execute()
     {
         ini_set("display_errors", 1);
         $storeUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
@@ -258,7 +258,3 @@ class Catalog extends \Magento\Framework\App\Action\Action
 
 
 }
-
-
-?>
-

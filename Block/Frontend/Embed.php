@@ -39,7 +39,7 @@ class Embed extends Template
      * @param array $data
      * @param Template\Context $context
      */
-    public function __construct(
+    function __construct(
         Data $helper,
         Http $request,
         Session $customerSession,
@@ -58,7 +58,7 @@ class Embed extends Template
     /**
      * @return string
      */
-    public function getValueACCID()
+    function getValueACCID()
     {
         return $this->helper->getACCID();
     }
@@ -66,7 +66,7 @@ class Embed extends Template
     /**
      * @return string
      */
-    public function getValueJUAJAX()
+    function getValueJUAJAX()
     {
         return $this->helper->getJUAJAX();
     }
@@ -74,7 +74,7 @@ class Embed extends Template
     /**
      * @return object
      */
-    public function getCurrentProductID()
+    function getCurrentProductID()
     {
         return  $this->registry->registry('current_product')->getID();
     }
@@ -83,7 +83,7 @@ class Embed extends Template
     /**
      * @return boolean
      */
-    public function customerLoggedIn()
+    function customerLoggedIn()
     {
         return $this->customerSession->isLoggedIn();
     }
@@ -91,7 +91,7 @@ class Embed extends Template
     /**
      * @return string
      */
-    public function getCustomerID()
+    function getCustomerID()
     {
         return $this->customerSession->getCustomer()->getId();
     }
@@ -99,7 +99,7 @@ class Embed extends Template
     /**
      * @return string
      */
-    public function getFullActionName()
+    function getFullActionName()
     {
         return $this->_request->getFullActionName();
     }

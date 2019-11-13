@@ -38,7 +38,7 @@ class Success extends Template
      * @param Template\Context $context
      * @param array            $data
      */
-    public function __construct(
+    function __construct(
 		OrderRepositoryInterface $orderRepository,
         Session $checkoutSession,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -55,7 +55,7 @@ class Success extends Template
 	/**
      * @return string
      */
-    public function juGetOrderId()
+    function juGetOrderId()
     {
         $lastorderId = $this->checkoutSession->getLastOrderId();
 		return $lastorderId;
@@ -64,7 +64,7 @@ class Success extends Template
 	/**
      * @return string
      */
-	public function juGetOrderById($id) {
+	function juGetOrderById($id) {
         return $this->orderRepository->get($id);
     }
 
@@ -73,7 +73,7 @@ class Success extends Template
     *
     * @return string
     */
-    public function getCurrentCurrencyCode()
+    function getCurrentCurrencyCode()
     {
         return $this->_storeManager->getStore()->getCurrentCurrencyCode();
     }

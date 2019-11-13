@@ -18,7 +18,7 @@ class MagexSync extends Template
      * @param Template\Context $context
      * @param array            $data
      */
-    public function __construct(
+    function __construct(
         Cart $cart,
         Template\Context $context,
         array $data
@@ -32,7 +32,7 @@ class MagexSync extends Template
      * @return object
      *
      */
-    public function juGetQuoteData()
+    function juGetQuoteData()
     {
         /**
          * Grab quote data and inject into block for use with custom quote.js
@@ -46,7 +46,7 @@ class MagexSync extends Template
      * @return array
      *
      */
-    public function juGetCartItems()
+    function juGetCartItems()
     {
         /**
          * Alternatively: $itemsCollection = quote->getItemsCollection();
@@ -64,7 +64,7 @@ class MagexSync extends Template
      *
      * @return string
      */
-    public function juGetCartQty()
+    function juGetCartQty()
     {
         /* alternatively getItemsCount(); */
         if (!$this->cart->getQuote()->getItemsQty()) {
@@ -76,7 +76,7 @@ class MagexSync extends Template
     /**
      * @return string
      */
-    public function juGetCartGrandTotal()
+    function juGetCartGrandTotal()
     {
         return $this->cart->getQuote()->getGrandTotal();
     }
@@ -84,7 +84,7 @@ class MagexSync extends Template
     /**
      * @return string
      */
-    public function juGetCartSubTotal()
+    function juGetCartSubTotal()
     {
         return $this->cart->getQuote()->getSubtotal();
     }
@@ -93,7 +93,7 @@ class MagexSync extends Template
      * @return array
      *
      */
-    public function juGetParsedCartItems()
+    function juGetParsedCartItems()
     {
 		$items = $this->cart->getQuote()->getAllVisibleItems();
 		$cartItems = [];

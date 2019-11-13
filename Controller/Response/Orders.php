@@ -13,7 +13,7 @@ class Orders extends \Magento\Framework\App\Action\Action
     protected $_customerFactory;
     protected $_addressFactory;
 
-	public function __construct(
+	function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Sales\Model\Order $order,
@@ -30,7 +30,7 @@ class Orders extends \Magento\Framework\App\Action\Action
 		return parent::__construct($context);
 	}
 
-    public function execute()
+    function execute()
     {
 
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -192,7 +192,7 @@ class Orders extends \Magento\Framework\App\Action\Action
 
 
     /**generate query parameters */
-    public function build_http_query( $query ){
+    function build_http_query( $query ){
         $query_array = array();
         foreach( $query as $key => $key_value ){
             if($key_value == ''){continue;}
@@ -208,7 +208,7 @@ class Orders extends \Magento\Framework\App\Action\Action
         return implode( '&', $query_array );
     }
 
-    public function customerData($customerId) {
+    function customerData($customerId) {
 
         $customer    = $this->_customerFactory->create()->load($customerId);
 
@@ -259,7 +259,7 @@ class Orders extends \Magento\Framework\App\Action\Action
     }
 
 
-    public function getOrders($customerId) {
+    function getOrders($customerId) {
 
         $orderCollection = $this->_order->getCollection()->addAttributeToFilter('customer_id', $customerId);
         $orders     = $orderCollection->getData();
