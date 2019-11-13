@@ -51,14 +51,6 @@ class Data extends AbstractHelper {
 	}
 
 	/**
-	 * @return string
-	 */
-	function getJUAJAX()
-	{
-		return (string) $this->getValue(self::OPTION_JUAJAXURL);
-	}
-
-	/**
 	 * @param string $path
 	 * @return mixed
 	 */

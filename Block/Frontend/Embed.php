@@ -8,7 +8,7 @@ use Magento\Framework\View\Element\Template;
 /**
  * 2019-11-13
  * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
- * @used-by vendor/justuno.com/m2/view/frontend/layout/default.xml
+ * @used-by view/frontend/layout/default.xml
  */
 class Embed extends Template {
 	/**
@@ -61,15 +61,10 @@ class Embed extends Template {
 
 	/**
 	 * 2019-11-13
+	 * @used-by view/frontend/templates/embed.phtml
 	 * @return string
 	 */
 	function getValueACCID() {return $this->helper->getACCID();}
-
-	/**
-	 * 2019-11-13
-	 * @return string
-	 */
-	function getValueJUAJAX() {return $this->helper->getJUAJAX();}
 
 	/**
 	 * 2019-11-13
