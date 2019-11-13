@@ -5,6 +5,11 @@ use Magento\Customer\Model\Session;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
+/**
+ * 2019-11-13
+ * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
+ * @used-by vendor/justuno.com/m2/view/frontend/layout/default.xml
+ */
 class Embed extends Template {
 	/**
 	 * @param Data $helper
