@@ -1,11 +1,5 @@
 <?php
 /**
- * @category    design
- * @package     base_default
- * @author      Justuno (http://www.justuno.com/)
- * @copyright   Copyright (c) 2013 Justuno (http://www.justuno.com/)
- * @license     Open Software License
- *
  * shortcode for cms pages / blocks
  * {{block class="Justuno\Jumagext\Block\Frontend\Embed" template="Justuno_Jumagext::embed.phtml" }}
  *
@@ -15,37 +9,37 @@ $subject = $block->getValueACCID();
 $juajaxurl = $block->getValueJUAJAX();
 $pattern = "/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/";
 if($block->customerLoggedIn() == false){
-    //echo 'customer is not logged in';
-    $customerID = '';
-    //print_r($customerData);
-    //echo $customerID;
+	//echo 'customer is not logged in';
+	$customerID = '';
+	//print_r($customerData);
+	//echo $customerID;
 }
 if($block->customerLoggedIn() == true){
-    //echo 'customer is logged in';
-    $customerID = $block->getCustomerID();
-    //print_r($customerData);
-    //echo $customerID;
+	//echo 'customer is logged in';
+	$customerID = $block->getCustomerID();
+	//print_r($customerData);
+	//echo $customerID;
 }
 ?>
 <?php if(preg_match($pattern, $subject)): ?>
-    <script>
-        window.ju_num='<?php echo $subject ?>';
-    </script>
-    <div data-mage-init='{"embed": {"message": "ju_num loaded (<?php echo $block->escapeHtml(substr($subject, -6)) ?>)"}}'></div>
+	<script>
+		window.ju_num='<?php echo $subject ?>';
+	</script>
+	<div data-mage-init='{"embed": {"message": "ju_num loaded (<?php echo $block->escapeHtml(substr($subject, -6)) ?>)"}}'></div>
 <?php else: ?>
-    <script>
-        console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');
-    </script>
+	<script>
+		console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');
+	</script>
 <?php endif; ?>
 <?php if($block->getFullActionName() == 'catalog_product_view'): ?>
-    <script>
-        setTimeout(function(){
-            window.ju_MageProductView = {
-                PageID: '<?php echo $block->getFullActionName() ?>',
-                ProductID: '<?php echo $block->getCurrentProductID(); ?>',
-                CustomerID: '<?php echo $customerID ?>',
-                StockQty: ''
-            };
-        },50);
-    </script>
+	<script>
+		setTimeout(function(){
+			window.ju_MageProductView = {
+				PageID: '<?php echo $block->getFullActionName() ?>',
+				ProductID: '<?php echo $block->getCurrentProductID(); ?>',
+				CustomerID: '<?php echo $customerID ?>',
+				StockQty: ''
+			};
+		},50);
+	</script>
 <?php endif; ?>

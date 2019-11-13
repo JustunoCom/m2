@@ -20,10 +20,10 @@
 				</field>
 
 
-                <field id="brand_attribute" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Choose Brand Attribute</label>
+				<field id="brand_attribute" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Choose Brand Attribute</label>
 					<source_model>Justuno\Jumagext\Model\Config\Mylist</source_model>
-                </field>
+				</field>
 
 				<field id="token_key" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="0">
 					<label>API Token Key</label>
@@ -33,8 +33,8 @@
 
 
 				<field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <frontend_model>Justuno\Jumagext\Block\System\Config\Form\Button</frontend_model>
-                </field>
+					<frontend_model>Justuno\Jumagext\Block\System\Config\Form\Button</frontend_model>
+				</field>
 
 			</group>
 		</section>

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <body>
-    <referenceBlock name="head.additional">
-        <block class="Justuno\Jumagext\Block\Frontend\Success" name="justuno.order.success"
+	<referenceBlock name="head.additional">
+		<block class="Justuno\Jumagext\Block\Frontend\Success" name="justuno.order.success"
 			   template="Justuno_Jumagext::order/success.phtml">
-        </block>
-    </referenceBlock>
+		</block>
+	</referenceBlock>
 </body>
