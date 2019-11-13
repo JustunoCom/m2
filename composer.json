@@ -1,19 +1,16 @@
 {
-    "name": "justuno.com/m2",
-    "description": "Justuno offers optimized marketing campaigns with customizable design, powerful targeting & segmentation, and A/B testing.",
-    "type": "magento2-module",
-    "version": "1.0.6",
-    "license": [
-        "OSL-3.0",
-        "AFL-3.0"
-    ],
-    "require": {
-      "php": ">=5.5.0"
-    },
-    "autoload": {
-        "files": [ "registration.php" ],
-        "psr-4": {
-            "Justuno\\Jumagext\\": ""
-        }
-    }
+	"name": "justuno.com/m2"
+	,"version": "1.0.6"
+	,"description": "Justuno module for Magento 2"
+	,"type": "magento2-module"
+	,"homepage": "https://github.com/justuno-com/m2"
+	,"license": "MIT"
+	,"authors": [{
+		"name": "Dmitry Fedyuk"
+		,"email": "admin@mage2.pro"
+		,"homepage": "https://mage2.pro/users/dmitry_fedyuk"
+		,"role": "Developer"
+	}]
+	,"autoload": {"files": ["registration.php"], "psr-4": {"Justuno\\Jumagext\\": ""}}
+	,"keywords": ["Magento 2"]
 }
