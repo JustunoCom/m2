@@ -7,27 +7,6 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 class Embed extends Template {
 	/**
-	 * @var Data
-	 */
-	private $helper;
-
-	/**
-	 * @var Http
-	 */
-	protected $_request;
-
-	/**
-	 * @var Registry
-	 */
-	protected $registry;
-
-	/**
-	 * @var Session
-	 */
-	protected $customerSession;
-
-	/**
-	 * Embed constructor.
 	 * @param Data $helper
 	 * @param Http $request
 	 * @param Registry $registry
@@ -36,67 +15,64 @@ class Embed extends Template {
 	 * @param Template\Context $context
 	 */
 	function __construct(
-		Data $helper,
-		Http $request,
-		Session $customerSession,
-		Registry $registry,
-		Template\Context $context,
-		array $data = [])
-	{
-		$this->helper = $helper;
-		$this->customerSession = $customerSession;
-		$this->registry = $registry;
+		Data $helper, Http $request
+		,Session $customerSession
+		,Registry $registry
+		,Template\Context $context
+		,array $data = []
+	) {
 		$this->_request = $request;
+		$this->customerSession = $customerSession;
 		$this->data = $data;
+		$this->helper = $helper;
+		$this->registry = $registry;
 		parent::__construct($context, $data);
 	}
 
 	/**
-	 * @return string
+	 * @return boolean
 	 */
-	function getValueACCID()
-	{
-		return $this->helper->getACCID();
-	}
-
-	/**
-	 * @return string
-	 */
-	function getValueJUAJAX()
-	{
-		return $this->helper->getJUAJAX();
-	}
+	function customerLoggedIn() {return $this->customerSession->isLoggedIn();}
 
 	/**
 	 * @return object
 	 */
-	function getCurrentProductID()
-	{
-		return  $this->registry->registry('current_product')->getID();
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	function customerLoggedIn()
-	{
-		return $this->customerSession->isLoggedIn();
-	}
+	function getCurrentProductID() {return $this->registry->registry('current_product')->getID();}
 
 	/**
 	 * @return string
 	 */
-	function getCustomerID()
-	{
-		return $this->customerSession->getCustomer()->getId();
-	}
+	function getCustomerID() {return $this->customerSession->getCustomer()->getId();}
 
 	/**
 	 * @return string
 	 */
-	function getFullActionName()
-	{
-		return $this->_request->getFullActionName();
-	}
+	function getFullActionName() {return $this->_request->getFullActionName();}
+
+	/**
+	 * @return string
+	 */
+	function getValueACCID() {return $this->helper->getACCID();}
+
+	/**
+	 * @return string
+	 */
+	function getValueJUAJAX() {return $this->helper->getJUAJAX();}
+
+	/**
+	 * @var Http
+	 */
+	protected $_request;
+	/**
+	 * @var Session
+	 */
+	protected $customerSession;
+	/**
+	 * @var Registry
+	 */
+	protected $registry;
+	/**
+	 * @var Data
+	 */
+	private $helper;
 }
