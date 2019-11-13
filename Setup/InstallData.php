@@ -9,27 +9,7 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\User\Model\User;
 class InstallData implements InstallDataInterface {
-	protected $_userFactory;
-	protected $justunorole;
-	protected $userModel;
-	protected $roleAuthModel;
-
 	/**
-	 * RoleFactory
-	 *
-	 * @var roleFactory
-	 */
-	private $roleFactory;
-
-	 /**
-	 * RulesFactory
-	 *
-	 * @var rulesFactory
-	 */
-	private $rulesFactory;
-	/**
-	 * Init
-	 *
 	 * @param \Magento\Authorization\Model\RoleFactory $roleFactory
 	 * @param \Magento\Authorization\Model\RulesFactory $rulesFactory
 	 */
@@ -40,35 +20,26 @@ class InstallData implements InstallDataInterface {
 		\Magento\Authorization\Model\Role $roleAuthModel ,
 		\Magento\User\Model\User $userModel ,
 		\Magento\Authorization\Model\ResourceModel\Role\Collection $justunorole
-		/*this define that which resource permitted to wich role */
-		)
-	{
+	) {
 		$this->_userFactory     = $userFactory;
+		$this->justunorole      = $justunorole;
+		$this->roleAuthModel    = $roleAuthModel;
 		$this->roleFactory      = $roleFactory;
 		$this->rulesFactory     = $rulesFactory;
-		$this->roleAuthModel    = $roleAuthModel;
 		$this->userModel        = $userModel;
-		$this->justunorole      = $justunorole;
 	}
-
-
 
 	/**
 	 * {@inheritdoc}
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 */
-	function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
-	{
-		/**
-		* Create Justuno role
-		*/
+	function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context) {
 		$role = $this->roleFactory->create();
 		$role->setName('justunoUser')
 				->setPid(0)
 				->setRoleType(RoleGroup::ROLE_TYPE)
 				->setUserType(UserContextInterface::USER_TYPE_ADMIN);
 		$role->save();
-
 		$resource=['Magento_Backend::admin',
 					'Magento_Catalog::catalog',
 					'Magento_Catalog::products',
@@ -80,10 +51,8 @@ class InstallData implements InstallDataInterface {
 					'Magento_Sales::actions_view'
 				  ];
 		$this->rulesFactory->create()->setRoleId($role->getId())->setResources($resource)->saveRel();
-
 		$checkRole = $this->justunorole->addFieldToFilter('role_name', ['eq' => 'justunoUser'] );
 		$roleID = $checkRole->getFirstItem()->getRoleId();
-
 		$UserInfo = [
 			'username'  => 'justunouser',
 			'firstname' => 'justuno',
@@ -93,12 +62,16 @@ class InstallData implements InstallDataInterface {
 			'interface_locale' => 'en_US',
 			'is_active' => 1
 		];
-
 		$userModel = $this->_userFactory->create();
 		$userModel->setData($UserInfo);
 		$userModel->setRoleId($roleID);
 		$userModel->save();
 	}
 
-
+	private $_userFactory;
+	private $justunorole;
+	private $roleAuthModel;
+	private $roleFactory;
+	private $rulesFactory;
+	private $userModel;
 }
