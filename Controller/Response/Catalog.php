@@ -1,17 +1,13 @@
 <?php
-
 namespace Justuno\Jumagext\Controller\Response;
-
-use Magento\Framework\HTTP\Client\Curl;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Model\Category;
-use Magento\Framework\App\RequestInterface;
-use Magento\Review\Model\ReviewFactory;
-use Magento\Review\Model\RatingFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-
-class Catalog extends \Magento\Framework\App\Action\Action
-{
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\HTTP\Client\Curl;
+use Magento\Review\Model\RatingFactory;
+use Magento\Review\Model\ReviewFactory;
+use Magento\Store\Model\StoreManagerInterface;
+class Catalog extends \Magento\Framework\App\Action\Action {
 	protected $eavConfig;
 	protected $_pageFactory;
 	protected $_reviewFactory;

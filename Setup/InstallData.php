@@ -1,23 +1,14 @@
 <?php
-
 namespace Justuno\Jumagext\Setup;
-
+use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
+use Magento\Authorization\Model\ResourceModel\Role\Collection;
+use Magento\Authorization\Model\Role;
+use Magento\Authorization\Model\UserContextInterface;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Authorization\Model\Role;
 use Magento\User\Model\User;
-use Magento\Authorization\Model\ResourceModel\Role\Collection
-
-/* For get RoleType and UserType for create Role   */;
-use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
-use Magento\Authorization\Model\UserContextInterface;
-
-/**
- * @codeCoverageIgnore
- */
-class InstallData implements InstallDataInterface
-{
+class InstallData implements InstallDataInterface {
 	protected $_userFactory;
 	protected $justunorole;
 	protected $userModel;

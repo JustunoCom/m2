@@ -1,10 +1,7 @@
 <?php
 namespace Justuno\Jumagext\Block\System\Config\Form;
-
 use Magento\Framework\App\Config\ScopeConfigInterface;
-
-class Button extends \Magento\Config\Block\System\Config\Form\Field
-{
+class Button extends \Magento\Config\Block\System\Config\Form\Field {
 	 const BUTTON_TEMPLATE = 'system/config/button/button.phtml';
 
 	 /**

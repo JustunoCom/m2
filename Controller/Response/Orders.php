@@ -1,12 +1,9 @@
 <?php
 namespace Justuno\Jumagext\Controller\Response;
-
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Sales\Model\Order;
-
-class Orders extends \Magento\Framework\App\Action\Action
-{
+use Magento\Store\Model\StoreManagerInterface;
+class Orders extends \Magento\Framework\App\Action\Action {
 
 	protected $_pageFactory;
 	protected $request;

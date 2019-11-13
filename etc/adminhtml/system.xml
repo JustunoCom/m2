@@ -1,38 +1,41 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<?xml version='1.0' ?>
+<config
+	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xsi:noNamespaceSchemaLocation='urn:magento:module:Magento_Config:etc/system_file.xsd'
+>
 	<system>
-		<tab id="justuno" translate="label" sortOrder="999">
+		<tab id='justuno' translate='label' sortOrder='999'>
 			<label>Justuno</label>
 		</tab>
-		<section id="justuno_settings" showInDefault="1" sortOrder="10" translate="label">
+		<section id='justuno_settings' showInDefault='1' sortOrder='10' translate='label'>
 			<label>Account Configuration</label>
 			<tab>justuno</tab>
 			<resource>Justuno_Jumagext::settings</resource>
-			<group id="options_interface" showInDefault="1" sortOrder="10" translate="label">
+			<group id='options_interface' showInDefault='1' sortOrder='10' translate='label'>
 				<label>Options</label>
-				<field id="accid" showInDefault="1" sortOrder="10" translate="label" type="text">
+				<field id='accid' showInDefault='1' sortOrder='10' translate='label' type='text'>
 					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
 					<comment>ACCID is found in the admin settings of your Justuno account in your embed section (XXXXXXXX-XXXX-XXXX-XXXXXXX)</comment>
 				</field>
-				<field id="juajaxurl" showInDefault="1" sortOrder="12" translate="label" type="text">
+				<field id='juajaxurl' showInDefault='1' sortOrder='12' translate='label' type='text'>
 					<label>AJAX URL (OPTIONAL if your cart has modded request URLs)</label>
 					<comment>This is any uniquely identifiable URL segment of one which is called upon when an item is being added to the cart via AJAX (e.g. /addToCart, ?ajaxUpdate, etc.)</comment>
 				</field>
 
 
-				<field id="brand_attribute" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="0" showInStore="0">
+				<field id='brand_attribute' translate='label' type='select' sortOrder='11' showInDefault='1' showInWebsite='0' showInStore='0'>
 					<label>Choose Brand Attribute</label>
 					<source_model>Justuno\Jumagext\Model\Config\Mylist</source_model>
 				</field>
 
-				<field id="token_key" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="0">
+				<field id='token_key' translate='label' type='text' sortOrder='12' showInDefault='1' showInWebsite='0' showInStore='0'>
 					<label>API Token Key</label>
 					<comment></comment>
 					<display_value></display_value>
 				</field>
 
 
-				<field id="listbutton" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<field id='listbutton' translate='label' sortOrder='20' showInDefault='1' showInWebsite='1' showInStore='1'>
 					<frontend_model>Justuno\Jumagext\Block\System\Config\Form\Button</frontend_model>
 				</field>
 

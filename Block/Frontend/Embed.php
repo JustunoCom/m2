@@ -1,15 +1,11 @@
 <?php
-
 namespace Justuno\Jumagext\Block\Frontend;
-
-use Magento\Framework\View\Element\Template;
 use Justuno\Jumagext\Helper\Data;
-use Magento\Framework\App\Request\Http;
 use Magento\Customer\Model\Session;
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\Registry;
-
-class Embed extends Template
-{
+use Magento\Framework\View\Element\Template;
+class Embed extends Template {
 	/**
 	 * @var Data
 	 */

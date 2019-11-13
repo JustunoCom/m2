@@ -1,9 +1,12 @@
-<?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<?xml version='1.0'?>
+<page
+	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xsi:noNamespaceSchemaLocation='urn:magento:framework:View/Layout/etc/page_configuration.xsd'
+>
 	<body>
-		 <referenceBlock name="head.additional">
-			<block class="Justuno\Jumagext\Block\Frontend\Embed" template="Justuno_Jumagext::embed.phtml"/>
-			<block class="Justuno\Jumagext\Block\Frontend\MagexSync" template="Justuno_Jumagext::magexsync.phtml"/>
+		 <referenceBlock name='head.additional'>
+			<block class='Justuno\Jumagext\Block\Frontend\Embed' template='Justuno_Jumagext::embed.phtml'/>
+			<block class='Justuno\Jumagext\Block\Frontend\MagexSync' template='Justuno_Jumagext::magexsync.phtml'/>
 		</referenceBlock>
 	</body>
 </page>

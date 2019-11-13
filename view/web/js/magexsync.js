@@ -1,7 +1,4 @@
-define(['jquery',], function ($)
-{
-	'use strict';
-
+define(['jquery',], function ($) {'use strict';
 	return function (config, element) {
 		window.omitKeys = function (obj, keys) {
 			var dup = {};
@@ -12,7 +9,6 @@ define(['jquery',], function ($)
 			}
 			return dup;
 		};
-
 		//Frontend API cart interface with preparsed cart item json, noteable 'options' indexing
 		window.justunoDataSync = function () {
 			$.ajax({

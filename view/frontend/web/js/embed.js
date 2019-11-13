@@ -1,10 +1,5 @@
-/* eslint-disable no-console */
-// eslint-disable-next-line no-undef
-/* eslint-disable camelcase */
-// eslint-disable-next-line no-undef
 define([], function () {
 	'use strict';
-	// eslint-disable-next-line no-unused-vars
 	return function (config, element) {
 		window.console.log(config.message);
 		window.asset_host = '//cdn.justuno.com/';
@@ -17,7 +12,6 @@ define([], function () {
 			a.async = 1;
 			a.src = g;
 			m.parentNode.insertBefore(a, m);
-			// eslint-disable-next-line no-undef
 		})(window, document, 'script', asset_host + 'vck.js', 'juapp');
 	};
 });

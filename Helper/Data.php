@@ -1,15 +1,11 @@
 <?php
-
 namespace Justuno\Jumagext\Helper;
-
 use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Store\Model\StoreManagerInterface;
-
-class Data extends AbstractHelper
-{
+class Data extends AbstractHelper {
 
 	protected $storeManager;
 	/**

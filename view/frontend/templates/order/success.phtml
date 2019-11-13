@@ -1,7 +1,7 @@
 <?php
 /**
  * shortcode for cms pages / blocks
- * {{block class="Justuno\Jumagext\Block\Frontend\Success" template="Justuno_Jumagext::success.phtml" }}
+ * {{block class='Justuno\Jumagext\Block\Frontend\Success' template='Justuno_Jumagext::success.phtml' }}
  *
  * @var Justuno\Jumagext\Block\Frontend\Success $block
  *
@@ -11,17 +11,15 @@ $orderId = $block->juGetOrderId();
 $order = $block->juGetOrderById($orderId);
 $currency = $block->getCurrentCurrencyCode();
 ?>
-<script type="text/javascript">
-var cr = <?php echo $currency; ?>;
+<script type='text/javascript'>
+var cr = <?= $currency; ?>;
 console.log(cr);
-window.ju_order_id = <?php echo $orderId ?>;
+window.ju_order_id = <?= $orderId ?>;
 window.ju_order_obj = {
-	total: <?php echo $order->getBaseSubtotal() ?>,
-	subtotal: <?php echo $order->getBaseGrandTotal() ?>,
-	tax: <?php echo $order->getTaxAmount() ?>,
-	shipping: <?php echo $order->getShippingAmount() ?>,
-	currency: <?php echo $currency; ?>
+	total: <?= $order->getBaseSubtotal() ?>,
+	subtotal: <?= $order->getBaseGrandTotal() ?>,
+	tax: <?= $order->getTaxAmount() ?>,
+	shipping: <?= $order->getShippingAmount() ?>,
+	currency: <?= $currency; ?>
 };
-
 </script>
-<?php //echo $currency; ?>

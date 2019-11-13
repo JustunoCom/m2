@@ -1,5 +1,4 @@
-define([], function () {
-	'use strict';
+define([], function () {'use strict';
 	return function (config, element) {
 		window.console.log(config.message +' fssdfdsf');
 		window.asset_host = '//cdn.justuno.com/';

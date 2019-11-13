@@ -1,10 +1,5 @@
-/* eslint-disable quotes */
-/* eslint-disable no-console */
-// eslint-disable-next-line no-undef
-define([], function ()
-{
+define([], function () {
 	'use strict';
-	// eslint-disable-next-line no-unused-vars
 	return function (config, element) {
 		window.omitKeys = function (obj, keys) {
 			var dup = {};
@@ -15,12 +10,9 @@ define([], function ()
 			}
 			return dup;
 		};
-
-		// eslint-disable-next-line no-undef
 		juapp('initFunc',
 			function() {
 				window.justunoDataPush = function() {
-					// eslint-disable-next-line no-undef
 					jju.ajax({
 						url: '/customer/section/load/?sections=cart',
 						type: 'GET',

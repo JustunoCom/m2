@@ -6,40 +6,29 @@
  * @var Justuno\Jumagext\Block\Frontend\Embed $block
  */
 $subject = $block->getValueACCID();
-$juajaxurl = $block->getValueJUAJAX();
 $pattern = "/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/";
-if($block->customerLoggedIn() == false){
-	//echo 'customer is not logged in';
+if ($block->customerLoggedIn() == false) {
 	$customerID = '';
-	//print_r($customerData);
-	//echo $customerID;
 }
-if($block->customerLoggedIn() == true){
-	//echo 'customer is logged in';
+if ($block->customerLoggedIn() == true){
 	$customerID = $block->getCustomerID();
-	//print_r($customerData);
-	//echo $customerID;
 }
-?>
-<?php if(preg_match($pattern, $subject)): ?>
-	<script>
-		window.ju_num='<?php echo $subject ?>';
-	</script>
-	<div data-mage-init='{"embed": {"message": "ju_num loaded (<?php echo $block->escapeHtml(substr($subject, -6)) ?>)"}}'></div>
-<?php else: ?>
-	<script>
-		console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');
-	</script>
-<?php endif; ?>
-<?php if($block->getFullActionName() == 'catalog_product_view'): ?>
+if (preg_match($pattern, $subject)) { ?>
+	<script>window.ju_num='<?= $subject ?>';</script>
+	<div
+		data-mage-init='{"embed": {"message": "ju_num loaded (<?= $block->escapeHtml(substr($subject, -6)) ?>)"}}'></div>
+<?php } else { ?>
+	<script>console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');</script>
+<?php }
+if ($block->getFullActionName() == 'catalog_product_view') { ?>
 	<script>
 		setTimeout(function(){
 			window.ju_MageProductView = {
-				PageID: '<?php echo $block->getFullActionName() ?>',
-				ProductID: '<?php echo $block->getCurrentProductID(); ?>',
-				CustomerID: '<?php echo $customerID ?>',
+				PageID: '<?= $block->getFullActionName() ?>',
+				ProductID: '<?= $block->getCurrentProductID(); ?>',
+				CustomerID: '<?= $customerID ?>',
 				StockQty: ''
 			};
 		},50);
 	</script>
-<?php endif; ?>
+<?php } ?>

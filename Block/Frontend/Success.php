@@ -1,13 +1,9 @@
 <?php
-
 namespace Justuno\Jumagext\Block\Frontend;
-
-use Magento\Framework\View\Element\Template;
 use Magento\Checkout\Model\Session;
+use Magento\Framework\View\Element\Template;
 use Magento\Sales\Api\OrderRepositoryInterface;
-
-class Success extends Template
-{
+class Success extends Template {
 
 	/**
 	 * @var OrderRepositoryInterface
