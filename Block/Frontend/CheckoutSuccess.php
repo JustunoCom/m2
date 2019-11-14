@@ -3,7 +3,7 @@ namespace Justuno\M2\Block\Frontend;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Api\OrderRepositoryInterface;
-class Success extends Template {
+class CheckoutSuccess extends Template {
 
 	/**
 	 * @var OrderRepositoryInterface
@@ -28,7 +28,6 @@ class Success extends Template {
 
 
 	/**
-	 * MagexSync constructor.
 	 * @param OrderRepositoryInterface   $orderRepository
 	 * @param Session   $checkoutSession
 	 * @param Template\Context $context

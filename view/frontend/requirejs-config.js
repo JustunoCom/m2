@@ -1,1 +1,0 @@
-var config = {'map': {'*': {'embed': 'Justuno_Jumagext/js/embed', 'magexsync': 'Justuno_Jumagext/js/magexsync'}}};

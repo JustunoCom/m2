@@ -5,8 +5,7 @@
 >
 	<body>
 		 <referenceBlock name='head.additional'>
-			<block class='Magento\Framework\View\Element\Template' template='Justuno_Jumagext::embed.phtml'/>
-			<block class='Justuno\M2\Block\Frontend\MagexSync' template='Justuno_Jumagext::magexsync.phtml'/>
+			<block class='Magento\Framework\View\Element\Template' template='Justuno_Jumagext::common.phtml'/>
 		</referenceBlock>
 	</body>
 </page>
