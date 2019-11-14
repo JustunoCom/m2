@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Block\Frontend;
+namespace Justuno\M2\Block\Frontend;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Api\OrderRepositoryInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Setup;
+namespace Justuno\M2\Setup;
 use Magento\Authorization\Model\Acl\Role\Group as RoleGroup;
 use Magento\Authorization\Model\ResourceModel\Role\Collection;
 use Magento\Authorization\Model\Role;

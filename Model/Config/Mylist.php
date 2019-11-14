@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Model\Config;
+namespace Justuno\M2\Model\Config;
 class Mylist implements \Magento\Framework\Option\ArrayInterface {
 	/**
 	 * {@inheritdoc}

@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Block\Frontend;
+namespace Justuno\M2\Block\Frontend;
 use Magento\Checkout\Model\Cart;
 use Magento\Framework\View\Element\Template;
 class MagexSync extends Template {

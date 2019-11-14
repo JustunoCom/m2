@@ -1,13 +1,15 @@
-<?php
-// 2019-11-13 {{block class="Magento\Framework\View\Element\Template" template="Justuno_Jumagext::embed.phtml"}}
-/** @var \Magento\Framework\View\Element\Template $block */
-$merchantId = df_cfg('justuno_settings/options_interface/accid'); /** @var string $merchantId */
-if (preg_match("/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/", $merchantId)) { ?>
-	<script>window.ju_num='<?= $merchantId ?>';</script>
-	<?= df_widget('embed', '', ['message' => "ju_num loaded ({$block->escapeHtml(substr($merchantId, -6))})"]) ?>
+<?php /** @var \Magento\Framework\View\Element\Template $block */
+$id = df_cfg('justuno_settings/options_interface/accid'); /** @var string $merchantId */
+// 2019-11-14 https://support.justuno.com/install-justuno-general-embed-instructions
+if (!preg_match("/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/", $id)) { ?>
+	<script>window.ju_num='<?= $id ?>';</script>
+	<?= df_tag('div', df_widget('embed', '', ['message' => sprintf(
+		'ju_num loaded (%s)', substr($id, -6
+	))])) ?>
 <?php } else { ?>
 	<script>console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');</script>
 <?php }
+/** 2019-11-14 @used-by view/frontend/web/js/magexsync.js */
 if (df_is_catalog_product_view()) { ?>
 	<script>
 		setTimeout(function(){

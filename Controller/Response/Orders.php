@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Controller\Response;
+namespace Justuno\M2\Controller\Response;
 use Magento\Framework\App\RequestInterface;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\StoreManagerInterface;

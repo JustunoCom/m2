@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\Jumagext\Controller\Response;
+namespace Justuno\M2\Controller\Response;
 use Magento\Catalog\Model\Category;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
