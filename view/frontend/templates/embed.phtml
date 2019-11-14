@@ -23,13 +23,12 @@
 <?php /** 2019-11-14 @used-by view/frontend/web/js/magexsync.js */
 if (df_is_catalog_product_view()) { ?>
 	<script>
-		setTimeout(function(){
-			window.ju_MageProductView = {
-				CustomerID: '<?= !df_customer_logged_in() ? '' : df_customer_session()->getCustomerId() ?>',
-				PageID: '<?= df_action_name() ?>',
-				ProductID: '<?= df_product_current()->getId() ?>',
-				StockQty: ''
-			};
-		},50);
+		setTimeout(function() {
+			<?= df_js_data('ju_MageProductView', [
+				'CustomerID' => !df_customer_logged_in() ? '' : df_customer_session()->getCustomerId()
+				,'PageID' => df_action_name()
+				,'ProductID' => df_product_current()->getId()
+			]) ?>
+		}, 50);
 	</script>
 <?php } ?>
