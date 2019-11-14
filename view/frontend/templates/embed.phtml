@@ -1,32 +1,20 @@
 <?php
-/**
- * shortcode for cms pages / blocks
- * {{block class="Justuno\Jumagext\Block\Frontend\Embed" template="Justuno_Jumagext::embed.phtml" }}
- *
- * @var Justuno\Jumagext\Block\Frontend\Embed $block
- */
-$subject = $block->getValueACCID();
-$pattern = "/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/";
-if ($block->customerLoggedIn() == false) {
-	$customerID = '';
-}
-if ($block->customerLoggedIn() == true){
-	$customerID = $block->getCustomerID();
-}
-if (preg_match($pattern, $subject)) { ?>
-	<script>window.ju_num='<?= $subject ?>';</script>
-	<div
-		data-mage-init='{"embed": {"message": "ju_num loaded (<?= $block->escapeHtml(substr($subject, -6)) ?>)"}}'></div>
+// 2019-11-13 {{block class="Magento\Framework\View\Element\Template" template="Justuno_Jumagext::embed.phtml"}}
+/** @var \Magento\Framework\View\Element\Template $block */
+$merchantId = df_cfg('justuno_settings/options_interface/accid'); /** @var string $merchantId */
+if (preg_match("/^[{]?[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}[}]?$/", $merchantId)) { ?>
+	<script>window.ju_num='<?= $merchantId ?>';</script>
+	<?= df_widget('embed', '', ['message' => "ju_num loaded ({$block->escapeHtml(substr($merchantId, -6))})"]) ?>
 <?php } else { ?>
 	<script>console.log('JU_ERROR: Justuno Account ID (ACCID) Was Not Set Correctly...');</script>
 <?php }
-if ($block->getFullActionName() == 'catalog_product_view') { ?>
+if (df_is_catalog_product_view()) { ?>
 	<script>
 		setTimeout(function(){
 			window.ju_MageProductView = {
-				PageID: '<?= $block->getFullActionName() ?>',
-				ProductID: '<?= $block->getCurrentProductID(); ?>',
-				CustomerID: '<?= $customerID ?>',
+				CustomerID: '<?= !df_customer_logged_in() ? '' : df_customer_session()->getCustomerId() ?>',
+				PageID: '<?= df_action_name() ?>',
+				ProductID: '<?= df_product_current()->getId() ?>',
 				StockQty: ''
 			};
 		},50);
