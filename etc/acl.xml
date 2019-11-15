@@ -6,7 +6,7 @@
 	<acl>
 		<resources>
 			<resource id='Magento_Backend::admin'>
-				<resource id='Justuno_Jumagext::settings' title='Justuno Data Interface'/>
+				<resource id='Justuno_M2::settings' title='Justuno Data Interface'/>
 			</resource>
 		</resources>
 	</acl>

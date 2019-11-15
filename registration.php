@@ -1,6 +1,3 @@
 <?php
-	\Magento\Framework\Component\ComponentRegistrar::register(
-	\Magento\Framework\Component\ComponentRegistrar::MODULE,
-	'Justuno_Jumagext',
-	__DIR__
-);
+use Magento\Framework\Component\ComponentRegistrar as R;
+R::register(R::MODULE, 'Justuno_M2', __DIR__);

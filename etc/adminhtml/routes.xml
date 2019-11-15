@@ -5,7 +5,7 @@
 >
 	<router id='admin'>
 		<route frontName='jumagext' id='jumagext'>
-			<module name='Justuno_Jumagext'/>
+			<module name='Justuno_M2'/>
 		</route>
 	</router>
 </config>

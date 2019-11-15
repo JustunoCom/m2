@@ -20,7 +20,7 @@ class Mylist implements \Magento\Framework\Option\ArrayInterface {
 
 		foreach ($result as $a) {
 			/**
-			 * 2019-10-245 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			 * 2019-10-25 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 			 * "The `manufaturer` attribute is absent in the «Choose Brand Attribute» backend dropdown":
 			 * https://github.com/justuno-com/m2/issues/3
 			 */

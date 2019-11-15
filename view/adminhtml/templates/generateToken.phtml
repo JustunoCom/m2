@@ -1,12 +1,13 @@
+<?php xdebug_break() ?>
 <div class='pp-buttons-container'>
-	<button id='<?= $block->getId() ?>' onclick='return generateToken();'>
-		<span><span><span><?= $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+	<button id='justuno_token_button' onclick='return generateToken();'>
+		<span><span><span>Generate Token</span></span></span>
 	</button>
 </div>
 <script>
 	function generateToken(){
 		var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-		var s   = document.getElementById('justuno_settings_options_interface_token_key');
+		var s = document.getElementById('justuno_settings_options_interface_token_key');
 		s.value = rString;
 		return false;
 	}

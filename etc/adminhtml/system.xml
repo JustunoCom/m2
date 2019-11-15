@@ -10,8 +10,9 @@
 		<section id='justuno_settings' showInDefault='1' sortOrder='10'>
 			<label>Account Configuration</label>
 			<tab>justuno</tab>
-			<resource>Justuno_Jumagext::settings</resource>
+			<resource>Justuno_M2::settings</resource>
 			<group id='options_interface' showInDefault='1' sortOrder='10'>
+				<frontend_model>Df\Config\Fieldset</frontend_model>
 				<label>Options</label>
 				<field id='accid' showInDefault='1' sortOrder='10' type='text'>
 					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
@@ -35,9 +36,14 @@
 				<field id='token_key' showInDefault='1' showInStore='0' showInWebsite='0' sortOrder='12' type='text'>
 					<label>API Token Key</label>
 				</field>
-				<field id='listbutton' showInDefault='1' showInStore='1' showInWebsite='1' sortOrder='20'>
-					<frontend_model>Justuno\M2\Block\System\Config\Form\Button</frontend_model>
-				</field>
+				<field
+					id='generateToken'
+					showInDefault='1'
+					showInStore='1'
+					showInWebsite='1'
+					sortOrder='20'
+					type='Justuno\M2\Block\GenerateToken'
+				/>
 			</group>
 		</section>
 	</system>
