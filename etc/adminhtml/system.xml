@@ -24,8 +24,8 @@
 					sortOrder='2'
 					type='select'
 				>
-					<label>Choose Brand Attribute</label>
-					<source_model>Justuno\M2\Model\Config\Mylist</source_model>
+					<label>Brand Attribute</label>
+					<source_model>Justuno\M2\Source\Brand</source_model>
 				</field>
 				<field id='token_key' showInDefault='1' showInStore='0' showInWebsite='0' sortOrder='12' type='text'>
 					<label>API Token Key</label>

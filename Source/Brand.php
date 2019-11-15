@@ -1,6 +1,8 @@
 <?php
-namespace Justuno\M2\Model\Config;
-class Mylist implements \Magento\Framework\Option\ArrayInterface {
+namespace Justuno\M2\Source;
+// 2019-11-15
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+class Brand implements \Magento\Framework\Option\ArrayInterface {
 	/**
 	 * {@inheritdoc}
 	 *
