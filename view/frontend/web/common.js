@@ -99,7 +99,7 @@ define([], function () {
 						origOpen.apply(this, arguments);
 					};
 				}
-				if(window.ju_order_obj) {
+				if (window.ju_order_obj) {
 					window.juapp('order', window.ju_order_id, window.ju_order_obj);
 				}
 			}
