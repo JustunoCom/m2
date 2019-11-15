@@ -4,17 +4,15 @@
 	xsi:noNamespaceSchemaLocation='urn:magento:module:Magento_Config:etc/system_file.xsd'
 >
 	<system>
-		<tab id='justuno' sortOrder='999'>
-			<label>Justuno</label>
-		</tab>
-		<section id='justuno_settings' showInDefault='1' sortOrder='10'>
+		<tab id='justuno' sortOrder='999'><label>Justuno</label></tab>
+		<section id='justuno_settings' showInDefault='1' sortOrder='1'>
 			<label>Account Configuration</label>
 			<tab>justuno</tab>
 			<resource>Justuno_M2::settings</resource>
 			<group id='options_interface' showInDefault='1' sortOrder='10'>
 				<frontend_model>Df\Config\Fieldset</frontend_model>
 				<label>Options</label>
-				<field id='accid' showInDefault='1' sortOrder='10' type='text'>
+				<field id='accid' showInDefault='1' sortOrder='1' type='text'>
 					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
 					<comment>ACCID is found in the admin settings of your Justuno account in your embed section (XXXXXXXX-XXXX-XXXX-XXXXXXX)</comment>
 				</field>
@@ -23,7 +21,7 @@
 					showInDefault='1'
 					showInStore='0'
 					showInWebsite='0'
-					sortOrder='11'
+					sortOrder='2'
 					type='select'
 				>
 					<label>Choose Brand Attribute</label>
@@ -37,7 +35,7 @@
 					showInDefault='1'
 					showInStore='1'
 					showInWebsite='1'
-					sortOrder='20'
+					sortOrder='3'
 					type='Justuno\M2\Block\GenerateToken'
 				/>
 			</group>
