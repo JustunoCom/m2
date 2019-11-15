@@ -18,10 +18,6 @@
 					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
 					<comment>ACCID is found in the admin settings of your Justuno account in your embed section (XXXXXXXX-XXXX-XXXX-XXXXXXX)</comment>
 				</field>
-				<field id='juajaxurl' showInDefault='1' sortOrder='12' type='text'>
-					<label>AJAX URL (OPTIONAL if your cart has modded request URLs)</label>
-					<comment>This is any uniquely identifiable URL segment of one which is called upon when an item is being added to the cart via AJAX (e.g. /addToCart, ?ajaxUpdate, etc.)</comment>
-				</field>
 				<field
 					id='brand_attribute'
 					showInDefault='1'
