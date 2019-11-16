@@ -31,7 +31,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 					//console.log('product view logged' + ' - ' + ju_MageProductView.CustomerID);
 				}
 				var options = {};
-				var push = function() {
+				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
 						.then(function(res) {
@@ -61,6 +61,12 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 									,variationid: i['item_id']
 								});
 							});
+							/**
+							 * 2019-11-16
+							 * «This function will essentially replace the current Justuno tracked cart items
+							 * with the array you provide».
+							 * https://support.justuno.com/tracking-visitor-carts-conversions-past-orders
+							 */
 							juapp('cartItems', cartItems);
 						})
 						.fail(function (xhr, status, err) {
@@ -68,21 +74,15 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 							alert('Error - ' + errorMessage);
 						});
 				};
-				push();
+				updateJustunoCart();
 				(function() {
+					// 2019-11-16 https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open#Syntax
 					var _super = XMLHttpRequest.prototype.open;
-					XMLHttpRequest.prototype.open = function() {
-						for (var k in arguments) {
-							try {
-								var a = (typeof (arguments[k]) === 'string' ? arguments[k].toString() : false);
-								if (a && (
-									-1 < a.indexOf('?sections=cart') && -1 < a.indexOf('%2Cmessages')
-									|| -1 < a.indexOf('?sections=cart') && -1 < a.indexOf('update_section_id')
-								)) {
-									this.addEventListener('load', push);
-								}
-							}
-							catch(e) {console.log('justuno couldn\'t add the cart info');}
+					XMLHttpRequest.prototype.open = function(method, url) {
+						if (-1 < url.indexOf('?sections=cart')
+							&& (-1 < url.indexOf('%2Cmessages') || -1 < url.indexOf('update_section_id'))
+						) {
+							this.addEventListener('load', updateJustunoCart);
 						}
 						_super.apply(this, arguments);
 					};
