@@ -1,6 +1,0 @@
-<?xml version='1.0'?>
-<body>
-	<referenceBlock name='head.additional'>
-		<block class='Justuno\M2\Block\Frontend\CheckoutSuccess' template='Justuno_M2::checkoutSuccess.phtml'/>
-	</referenceBlock>
-</body>
