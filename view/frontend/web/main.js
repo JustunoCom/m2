@@ -34,8 +34,8 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
-						.done(function(r) {
-							var cart = r.cart;
+						.done(function(res) {
+							var cart = res.cart;
 							Object.values(cart.items).forEach(function(i) {
 								i.options = i.options.map(function(o) {
 									var r = {};
@@ -46,10 +46,10 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 							for (var i = 0; i < Object.values(cart.items).length; i++) {
 								options[cart.items[i].item_id] = cart.items[i].options;
 							}
-							var cartItems = [];
+							var r = [];
 							cart.items.forEach(function(i) {
 								var o = options[i.item_id];
-								cartItems.push({
+								r.push({
 									color: _.get(o, 'Color.value', _.get(o, 'color.value', null))
 									,name: i['product_name']
 									,price: i['product_price_value']
@@ -66,7 +66,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 							 * with the array you provide».
 							 * https://support.justuno.com/tracking-visitor-carts-conversions-past-orders
 							 */
-							juapp('cartItems', cartItems);
+							juapp('cartItems', r);
 						})
 						.fail(function (xhr, status, err) {
 							var errorMessage = xhr.status + ': ' + status + '...' + err;
