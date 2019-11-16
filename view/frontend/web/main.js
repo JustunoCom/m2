@@ -1,5 +1,5 @@
 // 2019-11-15
-define(['df-lodash', 'jquery'], function(_, $) {return (
+define(['df-lodash', 'jquery', 'Magento_Customer/js/customer-data'], function(_, $, customer) {return (
 	/**
 	 * @param {Object} cfg
 	 * @param {String} cfg.merchantId
@@ -21,13 +21,15 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 			if (cfg.order) {
 				juapp('order', cfg.orderId, cfg.order);
 			}
-			else {
+			else require(['Magento_Customer/js/customer-data'], function(cd) {
+				debugger;
 				if (cfg.productId) {
 					juapp('local', 'pageType', cfg.action);
 					juapp('local', 'prodId', cfg.productId);
 					//juapp('local', 'custId', ju_MageProductView.CustomerID);
 					//console.log('product view logged' + ' - ' + ju_MageProductView.CustomerID);
 				}
+				var cart = cd.get('cart');
 				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
@@ -69,7 +71,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 						_super.apply(this, arguments);
 					};
 				})();
-			}
+			});
 		});
 		require(['//cdn.justuno.com/vck.js'], function() {});
 	});
