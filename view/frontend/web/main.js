@@ -35,19 +35,19 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
 						.done(function(res) {
-							var cart = res.cart;
-							Object.values(cart.items).forEach(function(i) {
+							var items = res.cart.items;
+							Object.values(items).forEach(function(i) {
 								i.options = i.options.map(function(o) {
 									var r = {};
 									r[o.label] = JSON.parse(JSON.stringify(_.omit(o, 'label')));
 									return JSON.stringify(r);
 								});
 							});
-							for (var i = 0; i < Object.values(cart.items).length; i++) {
-								options[cart.items[i].item_id] = cart.items[i].options;
+							for (var i = 0; i < Object.values(items).length; i++) {
+								options[items[i].item_id] = items[i].options;
 							}
 							var r = [];
-							cart.items.forEach(function(i) {
+							items.forEach(function(i) {
 								var o = options[i.item_id];
 								r.push({
 									color: _.get(o, 'Color.value', _.get(o, 'color.value', null))
