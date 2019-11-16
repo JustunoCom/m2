@@ -30,6 +30,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 					//juapp('local', 'custId', ju_MageProductView.CustomerID);
 					//console.log('product view logged' + ' - ' + ju_MageProductView.CustomerID);
 				}
+				var options = {};
 				var push = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
@@ -52,29 +53,26 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 									})
 								);
 							});
-							if ('undefined' === typeof window.ju_MageCartOptInterface){
-								window.ju_MageCartOptInterface = {};
-							}
 							for (var i = 0; i < Object.values(res.cart.items).length; i++) {
-								window.ju_MageCartOptInterface[res.cart.items[i].item_id] = res.cart.items[i].options;
+								options[res.cart.items[i].item_id] = res.cart.items[i].options;
 							}
 						})
 						.done(function() {
-							var ju_cart_obj = [];
-							res.cart.items.forEach(function(item) {
-								var itemId = item.product_id;
-								var itemVariantId = item.item_id;
-								var itemSku = item.product_sku;
-								var itemTitle = item.product_name;
-								var itemPrice = item.product_price_value;
-								var itemQty = item.qty;
-								var itemColor = window.ju_MageCartOptInterface[item.item_id].Color ? window.ju_MageCartOptInterface[item.item_id].Color.value : window.ju_MageCartOptInterface[item.item_id].color ? window.ju_MageCartOptInterface[item.item_id].color.value : null;
-								var itemSize = window.ju_MageCartOptInterface[item.item_id].Size ? window.ju_MageCartOptInterface[item.item_id].Size.value : window.ju_MageCartOptInterface[item.item_id].size ? window.ju_MageCartOptInterface[item.item_id].size.value : null;
-								ju_cart_obj.push({ productid: itemId, variationid: itemVariantId, sku: itemSku, quantity: itemQty, price: itemPrice, name: itemTitle, color: itemColor, size: itemSize });
+							var cartItems = [];
+							res.cart.items.forEach(function(i) {
+								var o = options[i.item_id];
+								cartItems.push({
+									color: _.get(o, 'Color.value', _.get(o, 'color.value', null))
+									,name: i['product_name']
+									,price: i['product_price_value']
+									,productid: i['product_id']
+									,quantity: i['qty']
+									,size: _.get(o, 'Size.value', _.get(o, 'size.value', null))
+									,sku: i['product_sku']
+									,variationid: i['item_id']
+								});
 							});
-							window.ju_sync_code = ju_cart_obj;
-							window.juapp('cartItems', ju_cart_obj);
-							console.log('ju_sync_code generated');
+							juapp('cartItems', cartItems);
 						})
 						.fail(function (xhr, status, err) {
 							var errorMessage = xhr.status + ': ' + status + '...' + err;
