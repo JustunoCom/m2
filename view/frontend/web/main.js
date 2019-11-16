@@ -15,9 +15,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 		window.console.log(`ju_num loaded (${cfg.merchantId})`);
 		(function() {
 			var k = 'juapp';
-			window[k] = window[k] || function() {
-				(window[k].q = window[k].q || []).push(arguments)
-			};
+			window[k] = window[k] || function() {(window[k].q = window[k].q || []).push(arguments)};
 		})();
 		juapp('initFunc', function() {
 			if (cfg.order) {
@@ -30,48 +28,33 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 					//juapp('local', 'custId', ju_MageProductView.CustomerID);
 					//console.log('product view logged' + ' - ' + ju_MageProductView.CustomerID);
 				}
-				var options = {};
 				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
+						.fail(function (xhr, status, err) {alert(`Error - ${xhr.status}: ${status}...${err}`);})
 						.done(function(res) {
-							var items = res.cart.items;
-							Object.values(items).forEach(function(i) {
-								i.options = i.options.map(function(o) {
-									var r = {};
-									r[o.label] = _.omit(o, 'label');
-									return JSON.stringify(r);
-								});
-							});
-							for (var i = 0; i < Object.values(items).length; i++) {
-								options[items[i].item_id] = items[i].options;
-							}
-							var r = [];
-							items.forEach(function(i) {
-								var o = options[i.item_id];
-								r.push({
-									color: _.get(o, 'Color.value', _.get(o, 'color.value', null))
-									,name: i['product_name']
-									,price: i['product_price_value']
-									,productid: i['product_id']
-									,quantity: i['qty']
-									,size: _.get(o, 'Size.value', _.get(o, 'size.value', null))
-									,sku: i['product_sku']
-									,variationid: i['item_id']
-								});
-							});
+							var oVal = function(oo, l) {return (
+								_.find(oo, function(o) {return l === o['label'].toLowerCase()}) || {}
+							).value || null;};
 							/**
 							 * 2019-11-16
 							 * «This function will essentially replace the current Justuno tracked cart items
 							 * with the array you provide».
 							 * https://support.justuno.com/tracking-visitor-carts-conversions-past-orders
 							 */
-							juapp('cartItems', r);
+							juapp('cartItems', _.map(res.cart.items, function(i) {return {
+								color: oVal(i.options, 'color')
+								,name: i['product_name']
+								,price: i['product_price_value']
+								,productid: i['product_id']
+								,quantity: i['qty']
+								,size: oVal(i.options, 'size')
+								,sku: i['product_sku']
+								,variationid: i['item_id']
+							};}));
 						})
-						.fail(function (xhr, status, err) {
-							var errorMessage = xhr.status + ': ' + status + '...' + err;
-							alert('Error - ' + errorMessage);
-						});
+					;
+
 				};
 				updateJustunoCart();
 				(function() {
