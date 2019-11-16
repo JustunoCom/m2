@@ -44,14 +44,12 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 								}
 								return dup;
 							};
-							Object.values(res.cart.items).forEach(function(item) {
-								return (item.options =
-									item.options.map(function (obj) {
-										var rObj = {};
-										rObj[obj.label] = JSON.parse(JSON.stringify(omitKeys(obj, ['label'])));
-										return JSON.stringify(rObj);
-									})
-								);
+							Object.values(res.cart.items).forEach(function(i) {
+								i.options = i.options.map(function(o) {
+									var r = {};
+									r[o.label] = JSON.parse(JSON.stringify(omitKeys(o, ['label'])));
+									return JSON.stringify(r);
+								});
 							});
 							for (var i = 0; i < Object.values(res.cart.items).length; i++) {
 								options[res.cart.items[i].item_id] = res.cart.items[i].options;
