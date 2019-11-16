@@ -34,19 +34,20 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
-						.done(function(res) {
-							Object.values(res.cart.items).forEach(function(i) {
+						.done(function(r) {
+							var cart = r.cart;
+							Object.values(cart.items).forEach(function(i) {
 								i.options = i.options.map(function(o) {
 									var r = {};
 									r[o.label] = JSON.parse(JSON.stringify(_.omit(o, 'label')));
 									return JSON.stringify(r);
 								});
 							});
-							for (var i = 0; i < Object.values(res.cart.items).length; i++) {
-								options[res.cart.items[i].item_id] = res.cart.items[i].options;
+							for (var i = 0; i < Object.values(cart.items).length; i++) {
+								options[cart.items[i].item_id] = cart.items[i].options;
 							}
 							var cartItems = [];
-							res.cart.items.forEach(function(i) {
+							cart.items.forEach(function(i) {
 								var o = options[i.item_id];
 								cartItems.push({
 									color: _.get(o, 'Color.value', _.get(o, 'color.value', null))
