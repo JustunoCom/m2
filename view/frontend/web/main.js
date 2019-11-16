@@ -39,7 +39,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 							Object.values(items).forEach(function(i) {
 								i.options = i.options.map(function(o) {
 									var r = {};
-									r[o.label] = JSON.parse(JSON.stringify(_.omit(o, 'label')));
+									r[o.label] = _.omit(o, 'label');
 									return JSON.stringify(r);
 								});
 							});
