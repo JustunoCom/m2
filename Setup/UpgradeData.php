@@ -6,6 +6,7 @@ use Magento\Authorization\Model\Rules;
 use Magento\Authorization\Model\UserContextInterface as C;
 use Magento\User\Model\User as U;
 // 2019-11-15
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class UpgradeData extends \Df\Framework\Upgrade\Data {
 	/**
 	 * 2019-11-15
