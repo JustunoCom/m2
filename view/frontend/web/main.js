@@ -34,7 +34,7 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 				var updateJustunoCart = function() {
 					$
 						.ajax({dataType: 'json', type: 'GET', url: '/customer/section/load/?sections=cart'})
-						.then(function(res) {
+						.done(function(res) {
 							Object.values(res.cart.items).forEach(function(i) {
 								i.options = i.options.map(function(o) {
 									var r = {};
@@ -45,8 +45,6 @@ define(['df-lodash', 'jquery'], function(_, $) {return (
 							for (var i = 0; i < Object.values(res.cart.items).length; i++) {
 								options[res.cart.items[i].item_id] = res.cart.items[i].options;
 							}
-						})
-						.done(function() {
 							var cartItems = [];
 							res.cart.items.forEach(function(i) {
 								var o = options[i.item_id];
