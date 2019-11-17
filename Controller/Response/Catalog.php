@@ -3,6 +3,7 @@ namespace Justuno\M2\Controller\Response;
 use Df\Framework\W\Result\Json;
 use Magento\Catalog\Model\Category;
 use Magento\Framework\App\Action\Action as _P;
+use Magento\Review\Model\ResourceModel\Review\Collection as RC;
 // 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
@@ -25,127 +26,104 @@ class Catalog extends _P {
 			}
 			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
-			$ch = curl_init($apiURL);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post = json_encode([
-				'password' => 'hello@123', 'username' => 'justunouser'
-			]));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, [
-				'Content-Type: application/json', 'Content-Length: ' . strlen($post)]
-			);
-			if (!($token = json_decode(curl_exec($ch)))) {
-				df_error("Unable to be authenticated as `justunouser`");
-			}
 			$ch = curl_init("{$storeUrl}index.php/rest/V1/products?$queryUrl");
-			curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token", 'Content-Type: application/json']);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer {$this->token()}", 'Content-Type: application/json']);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 			$cdata = curl_exec($ch);
-			$results = json_decode($cdata);
-			$formattedJson  = $categoryData = $special_price = $prod_url = array();
-			if ($results->search_criteria->current_page != true) {
+			$res = df_json_decode($cdata);
+			$formattedJson  = $categoryData = $special_price = $prod_url = [];
+			if ($m = dfa($res, 'message')) {
+				df_error($m);
+			}
+			$sc = dfa($res, 'search_criteria', []); /** @var array(string => mixed) $sc */
+			if (!($currentPage = (int)dfa($sc, 'current_page'))) {  /** @var int $currentPage */
 				df_error('Page not found');
 			}
-			if (!empty($results && isset($results->total_count)) ) {
-				if ($results->total_count < ($results->search_criteria->page_size * ($results->search_criteria->current_page - 1) ) ) {
-					$response = array(
-						'response' => NULL,
-						'message'  => 'No data found'
-					);
-					echo json_encode( $response ); exit('');
-				}
-				$totalProducts = $results->total_count;
-				foreach($results->items as $result) {
-					if(!empty ($result->custom_attributes ) ){
-						$special_price = $brandName = NULL;
-						foreach($result->custom_attributes as $data) {
-							if($data->attribute_code == 'url_key') {
-								$url = $data->value;
-							}
-							if($data->attribute_code == 'special_price'){
-								$special_price = (int)$data->value;
-							}
-							if($data->attribute_code == 'country_of_manufacture'){
-								$brandName = $data->value;
-							}
-						}
-					}
-					$rating = df_o("Magento\Review\Model\ResourceModel\Review\CollectionFactory");
-					$collection = $rating->create()
-						->addStatusFilter(
-							\Magento\Review\Model\Review::STATUS_APPROVED
-						)->addEntityFilter(
-							'product',
-							$result->id
-						)->setDateOrder();
-					if($collection->getSize() ){
-						$reviewCount = $collection->getSize();
-					} else {
-						$reviewCount = NULL;
-					}
-					$gallery_count = count($result->media_gallery_entries);
-					if($gallery_count > 0 ){
-						for($k = 0; $k <= $gallery_count; $k++) {
-							if(isset($result->media_gallery_entries[$k]->file) ) {
-								$imgkey = $k+1;
-								$image['ImageUrl'. $imgkey] = $mediaUrl . 'catalog/product' . $result->media_gallery_entries[$k]->file;
-							}
-						}
-					}
-					$catDetails = array();
-					if(!empty($result->extension_attributes->category_links) ){
-						foreach($result->extension_attributes->category_links as $catlink) {
-							$catData = df_category($catlink->category_id); /** @var Category $catData */
-							if(!empty($catData->getImage())) {
-								$catimg = $mediaUrl . 'catalog/category/' .$catData->getImage();
-							}
-							$categId = $catData->getId();
-							$catDetails['ID']       = "$categId";
-							$catDetails['Name']     = $catData->getName();
-							$catDetails['Description'] = strip_tags($catData->getDescription());
-							$catDetails['Keyword']  = $catData->getMetaKeywords();
-							$catDetails['URL']      =  $catData->getUrl();
-							$catDetails['ImageURL'] = $catimg;
-							$categoryData[] = $catDetails;
-						}
-						unset($catData);
-					}
-					$Catarray = array_map('array_filter', $categoryData);
-					$categoryData = array_filter($Catarray);
-					$formattedJson[] = array_merge( array(
-						'ID'        => $result->sku,
-						'MSRP'      => $special_price,
-						'Price'     => $result->price,
-						'SalePrice' => $result->price,
-						'Title'     => $result->name,
-						'URL'         => $storeUrl.$url,
-						'CreatedAt'   => $result->created_at,
-						'UpdatedAt'   => $result->updated_at,
-						'ReviewsCount' => $reviewCount,
-						'ReviewsRatingSum' => '',
-						'Categories'  => $categoryData,
-						'BrandId'     => df_cfg('justuno_settings/options_interface/brand_attribute'),
-						'BrandName'   => $brandName,
-						'TotalRecords' => "$totalProducts"
-					), $image);
-					unset($special_price);
-					unset($catDetails);
-					unset($categoryData);
-				}
-				$array = array_map('array_filter', $formattedJson);
-				$finalData = array_filter($array);
-
-				echo json_encode( $finalData,  JSON_PRETTY_PRINT);
-				exit();
-			} else {
-				$response = array(
-					'response' => NULL,
-					'message'  => 'No data found'
-				);
-				echo json_encode( $response ); exit('');
+			if (!($totalProducts = (int)dfa($res, 'total_count'))) { /** @var int $totalProducts */
+				df_error('No data found');
 			}
+			$pageSize = (int)dfa($sc, 'page_size'); /** @var int $pageSize */
+			if ($totalProducts < $pageSize * ($currentPage - 1)) {
+				df_error('No data found');
+			}
+			foreach (dfa($res, 'items') as $item) {
+				if ($caA = dfa($item, 'custom_attributes')) {
+					$special_price = $brandName = null;
+					foreach ($caA as $ca) {
+						$c = dfa($ca, 'attribute_code'); /** @var string $c */
+						if ('url_key' === $c) {
+							$url = $ca->value;
+						}
+						elseif ('special_price' === $c) {
+							$special_price = (int)$ca->value;
+						}
+						elseif ('country_of_manufacture' === $c) {
+							$brandName = $ca->value;
+						}
+					}
+				}
+				$rc = df_new_om(RC::class); /** @var RC $rc */
+				$rc->addStatusFilter(\Magento\Review\Model\Review::STATUS_APPROVED);
+				$rc->addEntityFilter('product', dfa($item, 'id'));
+				$rc->setDateOrder();
+				$mge = dfa($item, 'media_gallery_entries');
+				$gallery_count = count($mge);
+				if ($gallery_count > 0) {
+					for ($k = 0; $k <= $gallery_count; $k++) {
+						if ($file = dfa_deep($mge, "$k/file")) {
+							$imgkey = $k+1;
+							$image['ImageUrl'. $imgkey] = $mediaUrl . 'catalog/product' . $file;
+						}
+					}
+				}
+				$catDetails = array();
+				if ($links = dfa_deep($item, 'extension_attributes/category_links')) {
+					foreach ($links as $catlink) {
+						$catData = df_category(dfa($catlink, 'category_id')); /** @var Category $catData */
+						if(!empty($catData->getImage())) {
+							$catimg = $mediaUrl . 'catalog/category/' .$catData->getImage();
+						}
+						$categId = $catData->getId();
+						$catDetails['ID']       = "$categId";
+						$catDetails['Name']     = $catData->getName();
+						$catDetails['Description'] = strip_tags($catData->getDescription());
+						$catDetails['Keyword']  = $catData->getMetaKeywords();
+						$catDetails['URL']      =  $catData->getUrl();
+						$catDetails['ImageURL'] = $catimg;
+						$categoryData[] = $catDetails;
+					}
+					unset($catData);
+				}
+				$Catarray = array_map('array_filter', $categoryData);
+				$categoryData = array_filter($Catarray);
+				$formattedJson[] = array_merge( array(
+					'ID'        => dfa($item, 'sku'),
+					'MSRP'      => $special_price,
+					'Price'     => dfa($item, 'price'),
+					'SalePrice' => dfa($item, 'price'),
+					'Title'     => dfa($item, 'name'),
+					'URL'         => $storeUrl.$url,
+					'CreatedAt'   => dfa($item, 'created_at'),
+					'UpdatedAt'   => dfa($item, 'updated_at'),
+					'ReviewsCount' => $rc->getSize() ?: null,
+					'ReviewsRatingSum' => '',
+					'Categories'  => $categoryData,
+					'BrandId'     => df_cfg('justuno_settings/options_interface/brand_attribute'),
+					'BrandName'   => $brandName,
+					'TotalRecords' => "$totalProducts"
+				), $image);
+				unset($special_price);
+				unset($catDetails);
+				unset($categoryData);
+			}
+			$array = array_map('array_filter', $formattedJson);
+			$finalData = array_filter($array);
+
+			echo json_encode( $finalData,  JSON_PRETTY_PRINT);
+			exit();
 		}
 		catch (\Exception $e) {
 			$r = ['message' => $e->getMessage(), 'response' => null];
@@ -173,5 +151,27 @@ class Catalog extends _P {
 			}
 		}
 		return implode( '&', $query_array );
+	}
+
+	/**
+	 * 2019-11-18
+	 * @return string
+	 */
+	private function token() {
+		$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
+		$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
+		$ch = curl_init($apiURL);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post = json_encode([
+			'password' => 'hello@123', 'username' => 'justunouser'
+		]));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		if (!($r = json_decode(curl_exec($ch)))) {  /** @var string $r */
+			df_error("Unable to be authenticated as `justunouser`");
+		}
+		return $r;
 	}
 }
