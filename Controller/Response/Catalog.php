@@ -84,16 +84,15 @@ class Catalog extends _P {
 				if ($links = dfa_deep($item, 'extension_attributes/category_links')) {
 					foreach ($links as $catlink) {
 						$catData = df_category(dfa($catlink, 'category_id')); /** @var Category $catData */
-						if(!empty($catData->getImage())) {
-							$catimg = $mediaUrl . 'catalog/category/' .$catData->getImage();
-						}
 						$categId = $catData->getId();
 						$catDetails['ID']       = "$categId";
 						$catDetails['Name']     = $catData->getName();
 						$catDetails['Description'] = strip_tags($catData->getDescription());
 						$catDetails['Keyword']  = $catData->getMetaKeywords();
 						$catDetails['URL']      =  $catData->getUrl();
-						$catDetails['ImageURL'] = $catimg;
+						$catDetails['ImageURL'] =
+							!($img = $catData->getImage()) ? null : "{$mediaUrl}catalog/category/$img"
+						;
 						$categoryData[] = $catDetails;
 					}
 					unset($catData);
