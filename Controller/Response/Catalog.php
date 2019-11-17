@@ -9,12 +9,10 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Magento\Framework\App\RequestInterface $request,
 		\Magento\Review\Model\ReviewFactory $reviewFactory,
-		\Magento\Review\Model\RatingFactory $ratingFactory,
 		\Magento\Eav\Model\Config $eavConfig,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
 		$this->_pageFactory     = $pageFactory;
-		$this->_ratingFactory   = $ratingFactory;
 		$this->_reviewFactory   = $reviewFactory;
 		$this->_storeManager    = $storeManager;
 		$this->eavConfig        = $eavConfig;
@@ -193,7 +191,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 	}
 
 	private $_pageFactory;
-	private $_ratingFactory;
 	private $_reviewFactory;
 	private $eavConfig;
 	private $request;
