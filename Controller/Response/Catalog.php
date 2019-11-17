@@ -27,22 +27,20 @@ class Catalog extends _P {
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
-			$data = array("username" => "justunouser", "password" => "hello@123");
-			$data_string = json_encode($data);
 			$ch = curl_init($apiURL);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post = json_encode([
+				'password' => 'hello@123', 'username' => 'justunouser'
+			]));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json","Content-Length: ".strlen($data_string)));
-			$token_result = curl_exec($ch);
-			$token = json_decode($token_result);
-			$headers = array("Authorization: Bearer ".$token, "Content-Type: application/json");
-			$requestUrl= $storeUrl . 'index.php/rest/V1/products?'.$queryUrl;
-			$ch = curl_init($requestUrl);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Content-Length: ' . strlen($post)]);
+			$token = json_decode(curl_exec($ch));
+			$headers = ["Authorization: Bearer $token", 'Content-Type: application/json'];
+			$ch = curl_init("{$storeUrl}index.php/rest/V1/products?$queryUrl");
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$cdata      = curl_exec($ch);
-			$results    = json_decode($cdata);
+			$cdata = curl_exec($ch);
+			$results = json_decode($cdata);
 			$formattedJson  = $categoryData = $special_price = $prod_url = array();
 			 if( $results->search_criteria->current_page != TRUE ){
 				$response = array(
