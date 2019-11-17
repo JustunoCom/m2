@@ -1,19 +1,18 @@
 <?php
 namespace Justuno\M2\Controller\Response;
+use Magento\Catalog\Model\Category;
 // 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends \Magento\Framework\App\Action\Action {
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
-		\Magento\Catalog\Model\Category $category,
 		\Magento\Framework\App\RequestInterface $request,
 		\Magento\Review\Model\ReviewFactory $reviewFactory,
 		\Magento\Review\Model\RatingFactory $ratingFactory,
 		\Magento\Eav\Model\Config $eavConfig,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
-		$this->_category        = $category;
 		$this->_pageFactory     = $pageFactory;
 		$this->_ratingFactory   = $ratingFactory;
 		$this->_reviewFactory   = $reviewFactory;
@@ -118,9 +117,8 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 					}
 					$catDetails = array();
 					if(!empty($result->extension_attributes->category_links) ){
-						foreach($result->extension_attributes->category_links as $catlink){
-							$catData = $this->_category->load($catlink->category_id);
-
+						foreach($result->extension_attributes->category_links as $catlink) {
+							$catData = df_category($catlink->category_id); /** @var Category $catData */
 							if(!empty($catData->getImage())) {
 								$catimg = $mediaUrl . 'catalog/category/' .$catData->getImage();
 							}
