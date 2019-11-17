@@ -42,14 +42,10 @@ class Catalog extends _P {
 			$cdata = curl_exec($ch);
 			$results = json_decode($cdata);
 			$formattedJson  = $categoryData = $special_price = $prod_url = array();
-			 if( $results->search_criteria->current_page != TRUE ){
-				$response = array(
-					'response' => FALSE,
-					'message'  => 'Page not found'
-				);
-				echo json_encode( $response ); exit('');
+			if ($results->search_criteria->current_page != true) {
+				df_error('Page not found');
 			}
-			if( !empty($results && isset($results->total_count)) ) {
+			if (!empty($results && isset($results->total_count)) ) {
 				if ($results->total_count < ($results->search_criteria->page_size * ($results->search_criteria->current_page - 1) ) ) {
 					$response = array(
 						'response' => NULL,
