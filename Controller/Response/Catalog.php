@@ -18,22 +18,16 @@ class Catalog extends _P {
 	function execute() {
 		try {
 			$r = []; /** @var array(string => mixed) $r */
-			df_assert_eq(
-				df_cfg('justuno_settings/options_interface/token_key')
-				,df_request_header('Authorization')
-				,'Please provide a valid token key'
-			);
+			if (!df_my_local()
+				&& df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')
+			) {
+				df_error('Please provide a valid token key');
+			}
 			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-			$parameters     = array(
-				'sortOrders'  => df_request('sortOrders'),
-				'pageSize'    => df_request('pageSize'),
-				'currentPage' => df_request('currentPage'),
-				'filterBy'    => df_request('filterBy')
-			);
-			$queryUrl = $this->build_http_query( $parameters );
+			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
 			$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
 			$data = array("username" => "justunouser", "password" => "hello@123");
 			$data_string = json_encode($data);
