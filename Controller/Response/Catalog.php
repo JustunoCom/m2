@@ -8,12 +8,10 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Magento\Framework\App\RequestInterface $request,
-		\Magento\Eav\Model\Config $eavConfig,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
 		$this->_pageFactory = $pageFactory;
 		$this->_storeManager = $storeManager;
-		$this->eavConfig = $eavConfig;
 		$this->request = $request;
 		return parent::__construct($context);
 	}
@@ -189,6 +187,5 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 	}
 
 	private $_pageFactory;
-	private $eavConfig;
 	private $request;
 }
