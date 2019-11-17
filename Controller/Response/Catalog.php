@@ -1,13 +1,8 @@
 <?php
 namespace Justuno\M2\Controller\Response;
 // 2019-11-17
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends \Magento\Framework\App\Action\Action {
-	protected $eavConfig;
-	protected $_pageFactory;
-	protected $_reviewFactory;
-	protected $_ratingFactory;
-	protected $request;
-
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -18,63 +13,33 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		\Magento\Eav\Model\Config $eavConfig,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
-		$this->_pageFactory     = $pageFactory;
-		$this->_storeManager    = $storeManager;
 		$this->_category        = $category;
-		$this->request          = $request;
-		$this->_reviewFactory   = $reviewFactory;
+		$this->_pageFactory     = $pageFactory;
 		$this->_ratingFactory   = $ratingFactory;
+		$this->_reviewFactory   = $reviewFactory;
+		$this->_storeManager    = $storeManager;
 		$this->eavConfig        = $eavConfig;
-
+		$this->request          = $request;
 		return parent::__construct($context);
 	}
 
-	// http://justuno.urtestsite.com/index.php/rest/V1/products?sortOrders=created_at&pageSize=10&currentPage=1
-
-	/**generate query parameters */
-	function build_http_query( $query ){
-		$query_array = array();
-		foreach( $query as $key => $key_value ){
-			if($key_value == ''){continue;}
-			if( $key == 'sortOrders' ) {
-				$query_array[]  = "searchCriteria[$key][0][field]=".urlencode( $key_value );
-			} else if($key == "filterBy"){
-				$todate =  urlencode( $key_value );
-				$query_array[] = "searchCriteria[filter_groups][0][filters][0][field]=updated_at&searchCriteria[filter_groups][0][filters][0][value]=$todate&searchCriteria[filter_groups][0][filters][0][condition_type]=gteq";
-			} else {
-				$query_array[] = "searchCriteria[$key]=" .urlencode( $key_value );
-			}
-		}
-		return implode( '&', $query_array );
-	}
-
-
-	function execute()
-	{
+	/**
+	 * 2019-11-17
+	 * @return bool|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+	 * @throws \Magento\Framework\Exception\NoSuchEntityException
+	 */
+	function execute() {
 		ini_set("display_errors", 1);
 		$storeUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 		$mediaUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 		$apiURL     = $storeUrl . "index.php/rest/V1/integration/admin/token";
-
 		header('Content-Type: application/json');
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		foreach (getallheaders() as $name => $value) {
-			if($name == "Authorization") {
-				$token = $value; break;
-			} else {
-				$token = false;
-			}
-		}
-		if ($token == null || $token == '') {
-			$response = array (
-				'response' => NULL,
-				'message'  => 'Authorization Failed'
-			);
+		if (!($token = df_request_header('Authorization'))) { /** @var string|false $token */
+			$response = array ('response' => NULL, 'message'  => 'Authorization Failed');
 			echo json_encode($response);
 			return false;
 		}
-
-
 		$parameters     = array(
 			'sortOrders'  => $this->request->getParam('sortOrders'),
 			'pageSize'    => $this->request->getParam('pageSize'),
@@ -83,8 +48,8 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		);
 		$queryUrl = $this->build_http_query( $parameters );
 		$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
-		$apitoken = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/token_key','stores');
-		if ($token == $apitoken) { // valid token
+		$apitoken = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/token_key', 'stores');
+		if ($token == $apitoken) {
 			$data = array("username" => "justunouser", "password" => "hello@123");
 			$data_string = json_encode($data);
 			$ch = curl_init($apiURL);
@@ -208,7 +173,8 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 				);
 				echo json_encode( $response ); exit('');
 			}
-		} else {
+		}
+		else {
 			$response = array(
 				'response' => NULL,
 				'message'  => 'Please provide a valid token key'
@@ -216,4 +182,32 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 			echo json_encode($response);
 		}
 	}
+
+	/**
+	 * 2019-11-17
+	 * @used-by execute()
+	 * @param array(string => mixed) $query
+	 * @return string
+	 */
+	private function build_http_query($query) {
+		$query_array = array();
+		foreach ($query as $key => $key_value) {
+			if($key_value == ''){continue;}
+			if( $key == 'sortOrders' ) {
+				$query_array[]  = "searchCriteria[$key][0][field]=".urlencode( $key_value );
+			} else if($key == "filterBy"){
+				$todate =  urlencode( $key_value );
+				$query_array[] = "searchCriteria[filter_groups][0][filters][0][field]=updated_at&searchCriteria[filter_groups][0][filters][0][value]=$todate&searchCriteria[filter_groups][0][filters][0][condition_type]=gteq";
+			} else {
+				$query_array[] = "searchCriteria[$key]=" .urlencode( $key_value );
+			}
+		}
+		return implode( '&', $query_array );
+	}
+
+	private $_pageFactory;
+	private $_ratingFactory;
+	private $_reviewFactory;
+	private $eavConfig;
+	private $request;
 }
