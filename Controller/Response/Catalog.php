@@ -6,10 +6,9 @@ use Magento\Catalog\Model\Category;
 class Catalog extends \Magento\Framework\App\Action\Action {
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
-		\Magento\Framework\App\RequestInterface $request,
-		\Magento\Framework\View\Result\PageFactory $pageFactory)
+		\Magento\Framework\App\RequestInterface $request
+	)
 	{
-		$this->_pageFactory = $pageFactory;
 		$this->request = $request;
 		return parent::__construct($context);
 	}
@@ -184,6 +183,5 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		return implode( '&', $query_array );
 	}
 
-	private $_pageFactory;
 	private $request;
 }
