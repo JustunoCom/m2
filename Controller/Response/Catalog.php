@@ -1,20 +1,28 @@
 <?php
 namespace Justuno\M2\Controller\Response;
+use Df\Framework\W\Result\Json;
 use Magento\Catalog\Model\Category;
+use Magento\Framework\App\Action\Action as _P;
 // 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
-class Catalog extends \Magento\Framework\App\Action\Action {
+class Catalog extends _P {
 	/**
 	 * 2019-11-17
-	 * @return bool|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
-	 * @throws \Magento\Framework\Exception\NoSuchEntityException
+	 * @override
+	 * @see _P::execute()
+	 * @used-by \Magento\Framework\App\Action\Action::dispatch():
+	 * 		$result = $this->execute();
+	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
+	 * @return Json
 	 */
 	function execute() {
-		header('Content-Type: application/json');
-		if (df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')) {
-			echo json_encode(['message'  => 'Please provide a valid token key', 'response' => null]);
-		}
-		else {
+		try {
+			$r = []; /** @var array(string => mixed) $r */
+			df_assert_eq(
+				df_cfg('justuno_settings/options_interface/token_key')
+				,df_request_header('Authorization')
+				,'Please provide a valid token key'
+			);
 			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
@@ -150,6 +158,10 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 				echo json_encode( $response ); exit('');
 			}
 		}
+		catch (\Exception $e) {
+			$r = ['message' => $e->getMessage(), 'response' => null];
+		}
+		return Json::i($r);
 	}
 
 	/**
