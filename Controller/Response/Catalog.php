@@ -33,11 +33,14 @@ class Catalog extends _P {
 				'password' => 'hello@123', 'username' => 'justunouser'
 			]));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Content-Length: ' . strlen($post)]);
-			$token = json_decode(curl_exec($ch));
-			$headers = ["Authorization: Bearer $token", 'Content-Type: application/json'];
+			curl_setopt($ch, CURLOPT_HTTPHEADER, [
+				'Content-Type: application/json', 'Content-Length: ' . strlen($post)]
+			);
+			if (!($token = json_decode(curl_exec($ch)))) {
+				df_error("Unable to be authenticated as `justunouser`");
+			}
 			$ch = curl_init("{$storeUrl}index.php/rest/V1/products?$queryUrl");
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer $token", 'Content-Type: application/json']);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			$cdata = curl_exec($ch);
 			$results = json_decode($cdata);
