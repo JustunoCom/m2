@@ -1,8 +1,5 @@
 <?php
 namespace Justuno\M2\Controller\Response;
-use Magento\Framework\App\RequestInterface;
-use Magento\Sales\Model\Order;
-use Magento\Store\Model\StoreManagerInterface;
 class Orders extends \Magento\Framework\App\Action\Action {
 
 	protected $_pageFactory;

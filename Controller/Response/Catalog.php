@@ -1,12 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Response;
-use Magento\Catalog\Model\Category;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\HTTP\Client\Curl;
-use Magento\Review\Model\RatingFactory;
-use Magento\Review\Model\ReviewFactory;
-use Magento\Store\Model\StoreManagerInterface;
+// 2019-11-17
 class Catalog extends \Magento\Framework\App\Action\Action {
 	protected $eavConfig;
 	protected $_pageFactory;
@@ -66,12 +60,12 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 		foreach (getallheaders() as $name => $value) {
 			if($name == "Authorization") {
-				$req_token = $value; break;
+				$token = $value; break;
 			} else {
-				$req_token = false;
+				$token = false;
 			}
 		}
-		if($req_token == null || $req_token == ''){
+		if ($token == null || $token == '') {
 			$response = array (
 				'response' => NULL,
 				'message'  => 'Authorization Failed'
@@ -90,38 +84,24 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		$queryUrl = $this->build_http_query( $parameters );
 		$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
 		$apitoken = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/token_key','stores');
-
-		if($req_token == $apitoken){ // valid token
-
+		if ($token == $apitoken) { // valid token
 			$data = array("username" => "justunouser", "password" => "hello@123");
 			$data_string = json_encode($data);
 			$ch = curl_init($apiURL);
-
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json","Content-Length: ".strlen($data_string)));
-
 			$token_result = curl_exec($ch);
 			$token = json_decode($token_result);
-
 			$headers = array("Authorization: Bearer ".$token, "Content-Type: application/json");
-
 			$requestUrl= $storeUrl . 'index.php/rest/V1/products?'.$queryUrl;
-
-			// echo $requestUrl;  die('test ');
-
 			$ch = curl_init($requestUrl);
-
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
 			$cdata      = curl_exec($ch);
 			$results    = json_decode($cdata);
-
 			$formattedJson  = $categoryData = $special_price = $prod_url = array();
-
-			 //echo "<pre>"; print_r($results); //die('asdat');
 			 if( $results->search_criteria->current_page != TRUE ){
 				$response = array(
 					'response' => FALSE,
@@ -129,7 +109,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 				);
 				echo json_encode( $response ); exit('');
 			}
-
 			if( !empty($results && isset($results->total_count)) ) {
 				if ($results->total_count < ($results->search_criteria->page_size * ($results->search_criteria->current_page - 1) ) ) {
 					$response = array(
@@ -140,7 +119,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 				}
 				$totalProducts = $results->total_count;
 				foreach($results->items as $result) {
-
 					if(!empty ($result->custom_attributes ) ){
 						$special_price = $brandName = NULL;
 						foreach($result->custom_attributes as $data) {
@@ -155,7 +133,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 							}
 						}
 					}
-
 					$rating = $objectManager->get("Magento\Review\Model\ResourceModel\Review\CollectionFactory");
 					$collection = $rating->create()
 						->addStatusFilter(
@@ -169,7 +146,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 					} else {
 						$reviewCount = NULL;
 					}
-
 					$gallery_count = count($result->media_gallery_entries);
 					if($gallery_count > 0 ){
 						for($k = 0; $k <= $gallery_count; $k++) {
@@ -179,7 +155,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 							}
 						}
 					}
-
 					$catDetails = array();
 					if(!empty($result->extension_attributes->category_links) ){
 						foreach($result->extension_attributes->category_links as $catlink){
@@ -217,20 +192,15 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 						'BrandName'   => $brandName,
 						'TotalRecords' => "$totalProducts"
 					), $image);
-
 					unset($special_price);
 					unset($catDetails);
 					unset($categoryData);
-
-
-
 				}
 				$array = array_map('array_filter', $formattedJson);
 				$finalData = array_filter($array);
 
 				echo json_encode( $finalData,  JSON_PRETTY_PRINT);
 				exit();
-
 			} else {
 				$response = array(
 					'response' => NULL,
@@ -245,12 +215,5 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 			);
 			echo json_encode($response);
 		}
-
-
-
 	}
-
-
-
-
 }
