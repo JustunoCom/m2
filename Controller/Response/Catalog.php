@@ -26,9 +26,7 @@ class Catalog extends _P {
 			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
-			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
-			$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
 			$data = array("username" => "justunouser", "password" => "hello@123");
 			$data_string = json_encode($data);
 			$ch = curl_init($apiURL);
@@ -77,7 +75,7 @@ class Catalog extends _P {
 							}
 						}
 					}
-					$rating = $objectManager->get("Magento\Review\Model\ResourceModel\Review\CollectionFactory");
+					$rating = df_o("Magento\Review\Model\ResourceModel\Review\CollectionFactory");
 					$collection = $rating->create()
 						->addStatusFilter(
 							\Magento\Review\Model\Review::STATUS_APPROVED
@@ -131,7 +129,7 @@ class Catalog extends _P {
 						'ReviewsCount' => $reviewCount,
 						'ReviewsRatingSum' => '',
 						'Categories'  => $categoryData,
-						'BrandId'     => $brandId,
+						'BrandId'     => df_cfg('justuno_settings/options_interface/brand_attribute'),
 						'BrandName'   => $brandName,
 						'TotalRecords' => "$totalProducts"
 					), $image);
