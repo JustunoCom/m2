@@ -29,14 +29,14 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 	 * @throws \Magento\Framework\Exception\NoSuchEntityException
 	 */
 	function execute() {
+		header('Content-Type: application/json');
 		if (df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')) {
 			echo json_encode(['message'  => 'Please provide a valid token key', 'response' => null]);
 		}
 		else {
-			$storeUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
-			$mediaUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-			$apiURL     = $storeUrl . "index.php/rest/V1/integration/admin/token";
-			header('Content-Type: application/json');
+			$storeUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
+			$mediaUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 			$parameters     = array(
 				'sortOrders'  => $this->request->getParam('sortOrders'),
