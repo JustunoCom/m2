@@ -29,27 +29,23 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 	 * @throws \Magento\Framework\Exception\NoSuchEntityException
 	 */
 	function execute() {
-		ini_set("display_errors", 1);
-		$storeUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
-		$mediaUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-		$apiURL     = $storeUrl . "index.php/rest/V1/integration/admin/token";
-		header('Content-Type: application/json');
-		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		if (!($token = df_request_header('Authorization'))) { /** @var string|false $token */
-			$response = array ('response' => NULL, 'message'  => 'Authorization Failed');
-			echo json_encode($response);
-			return false;
+		if (df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')) {
+			echo json_encode(['message'  => 'Please provide a valid token key', 'response' => null]);
 		}
-		$parameters     = array(
-			'sortOrders'  => $this->request->getParam('sortOrders'),
-			'pageSize'    => $this->request->getParam('pageSize'),
-			'currentPage' => $this->request->getParam('currentPage'),
-			'filterBy'    => $this->request->getParam('filterBy')
-		);
-		$queryUrl = $this->build_http_query( $parameters );
-		$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
-		$apitoken = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/token_key', 'stores');
-		if ($token == $apitoken) {
+		else {
+			$storeUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
+			$mediaUrl   = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+			$apiURL     = $storeUrl . "index.php/rest/V1/integration/admin/token";
+			header('Content-Type: application/json');
+			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			$parameters     = array(
+				'sortOrders'  => $this->request->getParam('sortOrders'),
+				'pageSize'    => $this->request->getParam('pageSize'),
+				'currentPage' => $this->request->getParam('currentPage'),
+				'filterBy'    => $this->request->getParam('filterBy')
+			);
+			$queryUrl = $this->build_http_query( $parameters );
+			$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
 			$data = array("username" => "justunouser", "password" => "hello@123");
 			$data_string = json_encode($data);
 			$ch = curl_init($apiURL);
@@ -173,13 +169,6 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 				);
 				echo json_encode( $response ); exit('');
 			}
-		}
-		else {
-			$response = array(
-				'response' => NULL,
-				'message'  => 'Please provide a valid token key'
-			);
-			echo json_encode($response);
 		}
 	}
 
