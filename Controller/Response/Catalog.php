@@ -54,14 +54,15 @@ class Catalog extends _P {
 					$special_price = $brandName = null;
 					foreach ($caA as $ca) {
 						$c = dfa($ca, 'attribute_code'); /** @var string $c */
+						$v = dfa($ca, 'value');
 						if ('url_key' === $c) {
-							$url = $ca->value;
+							$url = $v;
 						}
 						elseif ('special_price' === $c) {
-							$special_price = (int)$ca->value;
+							$special_price = (int)$v;
 						}
 						elseif ('country_of_manufacture' === $c) {
-							$brandName = $ca->value;
+							$brandName = $v;
 						}
 					}
 				}
@@ -138,7 +139,7 @@ class Catalog extends _P {
 	 * @return string
 	 */
 	private function build_http_query($query) {
-		$query_array = array();
+		$query_array = [];
 		foreach ($query as $key => $key_value) {
 			if($key_value == ''){continue;}
 			if( $key == 'sortOrders' ) {
