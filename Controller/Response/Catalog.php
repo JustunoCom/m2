@@ -4,15 +4,6 @@ use Magento\Catalog\Model\Category;
 // 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends \Magento\Framework\App\Action\Action {
-	function __construct(
-		\Magento\Framework\App\Action\Context $context,
-		\Magento\Framework\App\RequestInterface $request
-	)
-	{
-		$this->request = $request;
-		return parent::__construct($context);
-	}
-
 	/**
 	 * 2019-11-17
 	 * @return bool|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
@@ -29,10 +20,10 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 			$parameters     = array(
-				'sortOrders'  => $this->request->getParam('sortOrders'),
-				'pageSize'    => $this->request->getParam('pageSize'),
-				'currentPage' => $this->request->getParam('currentPage'),
-				'filterBy'    => $this->request->getParam('filterBy')
+				'sortOrders'  => df_request('sortOrders'),
+				'pageSize'    => df_request('pageSize'),
+				'currentPage' => df_request('currentPage'),
+				'filterBy'    => df_request('filterBy')
 			);
 			$queryUrl = $this->build_http_query( $parameters );
 			$brandId = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('justuno_settings/options_interface/brand_attribute','stores');
@@ -182,6 +173,4 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 		}
 		return implode( '&', $query_array );
 	}
-
-	private $request;
 }
