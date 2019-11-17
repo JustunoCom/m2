@@ -6,12 +6,10 @@ use Magento\Catalog\Model\Category;
 class Catalog extends \Magento\Framework\App\Action\Action {
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
-		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Magento\Framework\App\RequestInterface $request,
 		\Magento\Framework\View\Result\PageFactory $pageFactory)
 	{
 		$this->_pageFactory = $pageFactory;
-		$this->_storeManager = $storeManager;
 		$this->request = $request;
 		return parent::__construct($context);
 	}
@@ -27,8 +25,8 @@ class Catalog extends \Magento\Framework\App\Action\Action {
 			echo json_encode(['message'  => 'Please provide a valid token key', 'response' => null]);
 		}
 		else {
-			$storeUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
-			$mediaUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
+			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
 			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 			$parameters     = array(
