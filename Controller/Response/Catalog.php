@@ -2,6 +2,7 @@
 namespace Justuno\M2\Controller\Response;
 use Df\Framework\W\Result\Json;
 use Magento\Catalog\Model\Category;
+use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Review\Model\ResourceModel\Review\Collection as RC;
 // 2019-11-17
@@ -16,14 +17,14 @@ class Catalog extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {
+	function execute() {/** @var array(string => mixed) $r */
 		try {
-			$r = []; /** @var array(string => mixed) $r */
 			if (!df_my_local()
 				&& df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')
 			) {
 				df_error('Please provide a valid token key');
 			}
+			$pc = df_product_c(); /** @var PC $pc */
 			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
 			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
@@ -119,11 +120,7 @@ class Catalog extends _P {
 				unset($catDetails);
 				unset($categoryData);
 			}
-			$array = array_map('array_filter', $formattedJson);
-			$finalData = array_filter($array);
-
-			echo json_encode( $finalData,  JSON_PRETTY_PRINT);
-			exit();
+			$r = array_filter(array_map('array_filter', $formattedJson));
 		}
 		catch (\Exception $e) {
 			$r = ['message' => $e->getMessage(), 'response' => null];
