@@ -1,10 +1,17 @@
 <?php
 namespace Justuno\M2\Controller\Response;
 use Df\Framework\W\Result\Json;
-use Magento\Catalog\Model\Category;
+use Justuno\M2\Catalog\Images as cImages;
+use Justuno\M2\Catalog\Variants as cVariants;
+use Justuno\M2\Filter;
+use Magento\Catalog\Model\Category as C;
+use Magento\Catalog\Model\Product as P;
+use Magento\Catalog\Model\Product\Visibility as V;
+use Magento\Catalog\Model\ResourceModel\Category\Collection as CC;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
+use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
-use Magento\Review\Model\ResourceModel\Review\Collection as RC;
+use Magento\Review\Model\Review\Summary as RS;
 // 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
@@ -25,150 +32,112 @@ class Catalog extends _P {
 				df_error('Please provide a valid token key');
 			}
 			$pc = df_product_c(); /** @var PC $pc */
-			$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
-			$mediaUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-			$queryUrl = $this->build_http_query(df_request(['currentPage', 'filterBy', 'pageSize', 'sortOrders']));
-			$ch = curl_init("{$storeUrl}index.php/rest/V1/products?$queryUrl");
-			curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer {$this->token()}", 'Content-Type: application/json']);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-			$cdata = curl_exec($ch);
-			$res = df_json_decode($cdata);
-			$formattedJson  = $categoryData = $special_price = $prod_url = [];
-			if ($m = dfa($res, 'message')) {
-				df_error($m);
-			}
-			$sc = dfa($res, 'search_criteria', []); /** @var array(string => mixed) $sc */
-			if (!($currentPage = (int)dfa($sc, 'current_page'))) {  /** @var int $currentPage */
-				df_error('Page not found');
-			}
-			if (!($totalProducts = (int)dfa($res, 'total_count'))) { /** @var int $totalProducts */
-				df_error('No data found');
-			}
-			$pageSize = (int)dfa($sc, 'page_size'); /** @var int $pageSize */
-			if ($totalProducts < $pageSize * ($currentPage - 1)) {
-				df_error('No data found');
-			}
-			foreach (dfa($res, 'items') as $item) {
-				if ($caA = dfa($item, 'custom_attributes')) {
-					$special_price = $brandName = null;
-					foreach ($caA as $ca) {
-						$c = dfa($ca, 'attribute_code'); /** @var string $c */
-						$v = dfa($ca, 'value');
-						if ('url_key' === $c) {
-							$url = $v;
-						}
-						elseif ('special_price' === $c) {
-							$special_price = (int)$v;
-						}
-						elseif ('country_of_manufacture' === $c) {
-							$brandName = $v;
-						}
+			$pc->addAttributeToSelect('*');
+			/**
+			 * 2019-10-30
+			 * 1) «if a product has a Status of "Disabled" we'd still want it in the feed,
+			 * but we'd want to set the inventoryquantity to -9999»:
+			 * https://github.com/justuno-com/m1/issues/4
+			 * 2) I do not use
+			 * 		$products->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH]);
+			 * because it filters out disabled products.
+			 */
+			$pc->addAttributeToFilter('visibility', ['in' => [
+				V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
+			]]);
+			Filter::p($pc);
+			$brand = df_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
+			$r = array_values(array_map(function(P $p) use($brand) { /** @var array(string => mixed) $r */
+				$rs = df_new_om(RS::class); /** @var RS $rs */
+				$rs->load($p->getId());
+				$cc = $p->getCategoryCollection(); /** @var CC $cc */
+				$r = [
+					'Categories' => array_values(array_map(function(C $c) {return [
+						'Description' => $c['description']
+						// 2019-10-30
+						// «json construct types are not correct for some values»:
+						// https://github.com/justuno-com/m1/issues/8
+						,'ID' => $c->getId()
+						// 2019-10-30
+						// «In Categories imageURL is being sent back as a boolean in some cases,
+						// it should always be sent back as a string,
+						// if there is not url just don't send the property back»:
+						// https://github.com/justuno-com/m1/issues/12
+						,'ImageURL' => $c->getImageUrl() ?: null
+						,'Keywords' => $c['meta_keywords']
+						,'Name' => $c->getName()
+						,'URL' => $c->getUrl()
+					];}, $cc->addAttributeToSelect('*')->addFieldToFilter('level', ['neq' => 1])->getItems()))
+					,'CreatedAt' => $p['created_at']
+					// 2019-10-30
+					// «The parent ID is pulling the sku, it should be pulling the ID like the variant does»:
+					// https://github.com/justuno-com/m1/issues/19
+					,'ID' => $p->getId()
+					/**
+					 * 2019-10-30
+					 * 1) «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+					 * or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+					 * 2) «If their isn't an MSRP for some reason just use the salesprice»:
+					 * https://github.com/justuno-com/m1/issues/6
+					 * 2019-10-31
+					 * «The MSRP should pull in this order MSRP > Price > Dynamic Price»:
+					 * https://github.com/justuno-com/m1/issues/20
+					 */
+					,'MSRP' => (float)($p['msrp'] ?: ($p['price'] ?: $p->getPrice()))
+					 /**
+					  * 2019-10-30
+					  * «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+					  * or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+					  * 2019-10-31
+					  * «Price should be Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/21
+					  */
+					,'Price' => (float)($p['price'] ?: $p->getPrice())
+					// 2019-10-30 «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
+					,'ReviewsCount' => (int)$rs->getReviewsCount()
+					// 2019-10-30
+					// 1) "Add the `ReviewsCount` and `ReviewsRatingSum` values to the `catalog` response":
+					// https://github.com/justuno-com/m1/issues/15
+					// 2) «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
+					,'ReviewsRatingSum' => (int)$rs->getRatingSummary()
+					// 2019-10-30
+					// «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+					// or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+					,'SalePrice' => (float)$p->getPrice()
+					,'Title' => $p['name']
+					,'UpdatedAt' => $p['updated_at']
+					,'URL' => $p->getProductUrl()
+					/**
+					 * 2019-10-30
+					 * «if a product doesn't have parent/child like structure,
+					 * I still need at least one variant in the Variants array»:
+					 * https://github.com/justuno-com/m1/issues/5
+					 */
+					,'Variants' => cVariants::p($p)
+				] + cImages::p($p);
+				if ('configurable' === $p->getTypeId()) {
+					$ct = $p->getTypeInstance(); /** @var Configurable $ct */
+					$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
+					/**
+					 * 2019-10-30
+					 * «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
+					 * We need these sent back starting at OptionType1, OptionType2»:
+					 * https://github.com/justuno-com/m1/issues/14
+					 */
+					foreach (array_values($opts) as $id => $code) {$id++; /** @var int $id */ /** @var string $code */
+						$r["OptionType$id"] = $code;
 					}
 				}
-				$rc = df_new_om(RC::class); /** @var RC $rc */
-				$rc->addStatusFilter(\Magento\Review\Model\Review::STATUS_APPROVED);
-				$rc->addEntityFilter('product', dfa($item, 'id'));
-				$rc->setDateOrder();
-				$mge = dfa($item, 'media_gallery_entries');
-				$gallery_count = count($mge);
-				if ($gallery_count > 0) {
-					for ($k = 0; $k <= $gallery_count; $k++) {
-						if ($file = dfa_deep($mge, "$k/file")) {
-							$imgkey = $k+1;
-							$image['ImageUrl'. $imgkey] = $mediaUrl . 'catalog/product' . $file;
-						}
-					}
-				}
-				$catDetails = array();
-				if ($links = dfa_deep($item, 'extension_attributes/category_links')) {
-					foreach ($links as $catlink) {
-						$catData = df_category(dfa($catlink, 'category_id')); /** @var Category $catData */
-						$categId = $catData->getId();
-						$catDetails['ID']       = "$categId";
-						$catDetails['Name']     = $catData->getName();
-						$catDetails['Description'] = strip_tags($catData->getDescription());
-						$catDetails['Keyword']  = $catData->getMetaKeywords();
-						$catDetails['URL']      =  $catData->getUrl();
-						$catDetails['ImageURL'] =
-							!($img = $catData->getImage()) ? null : "{$mediaUrl}catalog/category/$img"
-						;
-						$categoryData[] = $catDetails;
-					}
-					unset($catData);
-				}
-				$Catarray = array_map('array_filter', $categoryData);
-				$categoryData = array_filter($Catarray);
-				$formattedJson[] = array_merge( array(
-					'ID'        => dfa($item, 'sku'),
-					'MSRP'      => $special_price,
-					'Price'     => dfa($item, 'price'),
-					'SalePrice' => dfa($item, 'price'),
-					'Title'     => dfa($item, 'name'),
-					'URL'         => $storeUrl.$url,
-					'CreatedAt'   => dfa($item, 'created_at'),
-					'UpdatedAt'   => dfa($item, 'updated_at'),
-					'ReviewsCount' => $rc->getSize() ?: null,
-					'ReviewsRatingSum' => '',
-					'Categories'  => $categoryData,
-					'BrandId'     => df_cfg('justuno_settings/options_interface/brand_attribute'),
-					'BrandName'   => $brandName,
-					'TotalRecords' => "$totalProducts"
-				), $image);
-				unset($special_price);
-				unset($catDetails);
-				unset($categoryData);
-			}
-			$r = array_filter(array_map('array_filter', $formattedJson));
+				/**
+				 * 2019-11-01
+				 * If $brand is null, then @uses Mage_Catalog_Model_Product::getAttributeText() fails.
+				 * https://www.upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
+				 */
+				return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
+			}, $pc->getItems()));
 		}
 		catch (\Exception $e) {
 			$r = ['message' => $e->getMessage(), 'response' => null];
 		}
 		return Json::i($r);
-	}
-
-	/**
-	 * 2019-11-17
-	 * @used-by execute()
-	 * @param array(string => mixed) $query
-	 * @return string
-	 */
-	private function build_http_query($query) {
-		$query_array = [];
-		foreach ($query as $key => $key_value) {
-			if($key_value == ''){continue;}
-			if( $key == 'sortOrders' ) {
-				$query_array[]  = "searchCriteria[$key][0][field]=".urlencode( $key_value );
-			} else if($key == "filterBy"){
-				$todate =  urlencode( $key_value );
-				$query_array[] = "searchCriteria[filter_groups][0][filters][0][field]=updated_at&searchCriteria[filter_groups][0][filters][0][value]=$todate&searchCriteria[filter_groups][0][filters][0][condition_type]=gteq";
-			} else {
-				$query_array[] = "searchCriteria[$key]=" .urlencode( $key_value );
-			}
-		}
-		return implode( '&', $query_array );
-	}
-
-	/**
-	 * 2019-11-18
-	 * @return string
-	 */
-	private function token() {
-		$storeUrl = df_store()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK);
-		$apiURL = $storeUrl . "index.php/rest/V1/integration/admin/token";
-		$ch = curl_init($apiURL);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post = json_encode([
-			'password' => 'hello@123', 'username' => 'justunouser'
-		]));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		if (!($r = json_decode(curl_exec($ch)))) {  /** @var string $r */
-			df_error("Unable to be authenticated as `justunouser`");
-		}
-		return $r;
 	}
 }
