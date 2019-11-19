@@ -7,7 +7,7 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 final class Variants {
 	/**
 	 * 2019-10-30
-	 * @used-by \Justuno_Jumagext_ResponseController::catalogAction
+	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @param P $p
 	 * @return array(array(string => mixed))
 	 */
@@ -41,6 +41,7 @@ final class Variants {
 
 	/**
 	 * 2019-10-30
+	 * @used-by p()
 	 * @param P $p
 	 * @param P|IP|null $parent [optional]
 	 * @param array(int => string) $opts [optional]

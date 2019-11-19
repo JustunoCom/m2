@@ -45,6 +45,7 @@ class Catalog extends _P {
 			$pc->addAttributeToFilter('visibility', ['in' => [
 				V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 			]]);
+			$pc->addMediaGalleryData(); // 2019-11-20 https://magento.stackexchange.com/a/228181
 			Filter::p($pc);
 			$brand = df_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
 			$r = array_values(array_map(function(P $p) use($brand) { /** @var array(string => mixed) $r */
