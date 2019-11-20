@@ -3,6 +3,7 @@
 ## How to install
 ```
 bin/magento maintenance:enable
+rm -rf app/code/Justuno/Jumagext
 rm -rf composer.lock
 composer clear-cache
 composer require justuno.com/m2:*
