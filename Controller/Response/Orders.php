@@ -82,8 +82,8 @@ class Orders extends _P {
 		}
 		$ba = $o->getBillingAddress(); /** @var A $ba */
 		return [
-			'Address1' => $ba->getStreet(1)
-			,'Address2' => $ba->getStreet(2)
+			'Address1' => $ba->getStreetLine(1)
+			,'Address2' => $ba->getStreetLine(2)
 			,'City' => $ba->getCity()
 			,'CountryCode' => $ba->getCountryId()
 			,'CreatedAt' => $c['created_at']
