@@ -10,17 +10,19 @@ final class Filter {
 	 * 2019-10-31
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Orders::execute()
-	 * @param C|OC|PC $c
+	 * @param C|OC|PC $r
+	 * @return OC|PC;
 	 */
-	static function p(C $c) {
-		self::byDate($c);
+	static function p(C $r) {
+		self::byDate($r);
 		/** @var string $dir */ /** @var string $suffix */
-		list($dir, $suffix) = $c instanceof PC ? ['DESC', 'Products'] : ['ASC', 'Orders'];
+		list($dir, $suffix) = $r instanceof PC ? ['DESC', 'Products'] : ['ASC', 'Orders'];
 		if ($field = df_request("sort$suffix")) { /** @var string $field */
-			$c->getSelect()->order("$field $dir");
+			$r->getSelect()->order("$field $dir");
 		}
 		$size = (int)df_request('pageSize', 10); /** @var int $size */
-		$c->getSelect()->limit($size, $size * ((int)df_request('currentPage', 1) - 1));
+		$r->getSelect()->limit($size, $size * ((int)df_request('currentPage', 1) - 1));
+		return $r;
 	}
 
 	/**
