@@ -40,6 +40,13 @@ class Catalog extends _P {
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
+		/**
+		 * 2019-11-22
+		 * @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::addMediaGalleryData() loads the collection,
+		 * so we should apply filters before it, not after.
+		 * «Filters do not work for `catalog`»: https://github.com/justuno-com/m2/issues/5
+		 */
+		Filter::p($pc);
 		$pc->addMediaGalleryData(); // 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = df_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
 		return array_values(array_map(function(P $p) use($brand) { /** @var array(string => mixed) $r */
@@ -127,6 +134,6 @@ class Catalog extends _P {
 			 * https://www.upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
-		}, Filter::p($pc)->getItems()));
+		}, $pc->getItems()));
 	});}
 }
