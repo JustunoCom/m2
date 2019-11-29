@@ -42,19 +42,24 @@ class UpgradeSchema extends \Df\Framework\Upgrade\Schema {
 	/**
 	 * 2019-11-22
 	 * @used-by _process()
-	 * @param string $table
+	 * @param string $t
 	 * @param string $sql
 	 * @param string|int $suffix [optional]
 	 */
-	private function tr($table, $sql, $suffix = '') {
-		foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
-			df_conn()->createTrigger(df_trigger()
-				->addStatement($sql)
-				->setEvent($e)
-				->setName(df_ccc('__', 'justuno', $table, strtolower($e), $suffix))
-				->setTable(df_table($table))
-				->setTime(T::TIME_AFTER)
-			);
+	private function tr($t, $sql, $suffix = '') {
+		// 2019-11-30
+		// "The `inventory_reservation` table is absent in Magento < 2.3":
+		// https://github.com/justuno-com/m2/issues/6
+		if (df_table_exists($t)) {
+			foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
+				df_conn()->createTrigger(df_trigger()
+					->addStatement($sql)
+					->setEvent($e)
+					->setName(df_ccc('__', 'justuno', $t, strtolower($e), $suffix))
+					->setTable(df_table($t))
+					->setTime(T::TIME_AFTER)
+				);
+			}
 		}
 	}
 }
