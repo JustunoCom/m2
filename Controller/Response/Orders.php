@@ -63,7 +63,7 @@ class Orders extends _P {
 		,'TotalPrice' => (float)$o->getGrandTotal()
 		,'TotalTax' => (float)$o->getTaxAmount()
 		,'UpdatedAt' => $o->getUpdatedAt()
-	];}, Filter::p(df_order_c())->getItems()));});}
+	];}, Filter::p(df_order_c())->getItems()));}, true);}
 	
 	/**
 	 * 2019-10-27

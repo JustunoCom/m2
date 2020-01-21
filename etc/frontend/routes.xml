@@ -7,5 +7,8 @@
 		<route frontName='jumagext' id='jumagext'>
 			<module name='Justuno_M2'/>
 		</route>
+		<route frontName='justuno' id='justuno'>
+			<module name='Justuno_M2'/>
+		</route>
 	</router>
 </config>
