@@ -62,6 +62,7 @@ define([], function() {return (
 				})();
 			});
 		});
-		require(['//cdn.justuno.com/vck.js'], function() {});
+		// 2020-01-24 "Replace `cdn.justuno.com` with `cdn.jst.ai`": https://github.com/justuno-com/m2/issues/8
+		require(['//cdn.jst.ai/vck.js'], function() {});
 	});
 });
