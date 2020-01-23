@@ -3,10 +3,9 @@
 	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:noNamespaceSchemaLocation='urn:magento:framework:ObjectManager/etc/config.xsd'
 >
+<!-- 2020-01-24
+How to get the current customer ID in JavaScript: https://magento.stackexchange.com/a/201284 -->
 	<type name='Magento\Customer\CustomerData\Customer'>
-		<plugin
-			name='Justuno\M2\Plugin\Customer\CustomerData\Customer'
-			type='Justuno\M2\Plugin\Customer\CustomerData\Customer'
-		/>
+		<plugin disabled='false' name='Df\Customer\GetIdInJS'/>
 	</type>
 </config>

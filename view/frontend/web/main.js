@@ -27,9 +27,7 @@ define([], function() {return (
 					juapp('local', 'prodId', cfg.productId);
 					(function() {
 						var customer = cd.get('customer');
-						var updateCustomer = function() {
-							juapp('local', 'custId', customer().id);
-						};
+						var updateCustomer = function() {juapp('local', 'custId', customer().id);};
 						updateCustomer();
 						customer.subscribe(updateCustomer, this);
 					})();

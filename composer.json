@@ -1,6 +1,6 @@
 {
 	"name": "justuno.com/m2"
-	,"version": "1.2.1"
+	,"version": "1.2.2"
 	,"description": "Justuno module for Magento 2"
 	,"type": "magento2-module"
 	,"homepage": "https://github.com/justuno-com/m2"
@@ -11,7 +11,7 @@
 		,"homepage": "https://mage2.pro/users/dmitry_fedyuk"
 		,"role": "Developer"
 	}]
-	,"require": {"mage2pro/core": ">=5.5.7"}
+	,"require": {"mage2pro/core": ">=5.7.2"}
 	,"autoload": {"files": ["registration.php"], "psr-4": {"Justuno\\M2\\": ""}}
 	,"keywords": ["Magento 2"]
 }
