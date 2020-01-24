@@ -6,6 +6,6 @@
 <!-- 2020-01-24
 How to get the current customer ID in JavaScript: https://magento.stackexchange.com/a/201284 -->
 	<type name='Magento\Customer\CustomerData\Customer'>
-		<plugin disabled='false' name='Df\Customer\GetIdInJS'/>
+		<plugin disabled='false' name='Df\Customer\Js\CustomerId'/>
 	</type>
 </config>
