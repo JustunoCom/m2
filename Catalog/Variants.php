@@ -86,7 +86,10 @@ final class Variants {
 		 * «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
 		 * We need these sent back starting at OptionType1, OptionType2»:
 		 * https://github.com/justuno-com/m1/issues/14
+		 * 2020-03-13
+		 * "The Boolean values of `Option<X>` attributes should be converted to «true» / «false» strings":
+		 * https://github.com/justuno-com/m2/issues/9
 		 */
-		'Option' . (1 + $id), $p->getAttributeText($code)
+		'Option' . (1 + $id), strval(!is_bool($v = $p->getAttributeText($code)) ? $v : df_bts($v))
 	];}, array_values($opts));}
 }
