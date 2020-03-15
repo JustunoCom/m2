@@ -4,6 +4,12 @@
 	xsi:noNamespaceSchemaLocation='urn:magento:framework:App/etc/routes.xsd'
 >
 	<router id='standard'>
+<!-- 2020-03-15
+"Replace the `/justuno/service-worker.js` URL with `/apps/justuno/service-worker.js`":
+https://github.com/justuno-com/m2/issues/11 -->
+		<route frontName='apps' id='apps'>
+			<module name='Justuno_M2'/>
+		</route>		
 		<route frontName='jumagext' id='jumagext'>
 			<module name='Justuno_M2'/>
 		</route>
