@@ -29,7 +29,7 @@ final class Filter {
 	/**
 	 * 2019-10-31
 	 * @used-by p()
-	 * @param $c $c
+	 * @param C|OC|PC $c
 	 */
 	private static function byDate(C $c) {
 		if ($since = df_request('updatedSince')) { /** @var string $since */
@@ -53,7 +53,7 @@ final class Filter {
 	 * "Provide an ability to filter the `jumagext/response/catalog` response by a concrete product":
 	 * https://github.com/justuno-com/m2/issues/12
 	 * @used-by p()
-	 * @param $c $c
+	 * @param C|OC|PC $c
 	 */
 	private static function byProduct(C $c) {
 		if ($id = df_request('id')) { /** @var string $id */
@@ -62,10 +62,14 @@ final class Filter {
 		if ($name = df_request('title')) { /** @var string $name */
 			/**
 			 * 2020-05-06
-			 * 1) @uses \Magento\Framework\Data\Collection\AbstractDb::addFieldToFilter()
-			 * works even if the Flat Mode is disabled
-			 * despite the `catalog_product_entity` table does not contain the `name` field.
-			 * 2) @see \Magento\Catalog\Model\ResourceModel\Product\Collection::addAttributeToFilter() works too.
+			 * @uses \Magento\Eav\Model\Entity\Collection\AbstractCollection::addFieldToFilter()
+			 * works even if the Flat Mode is disabled because it just delegates the work to
+			 * @see \Magento\Eav\Model\Entity\Collection\AbstractCollection::addAttributeToFilter():
+			 *	public function addFieldToFilter($attribute, $condition = null) {
+			 *		return $this->addAttributeToFilter($attribute, $condition, 'left');
+			 *	}
+			 * https://github.com/magento/magento2/blob/2.3.5-p1/app/code/Magento/Eav/Model/Entity/Collection/AbstractCollection.php#L395-L406
+			 * https://github.com/magento/magento2/blob/2.0.0/app/code/Magento/Eav/Model/Entity/Collection/AbstractCollection.php#L383-L394
 			 */
 			$c->addFieldToFilter('name', [['like' => "%$name%"]]);
 		}
