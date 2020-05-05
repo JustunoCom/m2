@@ -35,7 +35,7 @@ class Catalog extends _P {
 		 * https://github.com/justuno-com/m1/issues/4
 		 * 2) I do not use
 		 * 		$pc->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH]);
-		 * because it filters out disabled products.
+		 * because it filters out the disabled products.
 		 */
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
