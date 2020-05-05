@@ -15,6 +15,7 @@ final class Filter {
 	 */
 	static function p(C $r) {
 		self::byDate($r);
+		self::byProduct($r);
 		/** @var string $dir */ /** @var string $suffix */
 		list($dir, $suffix) = $r instanceof PC ? ['DESC', 'Products'] : ['ASC', 'Orders'];
 		if ($field = df_request("sort$suffix")) { /** @var string $field */
@@ -44,6 +45,32 @@ final class Filter {
 				return date($f, $dt->format('U'));
 			};
 			$c->addFieldToFilter('updated_at', ['from' => $d($since), 'to' => $d('2035-01-01 23:59:59')]);
+		}
+	}
+
+	/**
+	 * 2020-05-06
+	 * "Provide an ability to filter the `jumagext/response/catalog` response by a concrete product":
+	 * https://github.com/justuno-com/m2/issues/12
+	 * @used-by p()
+	 * @param $c $c
+	 */
+	private static function byProduct(C $c) {
+		if ($id = df_request('id')) { /** @var string $id */
+			$c->addFieldToFilter('entity_id', $id);
+		}
+		if ($name = df_request('title')) { /** @var string $name */
+			/**
+			 * 2020-05-06
+			 * 1) @uses \Magento\Framework\Data\Collection\AbstractDb::addFieldToFilter()
+			 * works even if the Flat Mode is disabled
+			 * despite the `catalog_product_entity` table does not contain the `name` field.
+			 * 2) @see \Magento\Catalog\Model\ResourceModel\Product\Collection::addAttributeToFilter() works too.
+			 */
+			$c->addFieldToFilter('name', [['like' => "%$name%"]]);
+		}
+		if ($sku = df_request('sku')) { /** @var string $sku */
+			$c->addFieldToFilter('sku', [['like' => "%$sku%"]]);
 		}
 	}
 }
