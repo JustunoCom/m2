@@ -49,7 +49,7 @@ class Catalog extends _P {
 		Filter::p($pc);
 		$pc->addMediaGalleryData(); // 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = df_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
-		return array_values(array_map(function(P $p) use($brand) { /** @var array(string => mixed) $r */
+		return array_values(df_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = df_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
 			$r = [
@@ -134,6 +134,6 @@ class Catalog extends _P {
 			 * https://www.upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
-		}, $pc->getItems()));
+		}));
 	}, true);}
 }
