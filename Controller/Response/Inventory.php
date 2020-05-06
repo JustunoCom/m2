@@ -22,8 +22,8 @@ class Inventory extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {return R::p(function() {
-		$pc = df_product_c(); /** @var PC $pc */
+	function execute() {return R::p(function() {return array_values(df_map(
+		function(P $p) {return ['ID' => $p->getId(), 'Variants' => cVariants::p($p)];}
 		/**
 		 * 2020-05-06
 		 * 1) «We don't want to include products that have been disabled or have only disabled variants»:
@@ -31,7 +31,6 @@ class Inventory extends _P {
 		 * 2) @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::setVisibility()
 		 * filters out the disabled products.
 		 */
-		$pc->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH]);
-		return array_values(df_map($pc, function(P $p) {return ['ID' => $p->getId(), 'Variants' => cVariants::p($p)];}));
-	}, true);}
+		,df_product_c()->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
+	));}, true);}
 }
