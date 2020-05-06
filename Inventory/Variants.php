@@ -58,10 +58,9 @@ final class Variants {
 			 * https://github.com/magento/magento2/blob/2.3.5-p1/app/code/Magento/ConfigurableProduct/Model/Product/Type/Configurable.php#L1247-L1264
 			 * https://github.com/magento/magento2/blob/2.0.0/app/code/Magento/ConfigurableProduct/Model/Product/Type/Configurable.php#L420-L468
 			 */
-			/** @var P[] $children */
-			$r = !($children = array_filter($ct->getUsedProducts($p), function(P $p) {return !$p->isDisabled();}))
-				? [self::variant($p)]
-				: array_values(array_map(function(P $c) use($p) {return self::variant($c);}, $children))
+			/** @var P[] $ch */
+			$r = !($ch = array_filter($ct->getUsedProducts($p), function(P $p) {return !$p->isDisabled();}))
+				? [self::variant($p)] : array_values(df_map($ch, function(P $c) {return self::variant($c);}))
 			;
 		}
 		return $r;
