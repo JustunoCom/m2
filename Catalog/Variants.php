@@ -23,7 +23,7 @@ final class Variants {
 			// 2019-30-31
 			// "A configurable product without any associated child products does not produce variants":
 			// https://github.com/justuno-com/m1/issues/26
-			if (!($children = $ct->getUsedProducts($p))) { /** @var P $children */
+			if (!($children = $ct->getUsedProducts($p))) { /** @var P[] $children */
 				// 2019-30-31
 				// "Products: some Variants are objects instead of arrays of objects":
 				// https://github.com/justuno-com/m1/issues/32
