@@ -7,6 +7,7 @@ final class Response {
 	 * 2019-11-20
 	 * @used-by \Justuno\M2\Controller\Cart\Add::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
+	 * @used-by \Justuno\M2\Controller\Response\Inventory::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Orders::execute()
 	 * @param \Closure $f
 	 * @param bool $auth [optional]
