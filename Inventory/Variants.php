@@ -70,7 +70,6 @@ final class Variants {
 	 * 2019-10-30
 	 * @used-by p()
 	 * @param P $p
-	 * @param array(int => string) $opts [optional]
 	 * @return array(string => mixed)
 	 */
 	private static function variant(P $p) {return ['ID' => $p->getId(), 'Quantity' => df_qty($p)];}
