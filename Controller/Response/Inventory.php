@@ -5,7 +5,6 @@ use Justuno\M2\Inventory\Variants as cVariants;
 use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
 use Magento\Catalog\Model\Product\Visibility as V;
-use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\Framework\App\Action\Action as _P;
 /**
  * 2020-05-06
