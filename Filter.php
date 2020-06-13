@@ -18,11 +18,11 @@ final class Filter {
 		self::byProduct($r);
 		/** @var string $dir */ /** @var string $suffix */
 		list($dir, $suffix) = $r instanceof PC ? ['DESC', 'Products'] : ['ASC', 'Orders'];
-		if ($field = df_request("sort$suffix")) { /** @var string $field */
+		if ($field = ju_request("sort$suffix")) { /** @var string $field */
 			$r->getSelect()->order("$field $dir");
 		}
-		$size = (int)df_request('pageSize', 10); /** @var int $size */
-		$r->getSelect()->limit($size, $size * ((int)df_request('currentPage', 1) - 1));
+		$size = (int)ju_request('pageSize', 10); /** @var int $size */
+		$r->getSelect()->limit($size, $size * ((int)ju_request('currentPage', 1) - 1));
 		return $r;
 	}
 
@@ -32,7 +32,7 @@ final class Filter {
 	 * @param C|OC|PC $c
 	 */
 	private static function byDate(C $c) {
-		if ($since = df_request('updatedSince')) { /** @var string $since */
+		if ($since = ju_request('updatedSince')) { /** @var string $since */
 			/**
 			 * 2019-10-31
 			 * @param string $s
@@ -56,10 +56,10 @@ final class Filter {
 	 * @param C|OC|PC $c
 	 */
 	private static function byProduct(C $c) {
-		if ($id = df_request('id')) { /** @var string $id */
+		if ($id = ju_request('id')) { /** @var string $id */
 			$c->addFieldToFilter('entity_id', $id);
 		}
-		if ($name = df_request('title')) { /** @var string $name */
+		if ($name = ju_request('title')) { /** @var string $name */
 			/**
 			 * 2020-05-06
 			 * @uses \Magento\Eav\Model\Entity\Collection\AbstractCollection::addFieldToFilter()
@@ -73,7 +73,7 @@ final class Filter {
 			 */
 			$c->addFieldToFilter('name', [['like' => "%$name%"]]);
 		}
-		if ($sku = df_request('sku')) { /** @var string $sku */
+		if ($sku = ju_request('sku')) { /** @var string $sku */
 			$c->addFieldToFilter('sku', [['like' => "%$sku%"]]);
 		}
 	}
