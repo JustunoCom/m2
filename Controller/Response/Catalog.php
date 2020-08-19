@@ -13,7 +13,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Review\Model\Review\Summary as RS;
-// 2019-11-17
+# 2019-11-17
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
 	/**
@@ -26,6 +26,7 @@ class Catalog extends _P {
 	 * @return Json
 	 */
 	function execute() {return R::p(function() {
+		df_sentry('Justuno_Core', new \Exception('TEST'), ['extra' => df_request_o()->getParams()]);
 		$pc = df_product_c(); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		/**
@@ -47,7 +48,7 @@ class Catalog extends _P {
 		 * «Filters do not work for `catalog`»: https://github.com/justuno-com/m2/issues/5
 		 */
 		Filter::p($pc);
-		$pc->addMediaGalleryData(); // 2019-11-20 https://magento.stackexchange.com/a/228181
+		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = df_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
 		return array_values(df_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = df_review_summary($p); /** @var RS $rs */
@@ -55,24 +56,24 @@ class Catalog extends _P {
 			$r = [
 				'Categories' => array_values(array_map(function(C $c) {return [
 					'Description' => $c['description']
-					// 2019-10-30
-					// «json construct types are not correct for some values»:
-					// https://github.com/justuno-com/m1/issues/8
+					# 2019-10-30
+					# «json construct types are not correct for some values»:
+					# https://github.com/justuno-com/m1/issues/8
 					,'ID' => $c->getId()
-					// 2019-10-30
-					// «In Categories imageURL is being sent back as a boolean in some cases,
-					// it should always be sent back as a string,
-					// if there is not url just don't send the property back»:
-					// https://github.com/justuno-com/m1/issues/12
+					# 2019-10-30
+					# «In Categories imageURL is being sent back as a boolean in some cases,
+					# it should always be sent back as a string,
+					# if there is not url just don't send the property back»:
+					# https://github.com/justuno-com/m1/issues/12
 					,'ImageURL' => $c->getImageUrl() ?: null
 					,'Keywords' => $c['meta_keywords']
 					,'Name' => $c->getName()
 					,'URL' => $c->getUrl()
 				];}, $cc->addAttributeToSelect('*')->addFieldToFilter('level', ['neq' => 1])->getItems()))
 				,'CreatedAt' => $p['created_at']
-				// 2019-10-30
-				// «The parent ID is pulling the sku, it should be pulling the ID like the variant does»:
-				// https://github.com/justuno-com/m1/issues/19
+				# 2019-10-30
+				# «The parent ID is pulling the sku, it should be pulling the ID like the variant does»:
+				# https://github.com/justuno-com/m1/issues/19
 				,'ID' => $p->getId()
 				/**
 				 * 2019-10-30
@@ -93,16 +94,16 @@ class Catalog extends _P {
 				  * «Price should be Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/21
 				  */
 				,'Price' => (float)($p['price'] ?: $p->getPrice())
-				// 2019-10-30 «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
+				# 2019-10-30 «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
 				,'ReviewsCount' => (int)$rs->getReviewsCount()
-				// 2019-10-30
-				// 1) "Add the `ReviewsCount` and `ReviewsRatingSum` values to the `catalog` response":
-				// https://github.com/justuno-com/m1/issues/15
-				// 2) «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
+				# 2019-10-30
+				# 1) "Add the `ReviewsCount` and `ReviewsRatingSum` values to the `catalog` response":
+				# https://github.com/justuno-com/m1/issues/15
+				# 2) «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
 				,'ReviewsRatingSum' => (int)$rs->getRatingSummary()
-				// 2019-10-30
-				// «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
-				// or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+				# 2019-10-30
+				# «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+				# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
 				,'SalePrice' => (float)$p->getPrice()
 				,'Title' => $p['name']
 				,'UpdatedAt' => $p['updated_at']

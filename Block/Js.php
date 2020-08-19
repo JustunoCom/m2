@@ -2,7 +2,7 @@
 namespace Justuno\M2\Block;
 use Magento\Framework\View\Element\AbstractBlock as _P;
 use Magento\Sales\Model\Order as O;
-// 2019-11-15
+# 2019-11-15
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Js extends _P {
 	/**

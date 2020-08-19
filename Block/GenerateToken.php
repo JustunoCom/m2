@@ -3,7 +3,7 @@ namespace Justuno\M2\Block;
 use Df\Framework\Form\ElementI;
 use Magento\Backend\Block\Widget\Button as W;
 use Magento\Framework\Data\Form\Element\AbstractElement as E;
-// 2019-11-15
+# 2019-11-15
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class GenerateToken extends E implements ElementI {
 	/**

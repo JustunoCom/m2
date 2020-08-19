@@ -2,9 +2,9 @@
 namespace Justuno\M2\Plugin\App\Router;
 use Justuno\M2\Controller\Js;
 use Magento\Framework\App\Router\ActionList as Sb;
-// 2020-03-14
-// "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
-// https://github.com/justuno-com/m2/issues/10
+# 2020-03-14
+# "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
+# https://github.com/justuno-com/m2/issues/10
 final class ActionList {
 	/**
 	 * 2020-03-14

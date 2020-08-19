@@ -1,7 +1,7 @@
 <?php
 namespace Justuno\M2;
 use Df\Framework\W\Result\Json;
-// 2019-10-30
+# 2019-10-30
 final class Response {
 	/**
 	 * 2019-11-20
@@ -15,7 +15,7 @@ final class Response {
 	 */
 	static function p(\Closure $f, $auth = false) {/** @var array(string => mixed) $r */
 		try {
-			if ($auth && !df_my_local()
+			if ($auth && !ju_my_local()
 				&& df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')
 			) {
 				df_error('Please provide a valid token key');

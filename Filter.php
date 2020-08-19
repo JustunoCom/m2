@@ -4,7 +4,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\Directory\Helper\Data as DirectoryH;
 use Magento\Framework\Data\Collection\AbstractDb as C;
 use Magento\Sales\Model\ResourceModel\Order\Collection as OC;
-// 2019-10-31
+# 2019-10-31
 final class Filter {
 	/**
 	 * 2019-10-31

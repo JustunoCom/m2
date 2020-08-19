@@ -2,7 +2,7 @@
 namespace Justuno\M2\Inventory;
 use Magento\Catalog\Model\Product as P;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
-// 2020-05-06
+# 2020-05-06
 final class Variants {
 	/**
 	 * 2019-10-30
@@ -12,9 +12,9 @@ final class Variants {
 	 */
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
 		if ('configurable' !== $p->getTypeId()) {
-			// 2019-30-31
-			// "Products: some Variants are objects instead of arrays of objects":
-			// https://github.com/justuno-com/m1/issues/32
+			# 2019-30-31
+			# "Products: some Variants are objects instead of arrays of objects":
+			# https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
 		}
 		else {

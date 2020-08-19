@@ -3,7 +3,7 @@ namespace Justuno\M2\Catalog;
 use Magento\Catalog\Api\Data\ProductInterface as IP;
 use Magento\Catalog\Model\Product as P;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
-// 2019-10-30
+# 2019-10-30
 final class Variants {
 	/**
 	 * 2019-10-30
@@ -13,20 +13,20 @@ final class Variants {
 	 */
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
 		if ('configurable' !== $p->getTypeId()) {
-			// 2019-30-31
-			// "Products: some Variants are objects instead of arrays of objects":
-			// https://github.com/justuno-com/m1/issues/32
+			# 2019-30-31
+			# "Products: some Variants are objects instead of arrays of objects":
+			# https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
 		}
 		else {
 			$ct = $p->getTypeInstance(); /** @var Configurable $ct */
-			// 2019-30-31
-			// "A configurable product without any associated child products does not produce variants":
-			// https://github.com/justuno-com/m1/issues/26
+			# 2019-30-31
+			# "A configurable product without any associated child products does not produce variants":
+			# https://github.com/justuno-com/m1/issues/26
 			if (!($children = $ct->getUsedProducts($p))) { /** @var P[] $children */
-				// 2019-30-31
-				// "Products: some Variants are objects instead of arrays of objects":
-				// https://github.com/justuno-com/m1/issues/32
+				# 2019-30-31
+				# "Products: some Variants are objects instead of arrays of objects":
+				# https://github.com/justuno-com/m1/issues/32
 				$r = [self::variant($p)];
 			}
 			else {
@@ -74,9 +74,9 @@ final class Variants {
 		 * but using the variant's pricing of course»: https://github.com/justuno-com/m1/issues/25
 		 */
 		,'MSRP' => (float)($p['msrp'] ?: ($p['price'] ?: $p->getPrice()))
-		// 2019-10-30
-		// «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
-		// or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+		# 2019-10-30
+		# «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+		# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
 		,'SalePrice' => (float)$p->getPrice()
 		,'SKU' => $p->getSku()
 		,'Title' => $p->getName()

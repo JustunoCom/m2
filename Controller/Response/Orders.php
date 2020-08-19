@@ -8,7 +8,7 @@ use Magento\Framework\App\Action\Action as _P;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Address as A;
 use Magento\Sales\Model\Order\Item as OI;
-// 2019-11-20
+# 2019-11-20
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Orders extends _P {
 	/**
@@ -43,15 +43,15 @@ class Orders extends _P {
 		,'IP' => $o->getRemoteIp()
 		,'LineItems' => df_oqi_leafs($o, function(OI $i) {return [
 			'OrderId' => $i->getOrderId()
-			// 2019-10-31
-			// Orders: «lineItem prices currently being returned in the orders feed are 0 always»:
-			// https://github.com/justuno-com/m1/issues/31
+			# 2019-10-31
+			# Orders: «lineItem prices currently being returned in the orders feed are 0 always»:
+			# https://github.com/justuno-com/m1/issues/31
 			,'Price' => df_oqi_price($i)
 			,'ProductId' => (string)df_oqi_top($i)->getProductId()
 			,'TotalDiscount' => df_oqi_discount($i)
-			// 2019-10-31
-			// Orders: «VariantID for lineItems is currently hardcoded as ''»:
-			// https://github.com/justuno-com/m1/issues/29
+			# 2019-10-31
+			# Orders: «VariantID for lineItems is currently hardcoded as ''»:
+			# https://github.com/justuno-com/m1/issues/29
 			,'VariantId' => $i->getProductId()
 		];})
 		,'OrderNumber' => $o->getId()
