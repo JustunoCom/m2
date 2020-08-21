@@ -47,6 +47,6 @@ class GenerateToken extends E implements ElementI {
 		 * @see \Magento\MediaStorage\Block\System\Config\System\Storage\Media\Synchronize::render()
 		 */
 		$this->unsetData(['can_use_default_value', 'can_use_website_value', 'scope']);
-		df_fe_init($this, __CLASS__);
+		ju_fe_init($this, __CLASS__);
 	}
 }
