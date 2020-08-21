@@ -8,7 +8,7 @@ use Magento\Framework\App\Response\HttpInterface as IR;
  * https://github.com/justuno-com/m2/issues/10
  * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
  */
-class Js extends \Df\Framework\W\Result {
+class Js extends \Justuno\Core\Framework\W\Result {
 	/**
 	 * 2020-03-14
 	 * We can use the PHP «final» keyword here,
