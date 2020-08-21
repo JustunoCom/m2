@@ -52,7 +52,7 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 		# https://github.com/justuno-com/m2/issues/6
 		if (ju_table_exists($t)) {
 			foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
-				df_conn()->createTrigger(df_trigger()
+				ju_conn()->createTrigger(df_trigger()
 					->addStatement($sql)
 					->setEvent($e)
 					->setName(df_ccc('__', 'justuno', $t, strtolower($e), $suffix))
