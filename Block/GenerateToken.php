@@ -25,7 +25,7 @@ class GenerateToken extends E implements ElementI {
 	 * https://github.com/magento/magento2/blob/2.2.0-RC1.8/lib/internal/Magento/Framework/Data/Form/Element/AbstractElement.php#L426-L441
 	 * @return string
 	 */
-	function getElementHtml() {return df_block(W::class, ['id' => $this->getHtmlId(), 'label' => 'Generate Token'])->toHtml();}
+	function getElementHtml() {return ju_block(W::class, ['id' => $this->getHtmlId(), 'label' => 'Generate Token'])->toHtml();}
 
 	/**
 	 * 2017-06-27
@@ -37,8 +37,8 @@ class GenerateToken extends E implements ElementI {
 	 * «Understanding the Web Server OAuth Authentication Flow - Force.com REST API Developer Guide»
 	 * https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_web_server_oauth_flow.htm#d15809e72
 	 * @override
-	 * @see \Df\Framework\Form\ElementI::onFormInitialized()
-	 * @used-by \Df\Framework\Plugin\Data\Form\Element\AbstractElement::afterSetForm()
+	 * @see \Justuno\Core\Framework\Form\ElementI::onFormInitialized()
+	 * @used-by \Justuno\Core\Framework\Plugin\Data\Form\Element\AbstractElement::afterSetForm()
 	 */
 	final function onFormInitialized() {
 		/**
