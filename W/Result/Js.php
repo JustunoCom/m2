@@ -14,9 +14,8 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	 * We can use the PHP «final» keyword here,
 	 * because the method is absent in @see \Magento\Framework\Controller\ResultInterface
 	 * @override
-	 * @see \Df\Framework\W\Result::__toString()
+	 * @see \Justuno\Core\Framework\W\Result::__toString()
 	 * @used-by render()
-	 * @used-by \Df\Payment\W\Action::execute()
 	 * @return string
 	 */
 	final function __toString() {return $this->_r;}
@@ -24,8 +23,8 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	/**
 	 * 2020-03-14
 	 * @override
-	 * @see \Df\Framework\W\Result::render()
-	 * @used-by \Df\Framework\W\Result::renderResult()
+	 * @see \Justuno\Core\Framework\W\Result::render()
+	 * @used-by \Justuno\Core\Framework\W\Result::renderResult()
 	 * @param IR|R $r
 	 */
 	final protected function render(IR $r) {
