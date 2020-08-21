@@ -1,6 +1,6 @@
 <?php
 namespace Justuno\M2\Block;
-use Df\Framework\Form\ElementI;
+use Justuno\Core\Framework\Form\ElementI;
 use Magento\Backend\Block\Widget\Button as W;
 use Magento\Framework\Data\Form\Element\AbstractElement as E;
 # 2019-11-15
