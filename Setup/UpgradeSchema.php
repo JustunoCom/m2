@@ -54,7 +54,7 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 					->addStatement($sql)
 					->setEvent($e)
 					->setName(ju_ccc('__', 'justuno', $t, strtolower($e), $suffix))
-					->setTable(df_table($t))
+					->setTable(ju_table($t))
 					->setTime(T::TIME_AFTER)
 				);
 			}
