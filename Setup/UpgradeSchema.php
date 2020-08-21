@@ -3,7 +3,7 @@ namespace Justuno\M2\Setup;
 use Magento\Framework\DB\Ddl\Trigger as T;
 # 2019-11-22
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
-class UpgradeSchema extends \Df\Framework\Upgrade\Schema {
+class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 	/**
 	 * 2019-11-22
 	 * @override
