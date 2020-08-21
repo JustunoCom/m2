@@ -53,7 +53,7 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	 */
 	final static function i($name) {
 		$i = new self; /** @var self $i */
-		$i->_r = df_module_file(__CLASS__, "js/$name", 'js', true, function($f) {return file_get_contents($f);});
+		$i->_r = ju_module_file(__CLASS__, "js/$name", 'js', true, function($f) {return file_get_contents($f);});
 		return $i;
 	}
 }
