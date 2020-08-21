@@ -7,8 +7,8 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 	/**
 	 * 2019-11-22
 	 * @override
-	 * @see \Df\Framework\Upgrade::_process()
-	 * @used-by \Df\Framework\Upgrade::process()
+	 * @see \Justuno\Core\Framework\Upgrade::_process()
+	 * @used-by \Justuno\Core\Framework\Upgrade::process()
 	 */
 	final protected function _process() {
 		if ($this->v('1.1.7')) {
