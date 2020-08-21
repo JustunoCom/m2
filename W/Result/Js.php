@@ -29,7 +29,7 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	 */
 	final protected function render(IR $r) {
 		$r->setBody($this->__toString());
-		df_response_content_type('application/javascript', $r);
+		ju_response_content_type('application/javascript', $r);
 	}
 
 	/**
