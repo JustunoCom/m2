@@ -1,6 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Response;
-use Df\Framework\W\Result\Json;
+use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Catalog\Images as cImages;
 use Justuno\M2\Catalog\Variants as cVariants;
 use Justuno\M2\Filter;
