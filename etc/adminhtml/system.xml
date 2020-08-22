@@ -10,7 +10,6 @@
 			<tab>justuno</tab>
 			<resource>Justuno_M2::settings</resource>
 			<group id='options_interface' showInDefault='1' sortOrder='10'>
-				<frontend_model>Df\Config\Fieldset</frontend_model>
 				<label>Options</label>
 				<field id='accid' showInDefault='1' sortOrder='1' type='text'>
 					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
