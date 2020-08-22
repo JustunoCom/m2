@@ -1,5 +1,5 @@
 // 2019-11-15
-define(['df', 'jquery', 'domReady!'], function(df, $) {return (
+define(['jquery', 'domReady!'], function($) {return (
 	/**
 	 * @param {Object} config
 	 * @param {String} config.id
@@ -9,7 +9,9 @@ define(['df', 'jquery', 'domReady!'], function(df, $) {return (
 		$e.click(function() {
 			function randomString(length, chars) {
 				var result = '';
-				for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+				for (var i = length; i > 0; --i) {
+					result += chars[Math.floor(Math.random() * chars.length)];
+				}
 				return result;
 			}
 			var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
