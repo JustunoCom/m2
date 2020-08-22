@@ -1,6 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Cart;
-use Df\Framework\W\Result\Json;
+use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
 use Magento\Framework\App\Action\Action as _P;
