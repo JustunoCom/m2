@@ -1,6 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Response;
-use Df\Framework\W\Result\Json;
+use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Inventory\Variants as cVariants;
 use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
