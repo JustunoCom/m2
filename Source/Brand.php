@@ -5,8 +5,8 @@ final class Brand extends \Justuno\Core\Config\Source {
 	/**
 	 * 2019-11-15
 	 * @override
-	 * @see \Df\Config\Source::map()
-	 * @used-by \Df\Config\Source::toOptionArray()
+	 * @see \Justuno\Core\Config\Source::map()
+	 * @used-by \Justuno\Core\Config\Source::toOptionArray()
 	 * @return array(string => string)
 	 */	
 	protected function map() {return df_map_0(array_column(
