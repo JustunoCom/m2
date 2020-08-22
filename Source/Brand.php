@@ -11,7 +11,7 @@ final class Brand extends \Justuno\Core\Config\Source {
 	 */	
 	protected function map() {return ju_map_0(array_column(
 		array_filter(
-			df_fetch('eav_attribute', ['attribute_code', 'frontend_label', 'is_user_defined'], 'entity_type_id', 4)
+			ju_fetch('eav_attribute', ['attribute_code', 'frontend_label', 'is_user_defined'], 'entity_type_id', 4)
 			,function(array $a) {return
 				/**
 				 * 2019-10-25 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
