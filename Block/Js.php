@@ -27,12 +27,12 @@ class Js extends _P {
 	 * @return string
 	 */
 	final protected function _toHtml() { /** @var string $r */
-		if (!df_is_guid($id = ju_cfg('justuno_settings/options_interface/accid'))) {
+		if (!ju_is_guid($id = ju_cfg('justuno_settings/options_interface/accid'))) {
 			$r = '';
 		}
 		else {
 			$p = ['merchantId' => $id]; /** @var array(string => mixed) $p */
-			if (df_is_catalog_product_view()) {
+			if (ju_is_catalog_product_view()) {
 				$p += ['action' => df_action_name(), 'productId' => df_product_current_id()];
 			}
 			elseif (df_is_checkout_success()) {
