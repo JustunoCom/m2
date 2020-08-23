@@ -13,7 +13,7 @@ final class Images {
 		# 2019-10-30
 		# «"ImageURL" should be "imageURL1" and we should have "imageURL2" and "ImageURL3"
 		# if there are image available»: https://github.com/justuno-com/m1/issues/17
-		'ImageURL' . (1 + $idx), df_catalog_image_h()
+		'ImageURL' . (1 + $idx), ju_catalog_image_h()
 			->init($p, 'image', ['type' => 'image'])
 			->keepAspectRatio(true)
 			->constrainOnly(true)
