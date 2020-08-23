@@ -26,7 +26,7 @@ class Add extends _P {
 		 * https://github.com/magento/magento2/blob/2.3.3/app/code/Magento/Checkout/Controller/Cart/Add.php#L56-L75
 		 */
 		$p = self::product('product'); /** @var P $p */
-		$params = ['product' => $p->getId(), 'qty' => df_nat(ju_request('qty', 1))];
+		$params = ['product' => $p->getId(), 'qty' => ju_nat(ju_request('qty', 1))];
 		if (df_configurable($p)) {
 			$ch = self::product('variant'); /** @var P $ch */
 			$sa = []; /** @var array(int => int) $sa */
@@ -49,5 +49,5 @@ class Add extends _P {
 	 * @param string $k
 	 * @return P
 	 */
-	private static function product($k) {return df_product(df_nat(ju_request($k)), true);}
+	private static function product($k) {return df_product(ju_nat(ju_request($k)), true);}
 }
