@@ -59,7 +59,7 @@ final class Variants {
 		 * all the variants that are not disabled still show their entered inventory»:
 		 * https://github.com/justuno-com/m1/issues/35
 		 */
-		,'InventoryQuantity' => $p->isDisabled() || ($parent && $parent->isDisabled()) ? -9999 : df_qty($p)
+		,'InventoryQuantity' => $p->isDisabled() || ($parent && $parent->isDisabled()) ? -9999 : ju_qty($p)
 		/**
 		 * 2019-10-30
 		 * 1) «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
