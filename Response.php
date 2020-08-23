@@ -16,7 +16,7 @@ final class Response {
 	static function p(\Closure $f, $auth = false) {/** @var array(string => mixed) $r */
 		try {
 			if ($auth && !ju_my_local()
-				&& df_request_header('Authorization') !== df_cfg('justuno_settings/options_interface/token_key')
+				&& df_request_header('Authorization') !== ju_cfg('justuno_settings/options_interface/token_key')
 			) {
 				df_error('Please provide a valid token key');
 			}

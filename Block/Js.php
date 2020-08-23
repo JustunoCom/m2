@@ -27,7 +27,7 @@ class Js extends _P {
 	 * @return string
 	 */
 	final protected function _toHtml() { /** @var string $r */
-		if (!df_is_guid($id = df_cfg('justuno_settings/options_interface/accid'))) {
+		if (!df_is_guid($id = ju_cfg('justuno_settings/options_interface/accid'))) {
 			$r = '';
 		}
 		else {

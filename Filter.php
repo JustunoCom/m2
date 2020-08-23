@@ -40,7 +40,7 @@ final class Filter {
 			 */
 			$d = function($s) {
 				$f = 'Y-m-d H:i:s'; /** @var string $f */
-				$tz = df_cfg(DirectoryH::XML_PATH_DEFAULT_TIMEZONE); /** @var string $tz */
+				$tz = ju_cfg(DirectoryH::XML_PATH_DEFAULT_TIMEZONE); /** @var string $tz */
 				$dt = new \DateTime(date($f, strtotime($s)), new \DateTimeZone($tz));	/** @var \DateTime $dt */
 				return date($f, $dt->format('U'));
 			};
