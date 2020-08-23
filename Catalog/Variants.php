@@ -80,7 +80,7 @@ final class Variants {
 		,'SalePrice' => (float)$p->getPrice()
 		,'SKU' => $p->getSku()
 		,'Title' => $p->getName()
-	] + df_map_kr(function($id, $code) use($p) {return [
+	] + ju_map_kr(function($id, $code) use($p) {return [
 		/**
 		 * 2019-10-30
 		 * «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
