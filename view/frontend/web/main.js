@@ -21,7 +21,7 @@ define([], function() {return (
 			if (cfg.order) {
 				juapp('order', cfg.orderId, cfg.order);
 			}
-			else require(['df-lodash', 'Magento_Customer/js/customer-data'], function(_, cd) {
+			else require(['ju-lodash', 'Magento_Customer/js/customer-data'], function(_, cd) {
 				if (cfg.productId) {
 					juapp('local', 'pageType', cfg.action);
 					juapp('local', 'prodId', cfg.productId);
