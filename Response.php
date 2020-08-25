@@ -18,7 +18,7 @@ final class Response {
 			if ($auth && !ju_my_local()
 				&& ju_request_header('Authorization') !== ju_cfg('justuno_settings/options_interface/token_key')
 			) {
-				df_error('Please provide a valid token key');
+				ju_error('Please provide a valid token key');
 			}
 			$r = $f();
 		}
