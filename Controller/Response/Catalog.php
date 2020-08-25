@@ -26,7 +26,7 @@ class Catalog extends _P {
 	 * @return Json
 	 */
 	function execute() {return R::p(function() {
-		$pc = df_product_c(); /** @var PC $pc */
+		$pc = ju_product_c(); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		/**
 		 * 2019-10-30
