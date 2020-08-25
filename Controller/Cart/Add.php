@@ -27,7 +27,7 @@ class Add extends _P {
 		 */
 		$p = self::product('product'); /** @var P $p */
 		$params = ['product' => $p->getId(), 'qty' => ju_nat(ju_request('qty', 1))];
-		if (df_configurable($p)) {
+		if (ju_configurable($p)) {
 			$ch = self::product('variant'); /** @var P $ch */
 			$sa = []; /** @var array(int => int) $sa */
 			foreach ($p->getTypeInstance(true)->getConfigurableAttributesAsArray($p) as $a) {
