@@ -20,6 +20,6 @@ final class ActionList {
 	 * @return string
 	 */
 	function aroundGet(Sb $sb, \Closure $f, $m, $area, $ns, $action) {return 
-		$m === df_module_name($this) && df_ends_with($action, '.js') ? Js::class : $f($m, $area, $ns, $action)
+		$m === df_module_name($this) && ju_ends_with($action, '.js') ? Js::class : $f($m, $area, $ns, $action)
 	;}
 }
