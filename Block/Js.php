@@ -44,7 +44,7 @@ class Js extends _P {
 					,'total' => $o->getGrandTotal()
 				]];
 			}
-			$r = df_js(__CLASS__, '', $p);
+			$r = ju_js(__CLASS__, '', $p);
 		}
 		return $r;
 	}
