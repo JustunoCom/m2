@@ -48,5 +48,5 @@ class Add extends _P {
 	 * @param string $k
 	 * @return P
 	 */
-	private static function product($k) {return df_product(ju_nat(ju_request($k)), true);}
+	private static function product($k) {return ju_product(ju_nat(ju_request($k)), true);}
 }
