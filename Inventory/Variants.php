@@ -60,7 +60,7 @@ final class Variants {
 			 */
 			/** @var P[] $ch */
 			$r = !($ch = array_filter($ct->getUsedProducts($p), function(P $p) {return !$p->isDisabled();}))
-				? [self::variant($p)] : array_values(df_map($ch, function(P $c) {return self::variant($c);}))
+				? [self::variant($p)] : array_values(ju_map($ch, function(P $c) {return self::variant($c);}))
 			;
 		}
 		return $r;
