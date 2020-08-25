@@ -33,7 +33,7 @@ class Js extends _P {
 		else {
 			$p = ['merchantId' => $id]; /** @var array(string => mixed) $p */
 			if (ju_is_catalog_product_view()) {
-				$p += ['action' => ju_action_name(), 'productId' => df_product_current_id()];
+				$p += ['action' => ju_action_name(), 'productId' => ju_product_current_id()];
 			}
 			elseif (df_is_checkout_success()) {
 				$o = df_order_last(); /** @var O $o */
