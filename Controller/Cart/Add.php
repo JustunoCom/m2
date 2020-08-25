@@ -37,7 +37,7 @@ class Add extends _P {
 		}
 		ju_cart()->addProduct($p, $params);
 		ju_cart()->save();
-		df_dispatch('checkout_cart_add_product_complete', [
+		ju_dispatch('checkout_cart_add_product_complete', [
 			'product' => $p, 'request' => $this->getRequest(), 'response' => $this->getResponse()
 		]);
 	});}
