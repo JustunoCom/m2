@@ -30,8 +30,7 @@ class Add extends _P {
 		if (ju_configurable($p)) {
 			$ch = self::product('variant'); /** @var P $ch */
 			$sa = []; /** @var array(int => int) $sa */
-			foreach ($p->getTypeInstance(true)->getConfigurableAttributesAsArray($p) as $a) {
-				/** @var array(string => mixed) $a */
+			foreach ($p->getTypeInstance(true)->getConfigurableAttributesAsArray($p) as $a) {/** @var array(string => mixed) $a */
 				$sa[(int)$a['attribute_id']] = $ch[$a['attribute_code']];
 			}
 			$params['super_attribute'] = $sa;
