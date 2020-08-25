@@ -35,8 +35,8 @@ class Add extends _P {
 			}
 			$params['super_attribute'] = $sa;
 		}
-		df_cart()->addProduct($p, $params);
-		df_cart()->save();
+		ju_cart()->addProduct($p, $params);
+		ju_cart()->save();
 		df_dispatch('checkout_cart_add_product_complete', [
 			'product' => $p, 'request' => $this->getRequest(), 'response' => $this->getResponse()
 		]);
