@@ -76,7 +76,7 @@ class Orders extends _P {
 	 * @return array(string => mixed)
 	 */
 	private static function customer(O $o) {
-		$c = df_new_om(C::class); /** @var C $c */
+		$c = ju_new_om(C::class); /** @var C $c */
 		if ($o->getCustomerId()) {
 			$c->load($o->getCustomerId());
 		}
