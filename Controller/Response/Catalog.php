@@ -26,7 +26,6 @@ class Catalog extends _P {
 	 * @return Json
 	 */
 	function execute() {return R::p(function() {
-		df_sentry('Justuno_Core', new \Exception('TEST'), ['extra' => df_request_o()->getParams()]);
 		$pc = df_product_c(); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		/**
