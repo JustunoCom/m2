@@ -49,7 +49,7 @@ class Catalog extends _P {
 		Filter::p($pc);
 		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = ju_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
-		return array_values(df_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
+		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = df_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
 			$r = [
