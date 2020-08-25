@@ -109,8 +109,7 @@ class Orders extends _P {
 	/**
 	 * 2019-11-07
 	 * 2019-11-07
-	 * 1) «Allowed memory size exausted» on `'OrdersCount' => $oc->count()`:
-	 * https://github.com/justuno-com/m1/issues/36
+	 * 1) «Allowed memory size exausted» on `'OrdersCount' => $oc->count()`: https://github.com/justuno-com/m1/issues/36
 	 * 2) I have replaced the customer collection with direct SQL queries.
 	 * @used-by ordersCount()
 	 * @used-by totalSpent()
