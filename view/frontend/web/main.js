@@ -3,10 +3,10 @@ define([], function() {return (
 	/**
 	 * @param {Object} cfg
 	 * @param {String} cfg.merchantId
-	 * df_is_catalog_product_view():
+	 * ju_is_catalog_product_view():
 	 * @param {?String} cfg.action
 	 * @param {?Number} cfg.productId
-	 * df_is_checkout_success():
+	 * ju_is_checkout_success():
 	 * @param {?Number} cfg.orderId
 	 * @param {?Object} cfg.order
 	 */
