@@ -47,7 +47,7 @@ class Orders extends _P {
 			# Orders: «lineItem prices currently being returned in the orders feed are 0 always»:
 			# https://github.com/justuno-com/m1/issues/31
 			,'Price' => ju_oqi_price($i)
-			,'ProductId' => (string)df_oqi_top($i)->getProductId()
+			,'ProductId' => (string)ju_oqi_top($i)->getProductId()
 			,'TotalDiscount' => ju_oqi_discount($i)
 			# 2019-10-31
 			# Orders: «VariantID for lineItems is currently hardcoded as ''»:
