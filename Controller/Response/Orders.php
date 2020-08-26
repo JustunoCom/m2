@@ -119,6 +119,6 @@ class Orders extends _P {
 	 */
 	private static function stat(O $o, $v) {
 		$k = $o->getCustomerId() ? 'customer_id' : 'customer_email'; /** @var string $k */
-		return df_fetch_one('sales_order', ['v' => $v], [$k => $o[$k]]);
+		return ju_fetch_one('sales_order', ['v' => $v], [$k => $o[$k]]);
 	}	
 }
