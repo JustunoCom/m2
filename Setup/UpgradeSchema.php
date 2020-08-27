@@ -50,10 +50,15 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 		# 2019-11-30 "The `inventory_reservation` table is absent in Magento < 2.3": https://github.com/justuno-com/m2/issues/6
 		if (ju_table_exists($t)) {
 			foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
+				// 2020-08-27
+				// «This version of MariaDB doesn't yet support
+				// 'multiple triggers with the same action time and event for one table»:
+				// https://github.com/justuno-com/m2/issues/15
+				ju_conn()->dropTrigger($name = ju_ccc('__', 'justuno', $t, strtolower($e), $suffix)); /** @var string $name */
 				ju_conn()->createTrigger(ju_trigger()
 					->addStatement($sql)
 					->setEvent($e)
-					->setName(ju_ccc('__', 'justuno', $t, strtolower($e), $suffix))
+					->setName($name)
 					->setTable(ju_table($t))
 					->setTime(T::TIME_AFTER)
 				);
