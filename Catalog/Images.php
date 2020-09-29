@@ -1,6 +1,7 @@
 <?php
 namespace Justuno\M2\Catalog;
 use Magento\Catalog\Model\Product as P;
+use Magento\Framework\DataObject as _DO;
 # 2019-10-30
 final class Images {
 	/**
@@ -9,7 +10,7 @@ final class Images {
 	 * @param P $p
 	 * @return array(array(string => mixed))
 	 */
-	static function p(P $p) {return ju_map_kr(function($idx, $i) use($p) {return [
+	static function p(P $p) {return ju_map_kr(function($idx, _DO $i) use($p) {return [
 		# 2019-10-30
 		# «"ImageURL" should be "imageURL1" and we should have "imageURL2" and "ImageURL3"
 		# if there are image available»: https://github.com/justuno-com/m1/issues/17
@@ -24,5 +25,10 @@ final class Images {
 			# Could we change it to link to the small image?»: https://github.com/justuno-com/m1/issues/18
 			->resize(200, 200)
 			->getUrl()
-	];}, array_values($p->getMediaGalleryImages()->getItems()));}
+	];}, ju_sort(array_values($p->getMediaGalleryImages()->getItems()), function(_DO $a, _DO $b) {
+		# 2020-09-29
+		# "Images with the «_hero_» string should have a priority in product feeds": https://github.com/justuno-com/m2/issues/17
+		$f = function(_DO $i) {return (int)ju_contains($i['file'], '_hero_');};
+		return $f($b) - $f($a);
+	}));}
 }
