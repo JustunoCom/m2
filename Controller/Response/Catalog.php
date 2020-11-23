@@ -51,6 +51,11 @@ class Catalog extends _P {
 		 * «Filters do not work for `catalog`»: https://github.com/justuno-com/m2/issues/5
 		 */
 		Filter::p($pc);
+		# 2020-11-23
+		# 1) "The `jumagext/response/catalog` response does not contain disabled products":
+		# https://github.com/justuno-com/m2/issues/19
+		# 2) @todo It solves the problem only if the flat mode is disabled.
+		ju_pc_preserve_absent($pc);
 		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = ju_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
 		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */

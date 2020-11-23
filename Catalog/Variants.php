@@ -20,7 +20,9 @@ final class Variants {
 		}
 		else {
 			$ct = $p->getTypeInstance(); /** @var Configurable $ct */
-			if (!($children = $ct->getUsedProducts($p))) { /** @var P[] $children */
+			/** @var P[] $children */
+			$children = ju_pc_preserve_absent_f(function() use($ct, $p) {return $ct->getUsedProducts($p);});
+			if (!$children) {
 				# 2020-11-23
 				# 1) "A configurable product without any associated child products should not produce variants":
 				# https://github.com/justuno-com/m2/issues/21
