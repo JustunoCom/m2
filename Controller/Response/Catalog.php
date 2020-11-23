@@ -26,7 +26,7 @@ class Catalog extends _P {
 	 * @return Json
 	 */
 	function execute() {return R::p(function() {
-		$pc = ju_product_c(); /** @var PC $pc */
+		$pc = ju_pc(); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		/**
 		 * 2019-10-30
@@ -40,6 +40,10 @@ class Catalog extends _P {
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
+		# 2020-11-23
+		# @todo If the flat mode is enabled, then at this point the collection already misses diabled products,
+		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
+		# It is wrong because disabled products should be in the feed: https://github.com/justuno-com/m2/issues/19
 		/**
 		 * 2019-11-22
 		 * @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::addMediaGalleryData() loads the collection,

@@ -30,6 +30,6 @@ class Inventory extends _P {
 		 * 2) @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::setVisibility()
 		 * filters out the disabled products.
 		 */
-		,ju_product_c()->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
+		,ju_pc()->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
 	));}, true);}
 }
