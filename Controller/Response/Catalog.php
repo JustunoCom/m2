@@ -26,6 +26,14 @@ class Catalog extends _P {
 	 * @return Json
 	 */
 	function execute() {return R::p(function() {
+		# 2020-11-23
+		# If the flat mode is enabled, then the products collection misses disabled products,
+		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
+		# It is wrong because disabled products should be in the feed: https://github.com/justuno-com/m2/issues/19
+		# 2020-11-24
+		# 1) "The `jumagext/response/catalog` response does not contain disabled products
+		# if the «Use Flat Catalog Product» option is enabled": https://github.com/justuno-com/m2/issues/23
+		# 2) "Add an ability to temporary disable the flat mode for products": https://github.com/mage2pro/core/issues/149
 		ju_pc_disable_flat();
 		$pc = ju_pc(); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
@@ -41,10 +49,6 @@ class Catalog extends _P {
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
-		# 2020-11-23
-		# @todo If the flat mode is enabled, then at this point the collection already misses disabled products,
-		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
-		# It is wrong because disabled products should be in the feed: https://github.com/justuno-com/m2/issues/19
 		/**
 		 * 2019-11-22
 		 * @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::addMediaGalleryData() loads the collection,
