@@ -20,14 +20,13 @@ final class Variants {
 		}
 		else {
 			$ct = $p->getTypeInstance(); /** @var Configurable $ct */
-			# 2019-30-31
-			# "A configurable product without any associated child products does not produce variants":
-			# https://github.com/justuno-com/m1/issues/26
 			if (!($children = $ct->getUsedProducts($p))) { /** @var P[] $children */
-				# 2019-30-31
-				# "Products: some Variants are objects instead of arrays of objects":
-				# https://github.com/justuno-com/m1/issues/32
-				$r = [self::variant($p)];
+				# 2020-11-23
+				# 1) "A configurable product without any associated child products should not produce variants":
+				# https://github.com/justuno-com/m2/issues/21
+				# 2) It should solve «Products of type `configurable` do not have a quantity»
+				# https://github.com/justuno-com/m2/issues/20
+				$r = [];
 			}
 			else {
 				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
