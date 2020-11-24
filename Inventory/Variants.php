@@ -13,8 +13,7 @@ final class Variants {
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
 		if ('configurable' !== $p->getTypeId()) {
 			# 2019-30-31
-			# "Products: some Variants are objects instead of arrays of objects":
-			# https://github.com/justuno-com/m1/issues/32
+			# "Products: some Variants are objects instead of arrays of objects": https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
 		}
 		else {
@@ -60,7 +59,15 @@ final class Variants {
 			 */
 			/** @var P[] $ch */
 			$r = !($ch = array_filter($ct->getUsedProducts($p), function(P $p) {return !$p->isDisabled();}))
-				? [self::variant($p)] : array_values(ju_map($ch, function(P $c) {return self::variant($c);}))
+				# 2020-11-24
+				# 1) "A configurable product without any associated child products should not produce variants":
+				# https://github.com/justuno-com/m2/issues/21
+				# 2) «We would only want records for Products where the product and at least one of its variants are active.
+				# We don't want to include products that have been disabled or have only disabled variants»:
+				# https://github.com/justuno-com/m2/issues/13#issue-612869130
+				# 3) It should solve «Products of type `configurable` do not have a quantity»
+				# https://github.com/justuno-com/m2/issues/20
+				? [] : array_values(ju_map($ch, function(P $c) {return self::variant($c);}))
 			;
 		}
 		return $r;
