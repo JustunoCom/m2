@@ -14,8 +14,7 @@ final class Variants {
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
 		if ('configurable' !== $p->getTypeId()) {
 			# 2019-30-31
-			# "Products: some Variants are objects instead of arrays of objects":
-			# https://github.com/justuno-com/m1/issues/32
+			# "Products: some Variants are objects instead of arrays of objects": https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
 		}
 		else {
