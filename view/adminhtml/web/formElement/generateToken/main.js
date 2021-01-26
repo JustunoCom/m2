@@ -8,15 +8,15 @@ define(['jquery', 'domReady!'], function($) {return (
 		/** @type {jQuery} HTMLButtonElement */ var $e = $(document.getElementById(config.id));
 		$e.click(function() {
 			function randomString(length, chars) {
-				var result = '';
+				var r = '';
 				for (var i = length; i > 0; --i) {
-					result += chars[Math.floor(Math.random() * chars.length)];
+					r += chars[Math.floor(Math.random() * chars.length)];
 				}
-				return result;
+				return r;
 			}
-			var rString = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-			var s = document.getElementById('justuno_settings_options_interface_token_key');
-			s.value = rString;
+			document.getElementById('justuno_settings_options_interface_token_key').value = randomString(
+				32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+			);
 		});
 	}
 );});
