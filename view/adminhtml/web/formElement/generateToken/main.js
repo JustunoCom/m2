@@ -7,15 +7,15 @@ define(['jquery', 'domReady!'], function($) {return (
 	function(config) {
 		/** @type {jQuery} HTMLButtonElement */ var $e = $(document.getElementById(config.id));
 		$e.click(function() {
-			function randomString(length, chars) {
+			function randomString(chars) {
 				var r = '';
-				for (var i = length; i > 0; --i) {
+				for (var i = 32; i > 0; --i) {
 					r += chars[Math.floor(Math.random() * chars.length)];
 				}
 				return r;
 			}
 			document.getElementById('justuno_settings_options_interface_token_key').value = randomString(
-				32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+				'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 			);
 		});
 	}
