@@ -6,11 +6,8 @@ use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
 use Magento\Catalog\Model\Product\Visibility as V;
 use Magento\Framework\App\Action\Action as _P;
-/**
- * 2020-05-06
- * "Implement an endpoint to return product quantities": https://github.com/justuno-com/m2/issues/13
- * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
- */
+# 2020-05-06 "Implement an endpoint to return product quantities": https://github.com/justuno-com/m2/issues/13
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Inventory extends _P {
 	/**
 	 * 2020-05-06

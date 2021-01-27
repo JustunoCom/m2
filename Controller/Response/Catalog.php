@@ -13,8 +13,7 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Review\Model\Review\Summary as RS;
-# 2019-11-17
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+/** 2019-11-17 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
 	/**
 	 * 2019-11-17
