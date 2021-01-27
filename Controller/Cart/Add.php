@@ -51,7 +51,7 @@ class Add extends _P {
 		ju_dispatch('checkout_cart_add_product_complete', [
 			'product' => $p, 'request' => $this->getRequest(), 'response' => $this->getResponse()
 		]);
-	});}
+	}, false);}
 
 	/**
 	 * 2020-01-21

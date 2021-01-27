@@ -28,5 +28,5 @@ class Inventory extends _P {
 		 * filters out the disabled products.
 		 */
 		,ju_pc()->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
-	));}, true);}
+	));});}
 }

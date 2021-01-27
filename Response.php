@@ -13,7 +13,7 @@ final class Response {
 	 * @param bool $auth [optional]
 	 * @return Json
 	 */
-	static function p(\Closure $f, $auth = false) {/** @var array(string => mixed) $r */
+	static function p(\Closure $f, $auth = true) {/** @var array(string => mixed) $r */
 		try {
 			if ($auth && !ju_my_local()
 				&& ju_request_header('Authorization') !== ju_cfg('justuno_settings/options_interface/token_key')

@@ -148,5 +148,5 @@ class Catalog extends _P {
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
 		}));
-	}, true);}
+	});}
 }
