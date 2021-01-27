@@ -11,22 +11,36 @@
 			<resource>Justuno_M2::settings</resource>
 			<group id='options_interface' showInDefault='1' sortOrder='10'>
 				<label>Options</label>
-				<field id='accid' showInDefault='1' sortOrder='1' type='text'>
-					<label>ACCID (Unique Justuno ACCOUNT ID)</label>
+				<field
+					id='accid'
+					showInDefault='1'
+					showInStore='1'
+					showInWebsite='1'
+					sortOrder='1'
+					type='text'
+				>
+					<label>Justuno Account Number</label>
 					<comment>ACCID is found in the admin settings of your Justuno account in your embed section (XXXXXXXX-XXXX-XXXX-XXXXXXX)</comment>
 				</field>
 				<field
 					id='brand_attribute'
 					showInDefault='1'
-					showInStore='0'
-					showInWebsite='0'
+					showInStore='1'
+					showInWebsite='1'
 					sortOrder='2'
 					type='select'
 				>
 					<label>Brand Attribute</label>
 					<source_model>Justuno\M2\Source\Brand</source_model>
 				</field>
-				<field id='token_key' showInDefault='1' showInStore='0' showInWebsite='0' sortOrder='12' type='text'>
+				<field
+					id='token_key'
+					showInDefault='1'
+					showInStore='1'
+					showInWebsite='1'
+					sortOrder='12'
+					type='text'
+				>
 					<label>API Token Key</label>
 				</field>
 				<field
