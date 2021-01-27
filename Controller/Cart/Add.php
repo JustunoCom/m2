@@ -30,7 +30,15 @@ class Add extends _P {
 		if (ju_configurable($p)) {
 			$ch = self::product('variant'); /** @var P $ch */
 			$sa = []; /** @var array(int => int) $sa */
-			foreach ($p->getTypeInstance(true)->getConfigurableAttributesAsArray($p) as $a) {/** @var array(string => mixed) $a */
+			/**
+			 * 2020-01-27
+			 * 1) The @uses \Magento\Catalog\Model\Product::getTypeInstance() method does not have arguments in Magento 2:
+			 * https://github.com/magento/magento2/blob/2.0.0/app/code/Magento/Catalog/Model/Product.php#L628-L640
+			 * 2) It has an optional $singleton argument with the default `false` value in Magento 1:
+			 * https://github.com/OpenMage/magento-mirror/blob/1.9.4.5/app/code/core/Mage/Catalog/Model/Product.php#L252-L275
+			 * 3) In Magento 2, the method always returns a singleton.
+			 */
+			foreach ($p->getTypeInstance()->getConfigurableAttributesAsArray($p) as $a) {/** @var array(string => mixed) $a */
 				$sa[(int)$a['attribute_id']] = $ch[$a['attribute_code']];
 			}
 			$params['super_attribute'] = $sa;
