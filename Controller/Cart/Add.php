@@ -4,11 +4,11 @@ use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
 use Magento\Framework\App\Action\Action as _P;
-/** 2020-01-21 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+# 2020-01-21 "Implement the «add a configurable product to the cart» endpoint": https://github.com/justuno-com/m2/issues/7
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Add extends _P {
 	/**
 	 * 2020-01-21
-	 * "Implement the «add a configurable product to the cart» endpoint": https://github.com/justuno-com/m2/issues/7
 	 * @see \Magento\Checkout\Controller\Cart\Add::execute()
 	 * https://github.com/magento/magento2/blob/2.3.3/app/code/Magento/Checkout/Controller/Cart/Add.php#L77-L178
 	 * @override
