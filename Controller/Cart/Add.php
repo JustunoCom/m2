@@ -4,8 +4,7 @@ use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Response as R;
 use Magento\Catalog\Model\Product as P;
 use Magento\Framework\App\Action\Action as _P;
-# 2020-01-21
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+/** 2020-01-21 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Add extends _P {
 	/**
 	 * 2020-01-21
