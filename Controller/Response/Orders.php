@@ -8,8 +8,7 @@ use Magento\Framework\App\Action\Action as _P;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Address as A;
 use Magento\Sales\Model\Order\Item as OI;
-# 2019-11-20
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+/** 2019-11-20 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Orders extends _P {
 	/**
 	 * 2019-11-20
