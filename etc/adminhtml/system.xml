@@ -5,11 +5,23 @@
 >
 	<system>
 		<tab id='justuno' sortOrder='999'><label>Justuno</label></tab>
-		<section id='justuno_settings' showInDefault='1' sortOrder='1'>
+		<section
+			id='justuno_settings'
+			showInDefault='1'
+			showInStore='1'
+			showInWebsite='1'
+			sortOrder='1'
+		>
 			<label>Account Configuration</label>
 			<tab>justuno</tab>
 			<resource>Justuno_M2::settings</resource>
-			<group id='options_interface' showInDefault='1' sortOrder='10'>
+			<group
+				id='options_interface'
+				showInDefault='1'
+				showInStore='1'
+				showInWebsite='1'
+				sortOrder='10'
+			>
 				<label>Options</label>
 				<field
 					id='accid'
@@ -20,7 +32,7 @@
 					type='text'
 				>
 					<label>Justuno Account Number</label>
-					<comment>ACCID is found in the admin settings of your Justuno account in your embed section (XXXXXXXX-XXXX-XXXX-XXXXXXX)</comment>
+					<comment><![CDATA[<a href='https://github.com/justuno-com/m2#account-number' target='_blank'>where to find it?</a>]]></comment>
 				</field>
 				<field
 					id='brand_attribute'
