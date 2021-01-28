@@ -13,8 +13,8 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Review\Model\Review\Summary as RS;
-# 2019-11-17
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+use Magento\Store\Api\Data\StoreInterface as IS;
+/** 2019-11-17 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
 	/**
 	 * 2019-11-17
@@ -25,7 +25,7 @@ class Catalog extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {return R::p(function() {
+	function execute() {return R::p(function(IS $s) {
 		# 2020-11-23
 		# If the flat mode is enabled, then the products collection misses disabled products,
 		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
@@ -35,7 +35,7 @@ class Catalog extends _P {
 		# if the «Use Flat Catalog Product» option is enabled": https://github.com/justuno-com/m2/issues/23
 		# 2) "Add an ability to temporary disable the flat mode for products": https://github.com/mage2pro/core/issues/149
 		ju_pc_disable_flat();
-		$pc = ju_pc(); /** @var PC $pc */
+		$pc = ju_pc($s); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		/**
 		 * 2019-10-30
@@ -149,5 +149,5 @@ class Catalog extends _P {
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
 		}));
-	}, true);}
+	});}
 }
