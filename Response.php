@@ -53,7 +53,7 @@ final class Response {
 		}
 		else {
 			$sel = ju_db_from('core_config_data', ['scope', 'scope_id']); /** @var Sel $sel */
-			$sel->where('? = path', 'justuno_settings/options_interface/accid');
+			$sel->where('? = path', 'justuno_settings/options_interface/token_key');
 			$sel->where('? = value', $token);
 			$w = function(array $a) {return jutr(jua($a, 'scope'), array_flip([
 				SS::SCOPE_STORES, SS::SCOPE_WEBSITES, IScopeConfig::SCOPE_TYPE_DEFAULT
