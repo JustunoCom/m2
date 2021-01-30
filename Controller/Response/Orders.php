@@ -63,6 +63,7 @@ class Orders extends _P {
 		,'TotalPrice' => (float)$o->getGrandTotal()
 		,'TotalTax' => (float)$o->getTaxAmount()
 		,'UpdatedAt' => $o->getUpdatedAt()
+	# 2021-01-28 "Make the module multi-store aware": https://github.com/justuno-com/m2/issues/24
 	];}, Filter::p(ju_order_c()->addFieldToFilter('store_id', $s->getId()))->getItems()));});}
 	
 	/**
