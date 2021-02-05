@@ -64,6 +64,7 @@ class Catalog extends _P {
 		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = ju_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
+			$price = self::price($p); /** @var float $price */
 			$r = [
 				'Categories' => array_values(array_map(function(C $c) {return [
 					# 2021-02-05
@@ -97,12 +98,12 @@ class Catalog extends _P {
 				# https://github.com/justuno-com/m1/issues/6
 				# 2019-10-31
 				# «The MSRP should pull in this order MSRP > Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/20
-				,'MSRP' => (float)($p['msrp'] ?: ($p['price'] ?: $p->getPrice()))
+				,'MSRP' => (float)($p['msrp'] ?: ($p['price'] ?: $price))
 				# 2019-10-30
 				# «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
 				# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
 				# 2019-10-31 «Price should be Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/21
-				,'Price' => (float)($p['price'] ?: $p->getPrice())
+				,'Price' => (float)($p['price'] ?: $price)
 				# 2019-10-30 «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
 				,'ReviewsCount' => (int)$rs->getReviewsCount()
 				# 2019-10-30
@@ -113,7 +114,7 @@ class Catalog extends _P {
 				# 2019-10-30
 				# «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
 				# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
-				,'SalePrice' => (float)$p->getPrice()
+				,'SalePrice' => $price
 				,'Title' => $p['name']
 				,'UpdatedAt' => $p['updated_at']
 				,'URL' => $p->getProductUrl()
@@ -122,7 +123,7 @@ class Catalog extends _P {
 				# I still need at least one variant in the Variants array»: https://github.com/justuno-com/m1/issues/5
 				,'Variants' => cVariants::p($p)
 			] + cImages::p($p);
-			if ('configurable' === $p->getTypeId()) {
+			if (ju_configurable($p)) {
 				$ct = $p->getTypeInstance(); /** @var Configurable $ct */
 				# 2021-02-05
 				# «The OptionType1 and 2 here seem to be internal identifiers rather than whats displayed on the site.
@@ -143,4 +144,27 @@ class Catalog extends _P {
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
 		}));
 	});}
+
+	/**
+	 * 2021-02-05
+	 * @used-by execute()
+	 * @param P $p
+	 * @return float
+	 */
+	private static function price(P $p) {
+		$r = $p->getPrice(); /** @var float $r */
+		# 2021-02-05
+		# 1) «the parent product has 0 for pricing or MSRP and price are correct and then saleprice is 0 which isn't correct»:
+		# https://github.com/justuno-com/m2/issues/29
+		# 2) https://webkul.com/blog/get-price-range-configurable-product-magento-2
+		if (!$r && ju_configurable($p)) {
+			/**
+			 * 2021-02-05
+			 * @uses \Magento\ConfigurableProduct\Pricing\Price\ConfigurableRegularPrice::getMinRegularAmount()
+			 * always returns an object even in the configurable product does have children.
+			 */
+			$r = $p->getPriceInfo()->getPrice('regular_price')->getMinRegularAmount()->getValue();
+		}
+		return (float)$r;
+	}
 }

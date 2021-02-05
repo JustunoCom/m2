@@ -12,7 +12,7 @@ final class Variants {
 	 * @return array(array(string => mixed))
 	 */
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
-		if ('configurable' !== $p->getTypeId()) {
+		if (!ju_configurable($p)) {
 			# 2019-30-31
 			# "Products: some Variants are objects instead of arrays of objects": https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
