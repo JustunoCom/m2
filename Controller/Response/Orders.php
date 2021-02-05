@@ -24,19 +24,15 @@ class Orders extends _P {
 		'CountryCode' => $o->getBillingAddress()->getCountryId()
 		,'CreatedAt' => $o->getCreatedAt()
 		,'Currency' => $o->getOrderCurrencyCode()
-		/**
-		 * 2019-10-31
-		 * Orders: «if the customer checked out as a guest
-		 * we need still need a Customer object and it needs the ID to be a randomly generated UUID
-		 * or other random string»: https://github.com/justuno-com/m1/issues/30
-		 */
+		# 2019-10-31
+		# Orders: «if the customer checked out as a guest
+		# we need still need a Customer object and it needs the ID to be a randomly generated UUID
+		# or other random string»: https://github.com/justuno-com/m1/issues/30
 		,'Customer' => self::customer($o)
-		/**
-		 * 2019-10-31
-		 * Orders: «if the customer checked out as a guest
-		 * we need still need a Customer object and it needs the ID to be a randomly generated UUID
-		 * or other random string»: https://github.com/justuno-com/m1/issues/30
-		 */
+		# 2019-10-31
+		# Orders: «if the customer checked out as a guest
+		# we need still need a Customer object and it needs the ID to be a randomly generated UUID
+		# or other random string»: https://github.com/justuno-com/m1/issues/30
 		,'CustomerId' => $o->getCustomerId() ?: $o->getCustomerEmail()
 		,'Email' => $o->getCustomerEmail()
 		,'ID' => $o->getIncrementId()
@@ -90,12 +86,10 @@ class Orders extends _P {
 			,'CreatedAt' => $c['created_at']
 			,'Email' => $o->getCustomerEmail()
 			,'FirstName' => $o->getCustomerFirstname()
-			/**
-			 * 2019-10-31
-			 * Orders: «if the customer checked out as a guest
-			 * we need still need a Customer object and it needs the ID to be a randomly generated UUID
-			 * or other random string»: https://github.com/justuno-com/m1/issues/30
-			 */
+			# 2019-10-31
+			# Orders: «if the customer checked out as a guest
+			# we need still need a Customer object and it needs the ID to be a randomly generated UUID
+			# or other random string»: https://github.com/justuno-com/m1/issues/30
 			,'ID' => $o->getCustomerId() ?: $o->getCustomerEmail()
 			,'LastName' => $o->getCustomerLastname()
 			,'OrdersCount' => (int)self::stat($o, 'COUNT(*)')
