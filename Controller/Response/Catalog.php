@@ -68,18 +68,22 @@ class Catalog extends _P {
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
 			$r = [
 				'Categories' => array_values(array_map(function(C $c) {return [
-					'Description' => $c['description']
+					# 2021-02-05
+					# «remove the description and keywords parameters from the categories object»:
+					# https://github.com/justuno-com/m2/issues/25
 					# 2019-10-30
 					# «json construct types are not correct for some values»:
 					# https://github.com/justuno-com/m1/issues/8
-					,'ID' => $c->getId()
+					'ID' => $c->getId()
 					# 2019-10-30
 					# «In Categories imageURL is being sent back as a boolean in some cases,
 					# it should always be sent back as a string,
 					# if there is not url just don't send the property back»:
 					# https://github.com/justuno-com/m1/issues/12
 					,'ImageURL' => $c->getImageUrl() ?: null
-					,'Keywords' => $c['meta_keywords']
+					# 2021-02-05
+					# «remove the description and keywords parameters from the categories object»:
+					# https://github.com/justuno-com/m2/issues/25
 					,'Name' => $c->getName()
 					,'URL' => $c->getUrl()
 				];}, $cc->addAttributeToSelect('*')->addFieldToFilter('level', ['neq' => 1])->getItems()))
