@@ -25,10 +25,13 @@ final class Images {
 			# Could we change it to link to the small image?»: https://github.com/justuno-com/m1/issues/18
 			->resize(200, 200)
 			->getUrl()
-	];}, ju_sort(array_values($p->getMediaGalleryImages()->getItems()), function(_DO $a, _DO $b) {
+	# 2021-02-05
+	# «on the parent object, it's returning a lot more than ImageURL1 - 3. I only need the first three»:
+	# https://github.com/justuno-com/m2/issues/27
+	];}, array_slice(ju_sort(array_values($p->getMediaGalleryImages()->getItems()), function(_DO $a, _DO $b) {
 		# 2020-09-29
 		# "Images with the «_hero_» string should have a priority in product feeds": https://github.com/justuno-com/m2/issues/17
 		$f = function(_DO $i) {return (int)ju_contains($i['file'], '_hero_');};
 		return $f($b) - $f($a);
-	}));}
+	}), 0, 3));}
 }
