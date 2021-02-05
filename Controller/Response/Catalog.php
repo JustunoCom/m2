@@ -37,15 +37,13 @@ class Catalog extends _P {
 		ju_pc_disable_flat();
 		$pc = ju_pc($s); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
-		/**
-		 * 2019-10-30
-		 * 1) «if a product has a Status of "Disabled" we'd still want it in the feed,
-		 * but we'd want to set the inventoryquantity to -9999»:
-		 * https://github.com/justuno-com/m1/issues/4
-		 * 2) I do not use
-		 * 		$pc->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH]);
-		 * because it filters out the disabled products.
-		 */
+		# 2019-10-30
+		# 1) «if a product has a Status of "Disabled" we'd still want it in the feed,
+		# but we'd want to set the inventoryquantity to -9999»:
+		# https://github.com/justuno-com/m1/issues/4
+		# 2) I do not use
+		# 		$pc->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH]);
+		# because it filters out the disabled products.
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
@@ -92,24 +90,18 @@ class Catalog extends _P {
 				# «The parent ID is pulling the sku, it should be pulling the ID like the variant does»:
 				# https://github.com/justuno-com/m1/issues/19
 				,'ID' => $p->getId()
-				/**
-				 * 2019-10-30
-				 * 1) «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
-				 * or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
-				 * 2) «If their isn't an MSRP for some reason just use the salesprice»:
-				 * https://github.com/justuno-com/m1/issues/6
-				 * 2019-10-31
-				 * «The MSRP should pull in this order MSRP > Price > Dynamic Price»:
-				 * https://github.com/justuno-com/m1/issues/20
-				 */
+				# 2019-10-30
+				# 1) «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+				# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+				# 2) «If their isn't an MSRP for some reason just use the salesprice»:
+				# https://github.com/justuno-com/m1/issues/6
+				# 2019-10-31
+				# «The MSRP should pull in this order MSRP > Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/20
 				,'MSRP' => (float)($p['msrp'] ?: ($p['price'] ?: $p->getPrice()))
-				 /**
-				  * 2019-10-30
-				  * «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
-				  * or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
-				  * 2019-10-31
-				  * «Price should be Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/21
-				  */
+				# 2019-10-30
+				# «MSRP, Price, SalePrice, Variants.MSRP, and Variants.SalePrice all need to be Floats,
+				# or if that is not possible then Ints»: https://github.com/justuno-com/m1/issues/10
+				# 2019-10-31 «Price should be Price > Dynamic Price»: https://github.com/justuno-com/m1/issues/21
 				,'Price' => (float)($p['price'] ?: $p->getPrice())
 				# 2019-10-30 «ReviewsCount and ReviewSums need to be Ints»: https://github.com/justuno-com/m1/issues/11
 				,'ReviewsCount' => (int)$rs->getReviewsCount()
@@ -125,30 +117,24 @@ class Catalog extends _P {
 				,'Title' => $p['name']
 				,'UpdatedAt' => $p['updated_at']
 				,'URL' => $p->getProductUrl()
-				/**
-				 * 2019-10-30
-				 * «if a product doesn't have parent/child like structure,
-				 * I still need at least one variant in the Variants array»:
-				 * https://github.com/justuno-com/m1/issues/5
-				 */
+				# 2019-10-30
+				# «if a product doesn't have parent/child like structure,
+				# I still need at least one variant in the Variants array»: https://github.com/justuno-com/m1/issues/5
 				,'Variants' => cVariants::p($p)
 			] + cImages::p($p);
 			if ('configurable' === $p->getTypeId()) {
 				$ct = $p->getTypeInstance(); /** @var Configurable $ct */
 				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
-				/**
-				 * 2019-10-30
-				 * «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
-				 * We need these sent back starting at OptionType1, OptionType2»:
-				 * https://github.com/justuno-com/m1/issues/14
-				 */
+				# 2019-10-30
+				# «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
+				# We need these sent back starting at OptionType1, OptionType2»: https://github.com/justuno-com/m1/issues/14
 				foreach (array_values($opts) as $id => $code) {$id++; /** @var int $id */ /** @var string $code */
 					$r["OptionType$id"] = $code;
 				}
 			}
 			/**
 			 * 2019-11-01
-			 * If $brand is null, then @uses Mage_Catalog_Model_Product::getAttributeText() fails.
+			 * If $brand is null, then @uses \Magento\Catalog\Model\Product::getAttributeText() fails.
 			 * https://www.upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
