@@ -124,11 +124,14 @@ class Catalog extends _P {
 			] + cImages::p($p);
 			if ('configurable' === $p->getTypeId()) {
 				$ct = $p->getTypeInstance(); /** @var Configurable $ct */
-				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
+				# 2021-02-05
+				# «The OptionType1 and 2 here seem to be internal identifiers rather than whats displayed on the site.
+				# I would want Color and Size like it's displayed on the actual product page of their site»
+				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'store_label');
 				# 2019-10-30
 				# «within the ProductResponse and the Variants OptionType is being sent back as OptionType90, 91, etc...
 				# We need these sent back starting at OptionType1, OptionType2»: https://github.com/justuno-com/m1/issues/14
-				foreach (array_values($opts) as $id => $code) {$id++; /** @var int $id */ /** @var string $code */
+				foreach ($opts as $id => $code) {$id++; /** @var int $id */ /** @var string $code */
 					$r["OptionType$id"] = $code;
 				}
 			}
