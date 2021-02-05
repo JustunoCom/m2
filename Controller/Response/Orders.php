@@ -28,7 +28,7 @@ class Orders extends _P {
 		# Orders: «if the customer checked out as a guest
 		# we need still need a Customer object and it needs the ID to be a randomly generated UUID
 		# or other random string»: https://github.com/justuno-com/m1/issues/30
-		,'Customer' => self::customer($o)
+		# 2021-02-05 «on the orders feed, remove the Customers object entirely»: https://github.com/justuno-com/m2/issues/26
 		# 2019-10-31
 		# Orders: «if the customer checked out as a guest
 		# we need still need a Customer object and it needs the ID to be a randomly generated UUID
@@ -61,59 +61,4 @@ class Orders extends _P {
 		,'UpdatedAt' => $o->getUpdatedAt()
 	# 2021-01-28 "Make the module multi-store aware": https://github.com/justuno-com/m2/issues/24
 	];}, Filter::p(ju_order_c()->addFieldToFilter('store_id', $s->getId()))->getItems()));});}
-	
-	/**
-	 * 2019-10-27
-	 * 2019-10-31
-	 * Orders: «if the customer checked out as a guest
-	 * we need still need a Customer object and it needs the ID to be a randomly generated UUID
-	 * or other random string»: https://github.com/justuno-com/m1/issues/30
-	 * @used-by p()
-	 * @param O $o
-	 * @return array(string => mixed)
-	 */
-	private static function customer(O $o) {
-		$c = ju_new_om(C::class); /** @var C $c */
-		if ($o->getCustomerId()) {
-			$c->load($o->getCustomerId());
-		}
-		$ba = $o->getBillingAddress(); /** @var A $ba */
-		return [
-			'Address1' => $ba->getStreetLine(1)
-			,'Address2' => $ba->getStreetLine(2)
-			,'City' => $ba->getCity()
-			,'CountryCode' => $ba->getCountryId()
-			,'CreatedAt' => $c['created_at']
-			,'Email' => $o->getCustomerEmail()
-			,'FirstName' => $o->getCustomerFirstname()
-			# 2019-10-31
-			# Orders: «if the customer checked out as a guest
-			# we need still need a Customer object and it needs the ID to be a randomly generated UUID
-			# or other random string»: https://github.com/justuno-com/m1/issues/30
-			,'ID' => $o->getCustomerId() ?: $o->getCustomerEmail()
-			,'LastName' => $o->getCustomerLastname()
-			,'OrdersCount' => (int)self::stat($o, 'COUNT(*)')
-			,'ProvinceCode' => $ba->getRegionCode()
-			,'Tags' => ''
-			,'TotalSpend' => (float)self::stat($o, 'SUM(grand_total)')
-			,'UpdatedAt' => $c['updated_at']
-			,'Zip' => $ba->getPostcode()
-		];
-	}
-
-	/**
-	 * 2019-11-07
-	 * 2019-11-07
-	 * 1) «Allowed memory size exausted» on `'OrdersCount' => $oc->count()`: https://github.com/justuno-com/m1/issues/36
-	 * 2) I have replaced the customer collection with direct SQL queries.
-	 * @used-by ordersCount()
-	 * @used-by totalSpent()
-	 * @param O $o
-	 * @param string $v
-	 * @return string
-	 */
-	private static function stat(O $o, $v) {
-		$k = $o->getCustomerId() ? 'customer_id' : 'customer_email'; /** @var string $k */
-		return ju_fetch_one('sales_order', ['v' => $v], [$k => $o[$k]]);
-	}	
 }
