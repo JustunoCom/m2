@@ -12,16 +12,15 @@ final class Variants {
 	 * @return array(array(string => mixed))
 	 */
 	static function p(P $p) { /** @var array(array(string => mixed)) $r */
-		if ('configurable' !== $p->getTypeId()) {
+		if (!ju_configurable($p)) {
 			# 2019-30-31
 			# "Products: some Variants are objects instead of arrays of objects": https://github.com/justuno-com/m1/issues/32
 			$r = [self::variant($p)];
 		}
 		else {
 			$ct = $p->getTypeInstance(); /** @var Configurable $ct */
-			/** @var P[] $children */
-			$children = ju_pc_preserve_absent_f(function() use($ct, $p) {return $ct->getUsedProducts($p);});
-			if (!$children) {
+			/** @var P[] $ch */
+			if (!($ch = ju_pc_preserve_absent_f(function() use($ct, $p) {return $ct->getUsedProducts($p);}))) {
 				# 2020-11-23
 				# 1) "A configurable product without any associated child products should not produce variants":
 				# https://github.com/justuno-com/m2/issues/21
@@ -31,9 +30,7 @@ final class Variants {
 			}
 			else {
 				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
-				$r = array_values(array_map(function(P $c) use($opts, $p) {return
-					self::variant($c, $p, $opts)
-				;}, $children));
+				$r = array_values(array_map(function(P $c) use($opts, $p) {return self::variant($c, $p, $opts);}, $ch));
 			}
 		}
 		return $r;

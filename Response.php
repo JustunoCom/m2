@@ -42,7 +42,7 @@ final class Response {
 	}
 
 	/**
-	 * 2021-01-28
+	 * 2021-01-28 "Make the module multi-store aware": https://github.com/justuno-com/m2/issues/24
 	 * @used-by p()
 	 * @return IS
 	 * @throws DFE
