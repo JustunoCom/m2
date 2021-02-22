@@ -11,7 +11,7 @@
 		,"homepage": "https://mage2.pro/users/dmitry_fedyuk"
 		,"role": "Developer"
 	}]
-	,"require": {"justuno.com/core": ">=1.0.7"}
+	,"require": {"justuno.com/core": ">=1.0.9"}
 	,"autoload": {"files": ["registration.php"], "psr-4": {"Justuno\\M2\\": ""}}
 	,"keywords": ["Magento 2"]
 }
