@@ -2,9 +2,12 @@
 namespace Justuno\M2\Controller;
 use Justuno\M2\W\Result\Js as R;
 use Magento\Framework\App\Action\Action as _P;
-# 2020-03-14
-# "Respond to the `/justuno/service-worker.js` request with the provided JavaScript": https://github.com/justuno-com/m2/issues/10
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+/**
+ * 2020-03-14
+ * "Respond to the `/justuno/service-worker.js` request with the provided JavaScript": https://github.com/justuno-com/m2/issues/10
+ * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
+ * @used-by \Justuno\M2\Plugin\Framework\App\Router\ActionList::aroundGet()
+ */
 class Js extends _P {
 	/**
 	 * 2020-03-14

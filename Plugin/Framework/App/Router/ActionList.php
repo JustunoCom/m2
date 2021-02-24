@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\M2\Plugin\App\Router;
+namespace Justuno\M2\Plugin\Framework\App\Router;
 use Justuno\M2\Controller\Js;
 use Magento\Framework\App\Router\ActionList as Sb;
 # 2020-03-14

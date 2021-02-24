@@ -50,7 +50,7 @@
 					showInDefault='1'
 					showInStore='1'
 					showInWebsite='1'
-					sortOrder='12'
+					sortOrder='3'
 					type='text'
 				>
 					<label>API Token Key</label>
@@ -60,9 +60,20 @@
 					showInDefault='1'
 					showInStore='1'
 					showInWebsite='1'
-					sortOrder='3'
+					sortOrder='4'
 					type='Justuno\M2\Block\GenerateToken'
 				/>
+				<field
+					id='debug'
+					showInDefault='1'
+					showInStore='0'
+					showInWebsite='0'
+					sortOrder='5'
+					type='select'
+				>
+					<label>Provide the developer with the database access</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
 			</group>
 		</section>
 	</system>

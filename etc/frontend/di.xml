@@ -11,6 +11,15 @@
 "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
 https://github.com/justuno-com/m2/issues/10 -->
 	<type name='Magento\Framework\App\Router\ActionList'>
-		<plugin name='Justuno\M2\Plugin\App\Router\ActionList' type='Justuno\M2\Plugin\App\Router\ActionList'/>
+		<plugin
+			name='Justuno\M2\Plugin\Framework\App\Router\ActionList' type='Justuno\M2\Plugin\Framework\App\Router\ActionList'
+		/>
+	</type>
+<!-- 2021-02-23 "Implement a database diagnostic tool": https://github.com/justuno-com/core/issues/347 -->
+	<type name='Magento\Framework\Session\SessionStartChecker'>
+		<plugin
+			name='Justuno\M2\Plugin\Framework\Session\SessionStartChecker'
+			type='Justuno\M2\Plugin\Framework\Session\SessionStartChecker'
+		/>
 	</type>
 </config>
