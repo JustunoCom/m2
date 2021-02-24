@@ -19,8 +19,14 @@ final class Response {
 	 * @return Json
 	 */
 	static function p(\Closure $f, $auth = true) {/** @var array(string => mixed) $r */
-		try {$r = !$auth ? $f() : $f(self::store());}
-		catch (\Exception $e) {$r = ['message' => $e->getMessage()];}
+		try {
+			$r = !$auth ? $f() : $f(self::store());
+			ju_sentry(__CLASS__, sprintf('%s: %s', ju_request_o()->getHttpHost(), ju_class_l(ju_caller_c())));
+		}
+		catch (\Exception $e) {
+			$r = ['message' => $e->getMessage()];
+			ju_sentry(__CLASS__, $e);
+		}
 		return Json::i(is_null($r) ? 'OK' : (!is_array($r) ? $r : self::filter($r)));
 	}
 
@@ -68,6 +74,7 @@ final class Response {
 					ju_store_m()->getWebsite($scopeId)->getDefaultStore()
 			);
 		}
+		ju_sentry_extra(__CLASS__, 'Store', "{$r->getCode()} ({$r->getId()})");
 		return $r;
 	}
 }

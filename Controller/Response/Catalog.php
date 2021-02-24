@@ -61,6 +61,10 @@ class Catalog extends _P {
 		ju_pc_preserve_absent($pc);
 		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = ju_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
+		ju_sentry_extra($this, [
+			'Products count' => count($pc)
+			,'Products SQL' => (string)$pc->getSelect()->assemble()
+		]);
 		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = ju_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
