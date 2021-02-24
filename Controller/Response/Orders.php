@@ -3,12 +3,10 @@ namespace Justuno\M2\Controller\Response;
 use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Filter;
 use Justuno\M2\Response as R;
-use Magento\Customer\Model\Customer as C;
+use Justuno\M2\Store;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Sales\Model\Order as O;
-use Magento\Sales\Model\Order\Address as A;
 use Magento\Sales\Model\Order\Item as OI;
-use Magento\Store\Api\Data\StoreInterface as IS;
 /** 2019-11-20 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Orders extends _P {
 	/**
@@ -20,7 +18,7 @@ class Orders extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {return R::p(function(IS $s) {return array_values(array_map(function(O $o) {return [
+	function execute() {return R::p(function() {return array_values(array_map(function(O $o) {return [
 		'CountryCode' => $o->getBillingAddress()->getCountryId()
 		,'CreatedAt' => $o->getCreatedAt()
 		,'Currency' => $o->getOrderCurrencyCode()
@@ -46,8 +44,7 @@ class Orders extends _P {
 			,'ProductId' => (string)ju_oqi_top($i)->getProductId()
 			,'TotalDiscount' => ju_oqi_discount($i)
 			# 2019-10-31
-			# Orders: «VariantID for lineItems is currently hardcoded as ''»:
-			# https://github.com/justuno-com/m1/issues/29
+			# Orders: «VariantID for lineItems is currently hardcoded as ''»: https://github.com/justuno-com/m1/issues/29
 			,'VariantId' => $i->getProductId()
 		];})
 		,'OrderNumber' => $o->getId()
@@ -60,5 +57,5 @@ class Orders extends _P {
 		,'TotalTax' => (float)$o->getTaxAmount()
 		,'UpdatedAt' => $o->getUpdatedAt()
 	# 2021-01-28 "Make the module multi-store aware": https://github.com/justuno-com/m2/issues/24
-	];}, Filter::p(ju_order_c()->addFieldToFilter('store_id', $s->getId()))->getItems()));});}
+	];}, Filter::p(ju_order_c()->addFieldToFilter('store_id', Store::v()->getId()))->getItems()));});}
 }

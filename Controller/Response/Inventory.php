@@ -3,10 +3,10 @@ namespace Justuno\M2\Controller\Response;
 use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Inventory\Variants as cVariants;
 use Justuno\M2\Response as R;
+use Justuno\M2\Store;
 use Magento\Catalog\Model\Product as P;
 use Magento\Catalog\Model\Product\Visibility as V;
 use Magento\Framework\App\Action\Action as _P;
-use Magento\Store\Api\Data\StoreInterface as IS;
 # 2020-05-06 "Implement an endpoint to return product quantities": https://github.com/justuno-com/m2/issues/13
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Inventory extends _P {
@@ -19,7 +19,7 @@ class Inventory extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {return R::p(function(IS $s) {return array_values(ju_map(
+	function execute() {return R::p(function() {return array_values(ju_map(
 		function(P $p) {return ['ID' => $p->getId(), 'Variants' => cVariants::p($p)];}
 		/**
 		 * 2020-05-06
@@ -28,6 +28,6 @@ class Inventory extends _P {
 		 * 2) @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::setVisibility()
 		 * filters out the disabled products.
 		 */
-		,ju_pc($s)->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
+		,ju_pc(Store::v())->setVisibility([V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH])
 	));});}
 }

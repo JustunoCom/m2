@@ -11,7 +11,6 @@ final class Diagnostic {
 	 * @throws DFE
 	 */
 	static function p() {
-
 		ju_error('The product is not eligible for the feed for an unknown reason.');
 	}
 }

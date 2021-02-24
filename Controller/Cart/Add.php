@@ -51,10 +51,7 @@ class Add extends _P {
 		ju_dispatch('checkout_cart_add_product_complete', [
 			'product' => $p, 'request' => $this->getRequest(), 'response' => $this->getResponse()
 		]);
-	# 2020-02-06
-	# "`justuno/cart/add` should not require the Justuno token (Magento customer authentication is enough)":
-	# https://github.com/justuno-com/m1/issues/40
-	}, false);}
+	});}
 
 	/**
 	 * 2020-01-21
