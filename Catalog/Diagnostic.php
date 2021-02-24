@@ -10,5 +10,8 @@ final class Diagnostic {
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @throws DFE
 	 */
-	static function p() {ju_error('Diagnostic...');}
+	static function p() {
+
+		ju_error('The product is not eligible for the feed for an unknown reason.');
+	}
 }
