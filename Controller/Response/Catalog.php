@@ -1,5 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Response;
+use Justuno\Core\Exception as DFE;
 use Justuno\Core\Framework\W\Result\Json;
 use Justuno\M2\Catalog\Images as cImages;
 use Justuno\M2\Catalog\Variants as cVariants;
@@ -65,6 +66,12 @@ class Catalog extends _P {
 			'Products count' => count($pc)
 			,'Products SQL' => (string)$pc->getSelect()->assemble()
 		]);
+		# 2021-02-25
+		# "Provide a diagnostic message if the requested product is not eligible for the feed":
+		# https://github.com/justuno-com/m2/issues/32
+		if (ju_request('id') && !count($pc)) {
+			$this->diagnostic();
+		}
 		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = ju_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
@@ -148,6 +155,17 @@ class Catalog extends _P {
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
 		}));
 	});}
+
+	/**
+	 * 2021-02-25
+	 * "Provide a diagnostic message if the requested product is not eligible for the feed":
+	 * https://github.com/justuno-com/m2/issues/32
+	 * @used-by execute()
+	 * @throws DFE
+	 */
+	private function diagnostic() {
+		ju_error('Diagnostic...');
+	}
 
 	/**
 	 * 2021-02-05
