@@ -15,6 +15,9 @@ class Index extends \Justuno\Core\Framework\Action {
 	 * @return R|null
 	 */
 	function execute() {return
-		!ju_cfg('justuno_settings/options_interface/debug') ? null : ju_page_result(ju_module_name($this) . '::db.php')
+		# 2021-02-25
+		# The extension should be `.phtml` instead of `.php`, otherwise `bin/magento setup:di:compile` will be broken:
+		# https://github.com/justuno-com/m2/issues/33
+		!ju_cfg('justuno_settings/options_interface/debug') ? null : ju_page_result(ju_module_name($this) . '::db.phtml')
 	;}
 }
