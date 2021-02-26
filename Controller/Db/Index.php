@@ -14,10 +14,17 @@ class Index extends \Justuno\Core\Framework\Action {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return R|null
 	 */
-	function execute() {return
-		# 2021-02-25
-		# The extension should be `.phtml` instead of `.php`, otherwise `bin/magento setup:di:compile` will be broken:
-		# https://github.com/justuno-com/m2/issues/33
-		!ju_cfg('justuno_settings/options_interface/debug') ? null : ju_page_result(ju_module_name($this) . '::db.phtml')
-	;}
+	function execute() { /** @var R|null $r */
+		if (ju_cfg('justuno_settings/options_interface/debug')) {
+			# 2021-02-25
+			# The extension should be `.phtml` instead of `.php`, otherwise `bin/magento setup:di:compile` will be broken:
+			# https://github.com/justuno-com/m2/issues/33
+			$r = ju_page_result(ju_module_name($this) . '::db.phtml');
+		}
+		else {
+			$r = null;
+			ju_403();
+		}
+		return $r;
+	}
 }
