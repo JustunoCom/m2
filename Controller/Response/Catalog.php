@@ -1,10 +1,12 @@
 <?php
 namespace Justuno\M2\Controller\Response;
 use Justuno\Core\Framework\W\Result\Json;
+use Justuno\M2\Catalog\Diagnostic;
 use Justuno\M2\Catalog\Images as cImages;
 use Justuno\M2\Catalog\Variants as cVariants;
 use Justuno\M2\Filter;
 use Justuno\M2\Response as R;
+use Justuno\M2\Store;
 use Magento\Catalog\Model\Category as C;
 use Magento\Catalog\Model\Product as P;
 use Magento\Catalog\Model\Product\Visibility as V;
@@ -13,7 +15,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
 use Magento\Review\Model\Review\Summary as RS;
-use Magento\Store\Api\Data\StoreInterface as IS;
 /** 2019-11-17 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
 	/**
@@ -25,7 +26,7 @@ class Catalog extends _P {
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 * @return Json
 	 */
-	function execute() {return R::p(function(IS $s) {
+	function execute() {return R::p(function() {
 		# 2020-11-23
 		# If the flat mode is enabled, then the products collection misses disabled products,
 		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
@@ -35,7 +36,7 @@ class Catalog extends _P {
 		# if the «Use Flat Catalog Product» option is enabled": https://github.com/justuno-com/m2/issues/23
 		# 2) "Add an ability to temporary disable the flat mode for products": https://github.com/mage2pro/core/issues/149
 		ju_pc_disable_flat();
-		$pc = ju_pc($s); /** @var PC $pc */
+		$pc = ju_pc(Store::v()); /** @var PC $pc */
 		$pc->addAttributeToSelect('*');
 		# 2019-10-30
 		# 1) «if a product has a Status of "Disabled" we'd still want it in the feed,
@@ -61,6 +62,16 @@ class Catalog extends _P {
 		ju_pc_preserve_absent($pc);
 		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
 		$brand = ju_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
+		ju_sentry_extra($this, [
+			'Products count' => count($pc)
+			,'Products SQL' => (string)$pc->getSelect()->assemble()
+		]);
+		# 2021-02-25
+		# "Provide a diagnostic message if the requested product is not eligible for the feed":
+		# https://github.com/justuno-com/m2/issues/32
+		if (ju_request('id') && !count($pc)) {
+			Diagnostic::p();
+		}
 		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
 			$rs = ju_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
