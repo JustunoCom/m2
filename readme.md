@@ -8,6 +8,7 @@ rm -rf composer.lock
 composer clear-cache
 composer require justuno.com/m2:*
 bin/magento setup:upgrade
+bin/magento cache:enable
 rm -rf var/di var/generation generated/*
 bin/magento setup:di:compile
 bin/magento cache:enable
@@ -24,6 +25,7 @@ rm -rf composer.lock
 composer clear-cache
 composer require justuno.com/m2:*
 bin/magento setup:upgrade
+bin/magento cache:enable
 rm -rf var/di var/generation generated/*
 bin/magento setup:di:compile
 bin/magento cache:enable
