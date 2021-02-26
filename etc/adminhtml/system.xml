@@ -32,7 +32,7 @@
 					type='text'
 				>
 					<label>Justuno Account Number</label>
-					<comment><![CDATA[<a href='https://github.com/justuno-com/m2#account-number' target='_blank'>where to find it?</a>]]></comment>
+					<comment><![CDATA[<a href='https://github.com/justuno-com/m2/blob/master/doc/account-number.md#h' target='_blank'>where to find it?</a>]]></comment>
 				</field>
 				<field
 					id='brand_attribute'
