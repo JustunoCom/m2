@@ -1,5 +1,5 @@
 <?php
-namespace Justuno\M2\Source;
+namespace Justuno\M2\Config\Source;
 # 2019-11-15
 final class Brand extends \Justuno\Core\Config\Source {
 	/**
