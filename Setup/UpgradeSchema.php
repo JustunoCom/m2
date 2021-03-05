@@ -11,16 +11,18 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 	 * @used-by \Justuno\Core\Framework\Upgrade::process()
 	 */
 	final protected function _process() {
+		$t_catalog_product_entity = ju_table('catalog_product_entity'); /** @var string $t_catalog_product_entity */
+		$t_catalog_product_super_link = ju_table('catalog_product_super_link'); /** @var string $t_catalog_product_super_link */
 		if ($this->v('1.1.7')) {
 			$this->tr('cataloginventory_stock_status', "
-				UPDATE catalog_product_entity
+				UPDATE $t_catalog_product_entity
 				SET updated_at = CURRENT_TIMESTAMP()
 				WHERE
 					entity_id = NEW.product_id
-					OR entity_id IN (SELECT parent_id FROM catalog_product_super_link WHERE product_id = NEW.product_id)	
+					OR entity_id IN (SELECT parent_id FROM $t_catalog_product_super_link WHERE product_id = NEW.product_id)	
 			");
 			$this->tr('inventory_reservation', "
-				UPDATE catalog_product_entity
+				UPDATE $t_catalog_product_entity
 				SET updated_at = CURRENT_TIMESTAMP()
 				WHERE sku = NEW.sku	
 			");
@@ -29,13 +31,29 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 			# «You can't specify target table '...' for update in FROM clause»
 			# https://stackoverflow.com/questions/45494
 			$this->tr('inventory_reservation', "
-				UPDATE catalog_product_entity e1
-				INNER JOIN catalog_product_super_link s
+				UPDATE $t_catalog_product_entity e1
+				INNER JOIN $t_catalog_product_super_link s
 					ON s.product_id = e1.entity_id AND NEW.sku = e1.sku
-				INNER JOIN catalog_product_entity e2
+				INNER JOIN $t_catalog_product_entity e2
 					ON e2.entity_id = s.parent_id
 				SET e2.updated_at = CURRENT_TIMESTAMP()
 			", 2);
+		}
+		if ($this->v('1.6.3')) {
+			# 2021-03-05
+			# «trigger for updating catalog_product_entity running very slow for large catalog»:
+			# https://github.com/justuno-com/m1/issues/52
+			$this->tr('cataloginventory_stock_status', "
+				UPDATE $t_catalog_product_entity
+					SET updated_at = CURRENT_TIMESTAMP()
+					WHERE entity_id = NEW.product_id
+				;
+				UPDATE $t_catalog_product_super_link l
+					INNER JOIN $t_catalog_product_entity e ON (e.entity_id = l.parent_id)
+					SET e.updated_at = CURRENT_TIMESTAMP()
+					WHERE l.product_id = NEW.product_id
+				;
+			");
 		}
 	}
 
