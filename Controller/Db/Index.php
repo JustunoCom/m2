@@ -1,5 +1,6 @@
 <?php
 namespace Justuno\M2\Controller\Db;
+use Justuno\M2\Settings as S;
 use Magento\Framework\View\Result\Page as R;
 # 2021-02-22
 # "Implement a database diagnostic tool": https://github.com/justuno-com/core/issues/347
@@ -15,7 +16,7 @@ class Index extends \Justuno\Core\Framework\Action {
 	 * @return R|null
 	 */
 	function execute() { /** @var R|null $r */
-		if (ju_cfg('justuno_settings/options_interface/debug')) {
+		if (S::s()->debug()) {
 			# 2021-02-25
 			# The extension should be `.phtml` instead of `.php`, otherwise `bin/magento setup:di:compile` will be broken:
 			# https://github.com/justuno-com/m2/issues/33

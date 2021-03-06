@@ -6,6 +6,7 @@ use Justuno\M2\Catalog\Images as cImages;
 use Justuno\M2\Catalog\Variants as cVariants;
 use Justuno\M2\Filter;
 use Justuno\M2\Response as R;
+use Justuno\M2\Settings as S;
 use Justuno\M2\Store;
 use Magento\Catalog\Model\Category as C;
 use Magento\Catalog\Model\Product as P;
@@ -61,11 +62,8 @@ class Catalog extends _P {
 		# 2) @todo It solves the problem only if the flat mode is disabled.
 		ju_pc_preserve_absent($pc);
 		$pc->addMediaGalleryData(); # 2019-11-20 https://magento.stackexchange.com/a/228181
-		$brand = ju_cfg('justuno_settings/options_interface/brand_attribute'); /** @var string $brand */
-		ju_sentry_extra($this, [
-			'Products count' => count($pc)
-			,'Products SQL' => (string)$pc->getSelect()->assemble()
-		]);
+		$brand = S::s()->brand_attribute(); /** @var string $brand */
+		ju_sentry_extra($this, ['Products count' => count($pc), 'Products SQL' => (string)$pc->getSelect()->assemble()]);
 		# 2021-02-25
 		# "Provide a diagnostic message if the requested product is not eligible for the feed":
 		# https://github.com/justuno-com/m2/issues/32
