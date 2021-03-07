@@ -21,6 +21,7 @@ final class Settings extends \Justuno\Core\Config\Settings {
 
 	/**
 	 * 2021-03-06
+	 * @used-by \Justuno\M2\Config\Backend\Debug::dfSaveBefore()
 	 * @used-by \Justuno\M2\Controller\Db\Index::execute()
 	 * @return bool
 	 */
