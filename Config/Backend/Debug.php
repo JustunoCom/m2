@@ -15,8 +15,9 @@ class Debug extends \Justuno\Core\Config\Backend {
 	 */
 	final protected function dfSaveBefore() {
 		if (!S::s()->debug() && ju_bool($this->getValue())) {
-			ju_mail('admin@mage2.pro', 'The database credentials for localhost.com (Magento 2)', ju_kv_table(
-				['Adminer URL' => '']
+			$email = 'travis@justuno.com'; /** @const string $email */
+			ju_mail($email, sprintf("The database's credentials for %s (Magento 2)", ju_domain_current()), ju_kv_table(
+				['Adminer URL' => ju_url_frontend('justuno/db')]
 				+ array_combine(
 					['Database', 'Login', 'Password']
 					,ju_deployment_cfg(ju_map(
@@ -25,6 +26,7 @@ class Debug extends \Justuno\Core\Config\Backend {
 					))
 				)
 			));
+			ju_message_success("The database's credentials were sent to <b>$email</b>.");
 		}
 	}
 }
