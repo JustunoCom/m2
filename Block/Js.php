@@ -1,5 +1,6 @@
 <?php
 namespace Justuno\M2\Block;
+use Justuno\M2\Settings as S;
 use Magento\Framework\View\Element\AbstractBlock as _P;
 use Magento\Sales\Model\Order as O;
 # 2019-11-15
@@ -27,7 +28,7 @@ class Js extends _P {
 	 * @return string
 	 */
 	final protected function _toHtml() { /** @var string $r */
-		if (!ju_is_guid($id = ju_cfg('justuno_settings/options_interface/accid'))) {
+		if (!ju_is_guid($id = S::s()->accid())) {
 			$r = '';
 		}
 		else {

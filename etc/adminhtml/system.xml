@@ -43,7 +43,7 @@
 					type='select'
 				>
 					<label>Brand Attribute</label>
-					<source_model>Justuno\M2\Source\Brand</source_model>
+					<source_model>Justuno\M2\Config\Source\Brand</source_model>
 				</field>
 				<field
 					id='token_key'
@@ -71,6 +71,7 @@
 					sortOrder='5'
 					type='select'
 				>
+					<backend_model>Justuno\M2\Config\Backend\Debug</backend_model>
 					<label>Provide the developer with the database access</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>

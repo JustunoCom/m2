@@ -1,5 +1,6 @@
 <?php
 namespace Justuno\M2;
+use DateTimeZone as TZ;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\Directory\Helper\Data as DirectoryH;
 use Magento\Framework\Data\Collection\AbstractDb as C;
@@ -33,15 +34,16 @@ final class Filter {
 	 */
 	private static function byDate(C $c) {
 		if ($since = ju_request('updatedSince')) { /** @var string $since */
+			# 2021-03-24 "`updatedSince` should be interpreted in the UTC timezone": https://github.com/justuno-com/m2/issues/37
+			$tz = new TZ(TZ::UTC); /** @var TZ $tz */
 			/**
 			 * 2019-10-31
 			 * @param string $s
 			 * @return string
 			 */
-			$d = function($s) {
+			$d = function($s) use($tz) {
 				$f = 'Y-m-d H:i:s'; /** @var string $f */
-				$tz = ju_cfg(DirectoryH::XML_PATH_DEFAULT_TIMEZONE); /** @var string $tz */
-				$dt = new \DateTime(date($f, strtotime($s)), new \DateTimeZone($tz));	/** @var \DateTime $dt */
+				$dt = new \DateTime(date($f, strtotime($s)), $tz);	/** @var \DateTime $dt */
 				return date($f, $dt->format('U'));
 			};
 			$c->addFieldToFilter('updated_at', ['from' => $d($since), 'to' => $d('2035-01-01 23:59:59')]);
