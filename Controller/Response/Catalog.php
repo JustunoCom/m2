@@ -161,7 +161,8 @@ class Catalog extends _P {
 	 * @return float
 	 */
 	private static function price(P $p) {
-		$r = $p->getPrice(); /** @var float $r */
+		# 2021-03-24 "Replace `getPrice` with `getFinalPrice`": https://github.com/justuno-com/m2/issues/36
+		$r = $p->getFinalPrice(); /** @var float $r */
 		# 2021-02-05
 		# 1) «the parent product has 0 for pricing or MSRP and price are correct and then saleprice is 0 which isn't correct»:
 		# https://github.com/justuno-com/m2/issues/29
