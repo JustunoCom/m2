@@ -13,32 +13,6 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 	final protected function _process() {
 		$t_catalog_product_entity = ju_table('catalog_product_entity'); /** @var string $t_catalog_product_entity */
 		$t_catalog_product_super_link = ju_table('catalog_product_super_link'); /** @var string $t_catalog_product_super_link */
-		if ($this->v('1.1.7')) {
-			$this->tr('cataloginventory_stock_status', "
-				UPDATE $t_catalog_product_entity
-				SET updated_at = CURRENT_TIMESTAMP()
-				WHERE
-					entity_id = NEW.product_id
-					OR entity_id IN (SELECT parent_id FROM $t_catalog_product_super_link WHERE product_id = NEW.product_id)	
-			");
-			$this->tr('inventory_reservation', "
-				UPDATE $t_catalog_product_entity
-				SET updated_at = CURRENT_TIMESTAMP()
-				WHERE sku = NEW.sku	
-			");
-			# 2019-11-22
-			# I splitted the trigger for `inventory_reservation` into 2 parts to overcome the issue:
-			# «You can't specify target table '...' for update in FROM clause»
-			# https://stackoverflow.com/questions/45494
-			$this->tr('inventory_reservation', "
-				UPDATE $t_catalog_product_entity e1
-				INNER JOIN $t_catalog_product_super_link s
-					ON s.product_id = e1.entity_id AND NEW.sku = e1.sku
-				INNER JOIN $t_catalog_product_entity e2
-					ON e2.entity_id = s.parent_id
-				SET e2.updated_at = CURRENT_TIMESTAMP()
-			", 2);
-		}
 		if ($this->v('1.6.3')) {
 			# 2021-03-05
 			# «trigger for updating catalog_product_entity running very slow for large catalog»:
@@ -55,16 +29,41 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 				;
 			");
 		}
+		if ($this->v('1.6.5')) {
+			# 2019-11-22
+			# I splitted the trigger for `inventory_reservation` into 2 parts to overcome the issue:
+			# «You can't specify target table '...' for update in FROM clause»
+			# https://stackoverflow.com/questions/45494
+			# 2021-03-24
+			# I have merged 2 `UPDATE` statements into the same trigger to overcome the issue:
+			# «This version of MariaDB doesn't yet support
+			# 'multiple triggers with the same action time and event for one table»:
+			# https://github.com/justuno-com/m2/issues/15#issuecomment-805550630
+			$this->tr('inventory_reservation', "
+				UPDATE $t_catalog_product_entity
+					SET updated_at = CURRENT_TIMESTAMP()
+					WHERE sku = NEW.sku
+				;
+				UPDATE $t_catalog_product_entity e1
+					INNER JOIN $t_catalog_product_super_link s
+						ON s.product_id = e1.entity_id AND NEW.sku = e1.sku
+					INNER JOIN $t_catalog_product_entity e2
+						ON e2.entity_id = s.parent_id
+					SET e2.updated_at = CURRENT_TIMESTAMP()
+				;				
+			");
+			$this->tr('inventory_reservation', null, 2);
+		}
 	}
 
 	/**
 	 * 2019-11-22
 	 * @used-by _process()
 	 * @param string $t
-	 * @param string $sql
+	 * @param string|null $sql [optional]
 	 * @param string|int $suffix [optional]
 	 */
-	private function tr($t, $sql, $suffix = '') {
+	private function tr($t, $sql = null, $suffix = '') {
 		# 2019-11-30 "The `inventory_reservation` table is absent in Magento < 2.3": https://github.com/justuno-com/m2/issues/6
 		if (ju_table_exists($t)) {
 			foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
@@ -73,13 +72,15 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 				# 'multiple triggers with the same action time and event for one table»:
 				# https://github.com/justuno-com/m2/issues/15
 				ju_conn()->dropTrigger($name = ju_ccc('__', 'justuno', $t, strtolower($e), $suffix)); /** @var string $name */
-				ju_conn()->createTrigger(ju_trigger()
-					->addStatement($sql)
-					->setEvent($e)
-					->setName($name)
-					->setTable(ju_table($t))
-					->setTime(T::TIME_AFTER)
-				);
+				if ($sql) {
+					ju_conn()->createTrigger(ju_trigger()
+						->addStatement($sql)
+						->setEvent($e)
+						->setName($name)
+						->setTable(ju_table($t))
+						->setTime(T::TIME_AFTER)
+					);
+				}
 			}
 		}
 	}
