@@ -34,8 +34,13 @@ final class Filter {
 	 */
 	private static function byDate(C $c) {
 		if ($since = ju_request('updatedSince')) { /** @var string $since */
-			# 2021-03-24 "`updatedSince` should be interpreted in the UTC timezone": https://github.com/justuno-com/m2/issues/37
-			$tz = new TZ(TZ::UTC); /** @var TZ $tz */
+			/**
+			 * 2021-03-24 "`updatedSince` should be interpreted in the UTC timezone": https://github.com/justuno-com/m2/issues/37
+			 * 2021-03-27
+			 * Using @see TZ::UTC leads to the error: «DateTimeZone::__construct(): Unknown or bad timezone (1024)»
+			 * https://github.com/justuno-com/m2/issues/38
+			 */
+			$tz = new TZ('UTC'); /** @var TZ $tz */
 			/**
 			 * 2019-10-31
 			 * @param string $s
