@@ -6,6 +6,9 @@ use Magento\Framework\App\Response\HttpInterface as IR;
  * 2020-03-14
  * "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
  * https://github.com/justuno-com/m2/issues/10
+ * 2020-03-15
+ * "Replace the `/justuno/service-worker.js` URL with  `/apps/justuno/service-worker.js`":
+ * https://github.com/justuno-com/m2/issues/11
  * @final Unable to use the PHP «final» keyword here because of the M2 code generation.
  */
 class Js extends \Justuno\Core\Framework\W\Result {

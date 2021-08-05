@@ -9,7 +9,10 @@
 	</type>
 <!-- 2020-03-14
 "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
-https://github.com/justuno-com/m2/issues/10 -->
+https://github.com/justuno-com/m2/issues/10
+2020-03-15
+"Replace the `/justuno/service-worker.js` URL with  `/apps/justuno/service-worker.js`":
+https://github.com/justuno-com/m2/issues/11 -->
 	<type name='Magento\Framework\App\Router\ActionList'>
 		<plugin
 			name='Justuno\M2\Plugin\Framework\App\Router\ActionList' type='Justuno\M2\Plugin\Framework\App\Router\ActionList'

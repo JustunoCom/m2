@@ -5,6 +5,9 @@ use Magento\Framework\App\Router\ActionList as Sb;
 # 2020-03-14
 # "Respond to the `/justuno/service-worker.js` request with the provided JavaScript":
 # https://github.com/justuno-com/m2/issues/10
+# 2020-03-15
+# "Replace the `/justuno/service-worker.js` URL with  `/apps/justuno/service-worker.js`":
+# https://github.com/justuno-com/m2/issues/11
 final class ActionList {
 	/**
 	 * 2020-03-14
