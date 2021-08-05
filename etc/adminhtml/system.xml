@@ -63,18 +63,6 @@
 					sortOrder='4'
 					type='Justuno\M2\Block\GenerateToken'
 				/>
-				<field
-					id='debug'
-					showInDefault='1'
-					showInStore='0'
-					showInWebsite='0'
-					sortOrder='5'
-					type='select'
-				>
-					<backend_model>Justuno\M2\Config\Backend\Debug</backend_model>
-					<label>Provide the developer with the database access</label>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-				</field>
 			</group>
 		</section>
 	</system>
