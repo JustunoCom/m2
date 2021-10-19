@@ -3,7 +3,7 @@
 	,"version": "1.7.2"
 	,"description": "Justuno module for Magento 2"
 	,"type": "magento2-module"
-	,"homepage": "https://github.com/justuno-com/m2"
+	,"homepage": "https://github.com/justunoCom/m2"
 	,"license": "MIT"
 	,"authors": [{
 		"name": "Dmitry Fedyuk"
