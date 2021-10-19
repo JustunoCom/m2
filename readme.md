@@ -36,6 +36,6 @@ bin/magento maintenance:disable
 
 <h2 id='doc'>Documentation</h2>
 
-- [Where are Justuno settings located in the Magento’s backend?](https://github.com/justuno-com/m2/blob/master/doc/settings.md#h)
+- [Where are Justuno settings located in the Magento’s backend?](https://github.com/JustunoCom/m2/blob/master/doc/settings.md#h)
 - [Where to find my «Justuno Account Number»?](https://github.com/justuno-com/m2/blob/master/doc/account-number.md#h)
 - [How to provide the developer with the database access?](https://github.com/justuno-com/m2/blob/master/doc/database-access.md#h)
