@@ -100,7 +100,10 @@ define([], function () {
 			});
 			// 2020-01-24 "Replace `cdn.justuno.com` with `cdn.jst.ai`": https://github.com/justuno-com/m2/issues/8
 			// Change here and place magento's EmbedCode link
-			require(["//cdn.jst.ai/vck.js"], function () {});
+			// https://storage.googleapis.com/justuno-shopify-embed/5d435919d7724cc990df63301ced3b5d/shopifyEmbed.js?shop=bitsprojustuno.myshopify.com
+			require([
+				`//storage.googleapis.com/justuno-shopify-embed/${cfg.merchantId}/magentoEmbed.js`,
+			], function () {});
 		}
 	);
 });
