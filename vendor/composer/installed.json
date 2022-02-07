@@ -1,0 +1,46 @@
+[
+    {
+        "name": "justuno.com/core",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/justuno-com/core.git",
+            "reference": "4c0f28cd89df66e01372b7f3568b55b0b3da7553"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/justuno-com/core/zipball/4c0f28cd89df66e01372b7f3568b55b0b3da7553",
+            "reference": "4c0f28cd89df66e01372b7f3568b55b0b3da7553",
+            "shasum": ""
+        },
+        "time": "2021-10-11T09:59:52+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Justuno\\Core\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dmitry Fedyuk",
+                "email": "admin@mage2.pro",
+                "homepage": "https://mage2.pro/users/dmitry_fedyuk",
+                "role": "Developer"
+            }
+        ],
+        "description": "A core package for `justuno.com/m2` (instead of `mage2pro/core`)",
+        "homepage": "https://github.com/justuno-com/core",
+        "keywords": [
+            "magento 2"
+        ]
+    }
+]

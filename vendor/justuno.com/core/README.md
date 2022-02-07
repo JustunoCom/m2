@@ -1,0 +1,1 @@
+A core package for [`justuno.com/m2`](https://github.com/justuno-com/m2) (instead of [`mage2pro/core`](https://github.com/mage2pro/core)).

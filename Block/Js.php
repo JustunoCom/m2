@@ -39,10 +39,15 @@ class Js extends _P {
 			elseif (ju_is_checkout_success()) {
 				$o = ju_order_last(); /** @var O $o */
 				$p += ['currency' => $o->getOrderCurrencyCode(), 'orderId' => $o->getId(), 'order' => [
-					'shipping' => $o->getShippingAmount()
+					'orderID' =>  $o->getId()
+					,'grandTotal' => $o->getGrandTotal()
 					,'subtotal' => $o->getSubtotal()
 					,'tax' => $o->getTaxAmount()
-					,'total' => $o->getGrandTotal()
+					,'shipping' => $o->getShippingAmount()
+					,'discount' => $o->getDiscountAmount()
+					,'currency' => $o->getOrderCurrencyCode()
+					,'discountCodes'=> [$o->getCouponCode()]
+
 				]];
 			}
 			$r = ju_js(__CLASS__, '', $p);
