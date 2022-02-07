@@ -17,16 +17,16 @@ define([], function () {
 			(function () {
 				var k = "juapp";
 				window[k] =
-					window[k] ||o
+					window[k] ||
 					function () {
 						(window[k].q = window[k].q || []).push(arguments);
 					};
 			})();
 			juapp("initFunc", function () {
 				if (cfg.order) {
-          // Changing this from juapp("order", cfg.orderId, cfg.order);
-          // to juapp("order",  cfg.order); that reflects our latest 
-          // structure
+					// Changing this from juapp("order", cfg.orderId, cfg.order);
+					// to juapp("order",  cfg.order); that reflects our latest
+					// structure
 					juapp("order", cfg.order);
 				} else
 					require([
@@ -99,6 +99,7 @@ define([], function () {
 					});
 			});
 			// 2020-01-24 "Replace `cdn.justuno.com` with `cdn.jst.ai`": https://github.com/justuno-com/m2/issues/8
+			// Change here and place magento's EmbedCode link
 			require(["//cdn.jst.ai/vck.js"], function () {});
 		}
 	);
