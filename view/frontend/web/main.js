@@ -17,16 +17,16 @@ define([], function () {
 			(function () {
 				var k = "juapp";
 				window[k] =
-					window[k] ||
+					window[k] ||o
 					function () {
 						(window[k].q = window[k].q || []).push(arguments);
 					};
 			})();
 			juapp("initFunc", function () {
 				if (cfg.order) {
-					// Changing this from juapp("order", cfg.orderId, cfg.order);
-					// to juapp("order",  cfg.order); that reflects our latest
-					// structure
+          // Changing this from juapp("order", cfg.orderId, cfg.order);
+          // to juapp("order",  cfg.order); that reflects our latest 
+          // structure
 					juapp("order", cfg.order);
 				} else
 					require([
@@ -99,11 +99,7 @@ define([], function () {
 					});
 			});
 			// 2020-01-24 "Replace `cdn.justuno.com` with `cdn.jst.ai`": https://github.com/justuno-com/m2/issues/8
-			// Change here and place magento's EmbedCode link
-			// https://storage.googleapis.com/justuno-shopify-embed/5d435919d7724cc990df63301ced3b5d/shopifyEmbed.js?shop=bitsprojustuno.myshopify.com
-			require([
-				`//storage.googleapis.com/justuno-shopify-embed/${cfg.merchantId}/magentoEmbed.js`,
-			], function () {});
+			require(["//cdn.jst.ai/vck.js"], function () {});
 		}
 	);
 });
