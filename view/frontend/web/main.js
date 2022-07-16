@@ -19,7 +19,9 @@ define([], function() {return (
 		})();
 		juapp('initFunc', function() {
 			if (cfg.order) {
-				juapp('order', cfg.orderId, cfg.order);
+				// Changing this from `juapp('order', cfg.orderId, cfg.order)`
+				// to `juapp('order',  cfg.order)` that reflects our latest structure
+				juapp('order', cfg.order);
 			}
 			else require(['ju-lodash', 'Magento_Customer/js/customer-data'], function(_, cd) {
 				if (cfg.productId) {
