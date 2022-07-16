@@ -63,10 +63,6 @@ define([], function() {return (
 			});
 		});
 		// 2020-01-24 "Replace `cdn.justuno.com` with `cdn.jst.ai`": https://github.com/justuno-com/m2/issues/8
-		// 2022-07-16
-		// 1) "Replace `cdn.jst.ai` with `justone.ai`": https://github.com/JustunoCom/m2/issues/47
-		// 2) Currently, it intentionally breaks the module because the `//justone.ai/vck.js` URL is not resolved:
-		// https://github.com/JustunoCom/m2/issues/47#issuecomment-1186101136
-		require(['//justone.ai/vck.js'], function() {});
+		require(['//cdn.jst.ai/vck.js'], function() {});
 	});
 });
