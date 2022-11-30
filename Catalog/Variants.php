@@ -37,7 +37,7 @@ final class Variants {
 
 	/**
 	 * 2019-10-30
-	 * @used-by p()
+	 * @used-by self::p()
 	 * @param array(int => string) $opts [optional]
 	 * @return array(string => mixed)
 	 */
