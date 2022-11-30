@@ -29,7 +29,7 @@ final class Response {
 	 * @param array(string => mixed) $a
 	 * @return array(string => mixed)
 	 */
-	private static function filter(array $a) {
+	private static function filter(array $a):array {
 		$r = []; /** @var array(string => mixed) $r */
 		foreach ($a as $k => $v) { /** @var string $k */ /** @var mixed $v */
 			if (!in_array($v, ['', null], true)) {
