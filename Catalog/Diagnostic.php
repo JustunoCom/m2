@@ -11,7 +11,7 @@ final class Diagnostic {
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @throws DFE
 	 */
-	static function p() {
+	static function p():void {
 		$id = (int)ju_request('id'); /** @var int $id */
 		if (!($u = ju_fetch_one('catalog_product_entity', 'updated_at', ['entity_id' => $id]))) { /** @var string $u */
 			ju_error("The product with id «{$id}» is absent in the `catalog_product_entity` table.");
