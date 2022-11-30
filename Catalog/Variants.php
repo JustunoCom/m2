@@ -41,7 +41,7 @@ final class Variants {
 	 * @param array(int => string) $opts [optional]
 	 * @return array(string => mixed)
 	 */
-	private static function variant(P $p, P $parent = null, $opts = []) {return [
+	private static function variant(P $p, P $parent = null, array $opts = []):array {return [
 		'ID' => $p->getId()
 		# 2019-10-30
 		# «if a product has a Status of "Disabled" we'd still want it in the feed,
