@@ -9,7 +9,7 @@ final class Brand extends \Justuno\Core\Config\Source {
 	 * @used-by \Justuno\Core\Config\Source::toOptionArray()
 	 * @return array(string => string)
 	 */	
-	protected function map() {return ju_map_0(array_column(
+	protected function map():array {return ju_map_0(array_column(
 		array_filter(
 			ju_fetch('eav_attribute', ['attribute_code', 'frontend_label', 'is_user_defined'], 'entity_type_id', 4)
 			,function(array $a) {return
