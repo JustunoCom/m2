@@ -28,7 +28,7 @@ final class Filter {
 
 	/**
 	 * 2019-10-31
-	 * @used-by p()
+	 * @used-by self::p()
 	 * @param C|OC|PC $c
 	 */
 	private static function byDate(C $c):void {
