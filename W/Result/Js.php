@@ -18,7 +18,7 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	 * because the method is absent in @see \Magento\Framework\Controller\ResultInterface
 	 * @override
 	 * @see \Justuno\Core\Framework\W\Result::__toString()
-	 * @used-by render()
+	 * @used-by self::render()
 	 */
 	final function __toString():string {return $this->_r;}
 
@@ -36,8 +36,8 @@ class Js extends \Justuno\Core\Framework\W\Result {
 
 	/**
 	 * 2020-03-14
-	 * @used-by __toString()
-	 * @used-by i()
+	 * @used-by self::__toString()
+	 * @used-by self::i()
 	 * @var string
 	 */
 	private $_r;
