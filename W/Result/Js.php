@@ -44,16 +44,9 @@ class Js extends \Justuno\Core\Framework\W\Result {
 
 	/**
 	 * 2020-03-14
-	 * $m could be:
-	 * 1) A module name: «A_B`»
-	 * 2) A class name: «A\B\C».
-	 * 3) An object.
 	 * @used-by \Justuno\M2\Controller\Js::execute()
-	 * @param string|object $m
-	 * @param string $name
-	 * @return self
 	 */
-	final static function i($name) {
+	final static function i(string $name):self {
 		$i = new self; /** @var self $i */
 		$i->_r = ju_module_file(__CLASS__, "js/$name", 'js', true, function($f) {return file_get_contents($f);});
 		return $i;
