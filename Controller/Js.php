@@ -19,7 +19,6 @@ class Js extends _P {
 	 * @used-by \Magento\Framework\App\Action\Action::dispatch():
 	 * 		$result = $this->execute();
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
-	 * @return R
 	 */
-	function execute() {return R::i(ju_strip_ext($this->getRequest()->getActionName()));}
+	function execute():R {return R::i(ju_strip_ext($this->getRequest()->getActionName()));}
 }
