@@ -10,7 +10,7 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 	 * @see \Justuno\Core\Framework\Upgrade::_process()
 	 * @used-by \Justuno\Core\Framework\Upgrade::process()
 	 */
-	final protected function _process() {
+	final protected function _process():void {
 		$t_catalog_product_entity = ju_table('catalog_product_entity'); /** @var string $t_catalog_product_entity */
 		$t_catalog_product_super_link = ju_table('catalog_product_super_link'); /** @var string $t_catalog_product_super_link */
 		if ($this->v('1.6.3')) {
