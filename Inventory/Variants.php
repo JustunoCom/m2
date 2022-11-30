@@ -57,7 +57,7 @@ final class Variants {
 			 * https://github.com/magento/magento2/blob/2.0.0/app/code/Magento/ConfigurableProduct/Model/Product/Type/Configurable.php#L420-L468
 			 */
 			/** @var P[] $ch */
-			$r = !($ch = array_filter($ct->getUsedProducts($p), function(P $p) {return !$p->isDisabled();}))
+			$r = !($ch = array_filter($ct->getUsedProducts($p), function(P $p):bool {return !$p->isDisabled();}))
 				# 2020-11-24
 				# 1) "A configurable product without any associated child products should not produce variants":
 				# https://github.com/justuno-com/m2/issues/21
