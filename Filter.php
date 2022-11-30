@@ -11,7 +11,7 @@ final class Filter {
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Orders::execute()
 	 * @param C|OC|PC $r
-	 * @return OC|PC;
+	 * @return OC|PC
 	 */
 	static function p(C $r):C {
 		self::byDate($r);
