@@ -13,7 +13,7 @@ final class Filter {
 	 * @param C|OC|PC $r
 	 * @return OC|PC;
 	 */
-	static function p(C $r) {
+	static function p(C $r):C {
 		self::byDate($r);
 		self::byProduct($r);
 		/** @var string $dir */ /** @var string $suffix */
