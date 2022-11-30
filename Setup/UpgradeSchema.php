@@ -52,18 +52,15 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 					SET e2.updated_at = CURRENT_TIMESTAMP()
 				;				
 			");
-			$this->tr('inventory_reservation', null, 2);
+			$this->tr('inventory_reservation', '', 2);
 		}
 	}
 
 	/**
 	 * 2019-11-22
 	 * @used-by _process()
-	 * @param string $t
-	 * @param string|null $sql [optional]
-	 * @param string|int $suffix [optional]
 	 */
-	private function tr($t, $sql = null, $suffix = '') {
+	private function tr(string $t, string $sql = '', string $suffix = ''):void {
 		# 2019-11-30 "The `inventory_reservation` table is absent in Magento < 2.3": https://github.com/justuno-com/m2/issues/6
 		if (ju_table_exists($t)) {
 			foreach ([T::EVENT_INSERT, T::EVENT_UPDATE] as $e) {
