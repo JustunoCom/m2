@@ -38,8 +38,6 @@ final class Variants {
 	/**
 	 * 2019-10-30
 	 * @used-by p()
-	 * @param P $p
-	 * @param P|IP|null $parent [optional]
 	 * @param array(int => string) $opts [optional]
 	 * @return array(string => mixed)
 	 */
