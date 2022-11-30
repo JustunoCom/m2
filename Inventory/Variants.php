@@ -66,7 +66,7 @@ final class Variants {
 				# https://github.com/justuno-com/m2/issues/13#issue-612869130
 				# 3) It should solve «Products of type `configurable` do not have a quantity»
 				# https://github.com/justuno-com/m2/issues/20
-				? [] : array_values(ju_map($ch, function(P $c) {return self::variant($c);}))
+				? [] : array_values(ju_map($ch, function(P $c):array {return self::variant($c);}))
 			;
 		}
 		return $r;
