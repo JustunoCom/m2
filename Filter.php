@@ -31,7 +31,7 @@ final class Filter {
 	 * @used-by p()
 	 * @param C|OC|PC $c
 	 */
-	private static function byDate(C $c) {
+	private static function byDate(C $c):void {
 		if ($since = ju_request('updatedSince')) { /** @var string $since */
 			/**
 			 * 2021-03-24 "`updatedSince` should be interpreted in the UTC timezone": https://github.com/justuno-com/m2/issues/37
