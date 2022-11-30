@@ -8,9 +8,8 @@ final class Settings extends \Justuno\Core\Config\Settings {
 	/**
 	 * 2021-03-06
 	 * @used-by \Justuno\M2\Block\Js::_toHtml()
-	 * @return string
 	 */
-	function accid() {return $this->v();}
+	function accid():string {return (string)$this->v();}
 
 	/**
 	 * 2021-03-06
