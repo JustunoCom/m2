@@ -22,7 +22,6 @@ final class Settings extends \Justuno\Core\Config\Settings {
 	 * @override
 	 * @see \Justuno\Core\Config\Settings::prefix()
 	 * @used-by \Justuno\Core\Config\Settings::v()
-	 * @return string
 	 */
-	protected function prefix() {return 'justuno_settings/options_interface';}
+	protected function prefix():string {return 'justuno_settings/options_interface';}
 }
