@@ -6,9 +6,6 @@ final class SessionStartChecker {
 	/**
 	 * 2021-02-23
 	 * @see \Magento\Framework\Session\SessionStartChecker::check()
-	 * @param Sb $sb
-	 * @param bool $r
-	 * @return bool
 	 */
-	function afterCheck(Sb $sb, $r) {return $r && !ju_rp_has('justuno/db');}
+	function afterCheck(Sb $sb, bool $r):bool {return $r && !ju_rp_has('justuno/db');}
 }
