@@ -25,9 +25,8 @@ class Js extends _P {
 	 *		}
 	 *		$html = $this->_afterToHtml($html);
 	 * https://github.com/magento/magento2/blob/2.2.0/lib/internal/Magento/Framework/View/Element/AbstractBlock.php#L643-L689
-	 * @return string
 	 */
-	final protected function _toHtml() { /** @var string $r */
+	final protected function _toHtml():string { /** @var string $r */
 		if (!ju_is_guid($id = S::s()->accid())) {
 			$r = '';
 		}
