@@ -9,7 +9,7 @@ final class Images {
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @return array(array(string => mixed))
 	 */
-	static function p(P $p) {return ju_map_kr(function($idx, _DO $i) use($p) {return [
+	static function p(P $p):array {return ju_map_kr(function($idx, _DO $i) use($p) {return [
 		# 2019-10-30
 		# «"ImageURL" should be "imageURL1" and we should have "imageURL2" and "ImageURL3"
 		# if there are image available»: https://github.com/justuno-com/m1/issues/17
