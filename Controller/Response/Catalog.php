@@ -155,7 +155,7 @@ class Catalog extends _P {
 
 	/**
 	 * 2021-02-05
-	 * @used-by execute()
+	 * @used-by self::execute()
 	 */
 	private static function price(P $p):float {
 		# 2021-03-24 "Replace `getPrice` with `getFinalPrice`": https://github.com/justuno-com/m2/issues/36
