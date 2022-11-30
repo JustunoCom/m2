@@ -14,9 +14,8 @@ final class Settings extends \Justuno\Core\Config\Settings {
 	/**
 	 * 2021-03-06
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
-	 * @return string
 	 */
-	function brand_attribute() {return $this->v();}
+	function brand_attribute():string {return $this->v();}
 
 	/**
 	 * 2021-03-06
