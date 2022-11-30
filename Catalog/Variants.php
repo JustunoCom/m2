@@ -1,6 +1,5 @@
 <?php
 namespace Justuno\M2\Catalog;
-use Magento\Catalog\Api\Data\ProductInterface as IP;
 use Magento\Catalog\Model\Product as P;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 # 2019-10-30
