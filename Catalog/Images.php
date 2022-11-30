@@ -7,7 +7,6 @@ final class Images {
 	/**
 	 * 2019-10-30
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
-	 * @param P $p
 	 * @return array(array(string => mixed))
 	 */
 	static function p(P $p) {return ju_map_kr(function($idx, _DO $i) use($p) {return [
