@@ -26,7 +26,7 @@ class Catalog extends _P {
 	 * 		$result = $this->execute();
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 */
-	function execute():Json {return R::p(function() {
+	function execute():Json {return R::p(function():array {
 		# 2020-11-23
 		# If the flat mode is enabled, then the products collection misses disabled products,
 		# because the `catalog_product_flat_<store>` table does not contain disabled products at least in Magento 2.4.0.
