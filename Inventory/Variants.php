@@ -74,7 +74,7 @@ final class Variants {
 
 	/**
 	 * 2019-10-30
-	 * @used-by p()
+	 * @used-by self::p()
 	 * @return array(string => mixed)
 	 */
 	private static function variant(P $p):array {return ['ID' => $p->getId(), 'Quantity' => ju_qty($p)];}
