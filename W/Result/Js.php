@@ -19,9 +19,8 @@ class Js extends \Justuno\Core\Framework\W\Result {
 	 * @override
 	 * @see \Justuno\Core\Framework\W\Result::__toString()
 	 * @used-by render()
-	 * @return string
 	 */
-	final function __toString() {return $this->_r;}
+	final function __toString():string {return $this->_r;}
 
 	/**
 	 * 2020-03-14
