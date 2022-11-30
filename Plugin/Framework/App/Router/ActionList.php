@@ -14,8 +14,9 @@ final class ActionList {
 	 * @see \Magento\Framework\App\Router\ActionList::get()
 	 * https://github.com/magento/magento2/blob/2.0.0/lib/internal/Magento/Framework/App/Router/ActionList.php#L63-L94
 	 * https://github.com/magento/magento2/blob/2.3.4/lib/internal/Magento/Framework/App/Router/ActionList.php#L82-L114
+	 * @param string|null $area
 	 */
-	function aroundGet(Sb $sb, \Closure $f, string $m, string $area, string $ns, string $action):string {return
+	function aroundGet(Sb $sb, \Closure $f, string $m, $area, string $ns, string $action):string {return
 		$m === ju_module_name($this) && ju_ends_with($action, '.js') ? Js::class : $f($m, $area, $ns, $action)
 	;}
 }
