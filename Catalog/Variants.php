@@ -29,7 +29,7 @@ final class Variants {
 			}
 			else {
 				$opts = array_column($ct->getConfigurableAttributesAsArray($p), 'attribute_code', 'id');
-				$r = array_values(array_map(function(P $c) use($opts, $p) {return self::variant($c, $p, $opts);}, $ch));
+				$r = array_values(array_map(function(P $c) use($opts, $p):array {return self::variant($c, $p, $opts);}, $ch));
 			}
 		}
 		return $r;
