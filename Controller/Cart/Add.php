@@ -54,7 +54,7 @@ class Add extends _P {
 
 	/**
 	 * 2020-01-21
-	 * @used-by execute()
+	 * @used-by self::execute()
 	 */
 	private static function product(string $k):P {return ju_product(ju_nat(ju_request($k)), true);}
 }
