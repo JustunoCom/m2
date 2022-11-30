@@ -17,7 +17,7 @@ class Orders extends _P {
 	 * 		$result = $this->execute();
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
 	 */
-	function execute():Json {return R::p(function() {return array_values(array_map(function(O $o) {return [
+	function execute():Json {return R::p(function():array {return array_values(array_map(function(O $o) {return [
 		'CountryCode' => $o->getBillingAddress()->getCountryId()
 		,'CreatedAt' => $o->getCreatedAt()
 		,'Currency' => $o->getOrderCurrencyCode()
