@@ -23,9 +23,10 @@ class GenerateToken extends E implements ElementI {
 	 *			return $html;
 	 *		}
 	 * https://github.com/magento/magento2/blob/2.2.0-RC1.8/lib/internal/Magento/Framework/Data/Form/Element/AbstractElement.php#L426-L441
-	 * @return string
 	 */
-	function getElementHtml() {return ju_block(W::class, ['id' => $this->getHtmlId(), 'label' => 'Generate Token'])->toHtml();}
+	function getElementHtml():string {return
+		ju_block(W::class, ['id' => $this->getHtmlId(), 'label' => 'Generate Token'])->toHtml()
+	;}
 
 	/**
 	 * 2017-06-27
