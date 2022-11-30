@@ -41,7 +41,7 @@ class GenerateToken extends E implements ElementI {
 	 * @see \Justuno\Core\Framework\Form\ElementI::onFormInitialized()
 	 * @used-by \Justuno\Core\Framework\Plugin\Data\Form\Element\AbstractElement::afterSetForm()
 	 */
-	final function onFormInitialized() {
+	final function onFormInitialized():void {
 		/**
 		 * 2017-06-27
 		 * This code removes the «[store view]» sublabel, similar to
