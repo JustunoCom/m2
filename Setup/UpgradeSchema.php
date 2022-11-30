@@ -58,7 +58,7 @@ class UpgradeSchema extends \Justuno\Core\Framework\Upgrade\Schema {
 
 	/**
 	 * 2019-11-22
-	 * @used-by _process()
+	 * @used-by self::_process()
 	 */
 	private function tr(string $t, string $sql = '', string $suffix = ''):void {
 		# 2019-11-30 "The `inventory_reservation` table is absent in Magento < 2.3": https://github.com/justuno-com/m2/issues/6
