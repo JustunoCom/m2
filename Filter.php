@@ -53,7 +53,7 @@ final class Filter {
 	 * 2020-05-06
 	 * "Provide an ability to filter the `jumagext/response/catalog` response by a concrete product":
 	 * https://github.com/justuno-com/m2/issues/12
-	 * @used-by p()
+	 * @used-by self::p()
 	 * @param C|OC|PC $c
 	 */
 	private static function byProduct(C $c):void {
