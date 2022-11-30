@@ -40,16 +40,11 @@ final class Filter {
 			 * https://github.com/justuno-com/m2/issues/38
 			 */
 			$tz = new TZ('UTC'); /** @var TZ $tz */
-			/**
-			 * 2019-10-31
-			 * @param string $s
-			 * @return string
-			 */
-			$d = function($s) use($tz) {
+			$d = function(string $s) use($tz):string {
 				$f = 'Y-m-d H:i:s'; /** @var string $f */
 				$dt = new \DateTime(date($f, strtotime($s)), $tz);	/** @var \DateTime $dt */
 				return date($f, $dt->format('U'));
-			};
+			}; /** @var \Closure $d */
 			$c->addFieldToFilter('updated_at', ['from' => $d($since), 'to' => $d('2035-01-01 23:59:59')]);
 		}
 	}
