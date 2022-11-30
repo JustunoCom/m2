@@ -16,9 +16,8 @@ class Add extends _P {
 	 * @used-by \Magento\Framework\App\Action\Action::dispatch():
 	 * 		$result = $this->execute();
 	 * https://github.com/magento/magento2/blob/2.2.1/lib/internal/Magento/Framework/App/Action/Action.php#L84-L125
-	 * @return Json
 	 */
-	function execute() {return R::p(function() {
+	function execute():Json {return R::p(function() {
 		/**
 		 * 2020-01-21
 		 * @see \Magento\Checkout\Controller\Cart\Add::_initProduct()
