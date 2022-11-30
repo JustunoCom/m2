@@ -69,7 +69,7 @@ class Catalog extends _P {
 		if (ju_request('id') && !count($pc)) {
 			Diagnostic::p();
 		}
-		return array_values(ju_map($pc, function(P $p) use($brand) { /** @var array(string => mixed) $r */
+		return array_values(ju_map($pc, function(P $p) use($brand):array { /** @var array(string => mixed) $r */
 			$rs = ju_review_summary($p); /** @var RS $rs */
 			$cc = $p->getCategoryCollection(); /** @var CC $cc */
 			$price = self::price($p); /** @var float $price */
