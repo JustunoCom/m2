@@ -34,7 +34,7 @@ class Orders extends _P {
 		,'Email' => $o->getCustomerEmail()
 		,'ID' => $o->getIncrementId()
 		,'IP' => $o->getRemoteIp()
-		,'LineItems' => ju_oqi_leafs($o, function(OI $i) {return [
+		,'LineItems' => ju_oqi_leafs($o, function(OI $i):array {return [
 			'OrderId' => $i->getOrderId()
 			# 2019-10-31
 			# Orders: «lineItem prices currently being returned in the orders feed are 0 always»:
