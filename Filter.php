@@ -56,7 +56,7 @@ final class Filter {
 	 * @used-by p()
 	 * @param C|OC|PC $c
 	 */
-	private static function byProduct(C $c) {
+	private static function byProduct(C $c):void {
 		if ($id = ju_request('id')) { /** @var string $id */
 			$c->addFieldToFilter('entity_id', $id);
 		}
