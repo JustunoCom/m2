@@ -9,10 +9,8 @@ final class Response {
 	 * @used-by \Justuno\M2\Controller\Response\Catalog::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Inventory::execute()
 	 * @used-by \Justuno\M2\Controller\Response\Orders::execute()
-	 * @param \Closure $f
-	 * @return Json
 	 */
-	static function p(\Closure $f) {/** @var array(string => mixed) $r */
+	static function p(\Closure $f):Json {/** @var array(string => mixed) $r */
 		try {
 			$r = $f();
 			ju_sentry(__CLASS__, sprintf('%s: %s', ju_request_o()->getHttpHost(), ju_class_l(ju_caller_c())));
