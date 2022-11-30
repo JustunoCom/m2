@@ -24,8 +24,8 @@ final class Response {
 
 	/**
 	 * 2019-10-30 «if a property is null or an empty string do not send it back»: https://github.com/justuno-com/m1/issues/9
-	 * @used-by filter()
-	 * @used-by p()
+	 * @used-by self::filter()
+	 * @used-by self::p()
 	 * @param array(string => mixed) $a
 	 * @return array(string => mixed)
 	 */
