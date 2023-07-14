@@ -147,7 +147,7 @@ class Catalog extends _P {
 			/**
 			 * 2019-11-01
 			 * If $brand is null, then @uses \Magento\Catalog\Model\Product::getAttributeText() fails.
-			 * https://www.upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
+			 * https://upwork.com/messages/rooms/room_e6b2d182b68bdb5e9bf343521534b1b6/story_4e29dacff68f2d918eff2f28bb3d256c
 			 */
 			return $r + ['BrandId' => $brand, 'BrandName' => !$brand ? null : ($p->getAttributeText($brand) ?: null)];
 		}));

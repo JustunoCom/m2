@@ -7,7 +7,7 @@
 		<justuno_settings>
 			<options_interface>
 				<accid></accid>
-<!-- 2021-08-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+<!-- 2021-08-30 Dmitrii Fediuk https://upwork.com/fl/mage2pro
 "Remove the example «API Token Key» value from `etc/config.xml` as it makes the custumer's Magento data vulnerable
 if the customers uses the example value it his Justuno account": https://github.com/justuno-com/m2/issues/42 -->
 				<token_key></token_key>
