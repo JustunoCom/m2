@@ -16,6 +16,7 @@ use Magento\Catalog\Model\ResourceModel\Category\Collection as CC;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as PC;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 use Magento\Framework\App\Action\Action as _P;
+use Magento\GroupedProduct\Model\Product\Type\Grouped;
 use Magento\Review\Model\Review\Summary as RS;
 /** 2019-11-17 @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Catalog extends _P {
@@ -49,8 +50,10 @@ class Catalog extends _P {
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
-		# 2023-07-15 «Products of type `bundle` do not have a quantity»: https://github.com/JustunoCom/m2/issues/50
-		$pc->addAttributeToFilter('type_id', ['neq' => Bundle::TYPE_CODE]);
+		# 2023-07-15
+		# 1) «Products of type `bundle` do not have a quantity»: https://github.com/JustunoCom/m2/issues/50
+		# 2) «Products of type `grouped` do not have a quantity»: https://github.com/JustunoCom/m2/issues/52
+		$pc->addAttributeToFilter('type_id', ['nin' => [Bundle::TYPE_CODE, Grouped::TYPE_CODE]]);
 		/**
 		 * 2019-11-22
 		 * @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::addMediaGalleryData() loads the collection,
