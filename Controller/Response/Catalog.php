@@ -8,6 +8,7 @@ use Justuno\M2\Filter;
 use Justuno\M2\Response as R;
 use Justuno\M2\Settings as S;
 use Justuno\M2\Store;
+use Magento\Bundle\Model\Product\Type as Bundle;
 use Magento\Catalog\Model\Category as C;
 use Magento\Catalog\Model\Product as P;
 use Magento\Catalog\Model\Product\Visibility as V;
@@ -48,6 +49,8 @@ class Catalog extends _P {
 		$pc->addAttributeToFilter('visibility', ['in' => [
 			V::VISIBILITY_BOTH, V::VISIBILITY_IN_CATALOG, V::VISIBILITY_IN_SEARCH
 		]]);
+		# 2023-07-15 «Products of type `bundle` do not have a quantity»: https://github.com/JustunoCom/m2/issues/50
+		$pc->addAttributeToFilter('type_id', ['neq' => Bundle::TYPE_CODE]);
 		/**
 		 * 2019-11-22
 		 * @uses \Magento\Catalog\Model\ResourceModel\Product\Collection::addMediaGalleryData() loads the collection,
