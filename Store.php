@@ -29,7 +29,7 @@ final class Store {
 			]));};
 			/** @var array(string => string) $row */
 			$row = ju_first(ju_sort(ju_conn()->fetchAll($sel), function(array $a, array $b) use($w) {return $w($a) - $w($b);}));
-			ju_assert($row, "The token $token is not registered in Magento.");
+			ju_assert($row, "The token «{$token}» is not registered in Magento.");
 			$scope = jua($row, 'scope'); /** @var string $scope */
 			$scopeId = jua($row, 'scope_id'); /** @var string $scopeId */
 			$r = SS::SCOPE_STORES === $scope ? ju_store($scopeId) : (
