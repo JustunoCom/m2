@@ -56,5 +56,10 @@ class Add extends _P {
 	 * 2020-01-21
 	 * @used-by self::execute()
 	 */
-	private static function product(string $k):P {return ju_product(ju_nat(ju_request($k)), true);}
+	private static function product(string $k):P {return ju_product(ju_nat(
+		# 2023-07-15
+		# "Improve diagnostic messages for the `justuno/cart/add` endpoint":
+		# https://github.com/JustunoCom/m2/issues/49
+		ju_request($k) ?: ju_error("The required parameter `{$k}` is missing in the `justuno/cart/add` request.")
+	), true);}
 }
