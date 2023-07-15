@@ -11,13 +11,20 @@ final class Response {
 	 * @used-by \Justuno\M2\Controller\Response\Orders::execute()
 	 */
 	static function p(\Closure $f):Json {/** @var array(string => mixed) $r */
-		try {
-			$r = $f();
-			ju_sentry(__CLASS__, sprintf('%s: %s', ju_request_o()->getHttpHost(), ju_class_l(ju_caller_c())));
+		# 2023-07-15 "Ignore requests of Heritrix web crawler": https://github.com/JustunoCom/m2/issues/51
+		if (ju_request_ua('heritrix')) {
+			$r = 'Heritrix is forbidden';
+			ju_403();
 		}
-		catch (\Exception $e) {
-			$r = ['message' => $e->getMessage()];
-			ju_sentry(__CLASS__, $e);
+		else {
+			try {
+				$r = $f();
+				ju_sentry(__CLASS__, sprintf('%s: %s', ju_request_o()->getHttpHost(), ju_class_l(ju_caller_c())));
+			}
+			catch (\Exception $e) {
+				$r = ['message' => $e->getMessage()];
+				ju_sentry(__CLASS__, $e);
+			}
 		}
 		return Json::i(is_null($r) ? 'OK' : (!is_array($r) ? $r : self::filter($r)));
 	}
